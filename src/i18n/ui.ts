@@ -21,9 +21,9 @@ export const ui: Record<Language, Translation> = {
     toc: 'Inhaltsverzeichnis',
   },
   'en': {
-    title: 'Zixin\'s Notes',
+    title: 'Jessie\'s Notes',
     subtitle: 'Dynamics, papers, and tinkering',
-    description: 'Spacecraft dynamics and attitude control, paper notes, and the occasional tooling rabbit hole.',
+    description: 'Paper notes, dynamics and orbital simulation write-ups, and the occasional tooling detour.',
     posts: 'Posts',
     tags: 'Tags',
     about: 'About',
