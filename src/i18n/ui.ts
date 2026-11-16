@@ -93,9 +93,9 @@ export const ui: Record<Language, Translation> = {
     toc: 'Оглавление',
   },
   'zh': {
-    title: '子新的笔记',
+    title: 'Jessie\'s Notes',
     subtitle: '动力学、论文与折腾',
-    description: '空间飞行器动力学与姿态控制，论文阅读笔记，以及一些工具上的折腾。',
+    description: '读论文的笔记，做动力学与轨道仿真时的心得，和一些与主业无关的折腾。',
     posts: '文章',
     tags: '标签',
     about: '关于',

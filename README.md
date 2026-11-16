@@ -1,6 +1,6 @@
-# 子新的笔记
+# Jessie's Notes
 
-个人博客，基于 Astro。写三类东西：空间飞行器动力学与姿态控制、论文阅读笔记、以及一些工具上的折腾。
+个人博客，基于 Astro。写三类东西：读论文的笔记、动力学与轨道仿真的心得、以及一些工具上的折腾。
 
 **线上地址 → [sanshansss.github.io/blog](https://sanshansss.github.io/blog/)**
 
