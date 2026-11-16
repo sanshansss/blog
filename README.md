@@ -1,89 +1,40 @@
-# Retypeset
+# 子新的笔记
 
-![Cover Image](assets/images/v1/retypeset-en-desktop.webp)
-![Cover Image](assets/images/v1/retypeset-en-mobile.webp)
+个人博客，基于 Astro。写三类东西：空间飞行器动力学与姿态控制、论文阅读笔记、以及一些工具上的折腾。
 
-[简体中文](assets/docs/README.zh.md)｜[繁体中文](assets/docs/README.zh-tw.md)｜[日本語](assets/docs/README.ja.md)｜[Español](assets/docs/README.es.md)｜[Français](assets/docs/README.fr.md)｜[Русский](assets/docs/README.ru.md)
+**线上地址 → [sanshansss.github.io/blog](https://sanshansss.github.io/blog/)**
 
-Retypeset is a static blog theme based on the [Astro](https://astro.build/) framework. Inspired by [Typography](https://astro-theme-typography.vercel.app/), Retypeset establishes a new visual standard and reimagines the layout of all pages, creating a reading experience reminiscent of paper books, reviving the beauty of typography. Details in every sight, elegance in every space.
+## 内容
 
-## Demo
+| 文章 | 说明 |
+| --- | --- |
+| [我以为 memory 是 LLM 之后才有的](https://sanshansss.github.io/blog/posts/bboc-agent-memory/) | BBOC 假设、三类算法创新与 agent memory 方向的阅读记录 |
+| [把 Magpie Routing 带进 Herdr](https://sanshansss.github.io/blog/posts/herdr-magpie-routing/) | 从路由图到 Context Window 的一个布局实践 |
+| [空间飞行器动力学教学动画](https://sanshansss.github.io/blog/posts/spacecraft-dynamics-animations/) | 用 Manim 做轨道力学与姿态控制的可视化 |
 
-- [Retypeset](https://retypeset.radishzz.cc/en/)
-- [Retipografía](https://retypeset.radishzz.cc/es/)
-- [Переверстка](https://retypeset.radishzz.cc/ru/)
-- [重新编排](https://retypeset.radishzz.cc/)
-- [重新編排](https://retypeset.radishzz.cc/zh-tw/)
-- [再組版](https://retypeset.radishzz.cc/ja/)
+## 本地运行
 
-## Features
+```bash
+pnpm install
+pnpm dev      # 本地预览
+pnpm build    # 构建到 dist/
+```
 
-- Built with Astro and UnoCSS
-- Support for SEO, Sitemap, OpenGraph, RSS, MDX, LaTeX, Mermaid, and TOC
-- i18n support
-- Light / Dark mode
-- Elegant view transitions
-- Rich theme customization
-- Optimized typography
-- Responsive design
-- Comment system
+写新文章用 `pnpm new-post <文件名>`，生成的 md 放在 `src/content/posts/`。
 
-## Performance
+推送 `master` 会自动触发 GitHub Actions 构建并部署到 Pages。
 
-<br>
-<p align="center">
-  <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fretypeset.radishzz.cc%2Fen%2F&form_factor=desktop">
-    <img width="710" alt="Retypeset Lighthouse Score" src="assets/images/retypeset-lighthouse-score.svg">
-  <a>
-</p>
+## 主题
 
-## Getting Started
+界面用的是 [Retypeset](https://github.com/radishzzz/astro-theme-retypeset)（MIT），做过这些改造：
 
-1. [Fork](https://github.com/radishzzz/astro-theme-retypeset/fork) this repository, or use this template to create a new repository.
-2. Run the following commands in your terminal:
+- 站点标题、描述、关于页换成自己的内容
+- 移除上游的 umami 统计、Waline 评论实例、apiflash 硬编码 key
+- OG 字体从 `public/` 移到 `assets/`，不再随站点发布（构建产物 39M → 11M）
+- 语言从 6 种收敛到中英两种，移除主题自带演示文章
 
-   ```bash
-   # Clone the repository
-   git clone <repository-url>
+原文的 [README](https://github.com/radishzzz/astro-theme-retypeset#readme) 里有完整的配置文档。
 
-   # Navigate to the project directory
-   cd <repository-name>
+## License
 
-   # Install pnpm globally (if not already installed)
-   npm install -g pnpm
-
-   # Install dependencies
-   pnpm install
-
-   # Start the development server
-   pnpm dev
-   ```
-
-3. Refer to the [Theme Guide](https://retypeset.radishzz.cc/en/posts/theme-guide/) to customize your blog and create new posts.
-4. Refer to the [Astro Deployment Guides](https://docs.astro.build/en/guides/deploy/) to deploy your blog to Netlify, Vercel, or other platforms.
-
-&emsp;[![Deploy to Netlify](assets/images/deploy-netlify.svg)](https://app.netlify.com/start) [![Deploy to Vercel](assets/images/deploy-vercel.svg)](https://vercel.com/new)
-
-## Updates
-
-Retypeset releases [new features](https://github.com/radishzzz/astro-theme-retypeset/issues/18) from time to time. Simply run `pnpm update-theme` to update the theme. If you encounter merge conflicts, please refer to [this video](https://youtu.be/lz5OuKzvadQ?si=sH_ALNgqxrYqNVQT) for manual resolution.
-
-## Credits
-
-- [Typography](https://github.com/moeyua/astro-theme-typography)
-- [Fuwari](https://github.com/saicaca/fuwari)
-- [Redefine](https://github.com/EvanNotFound/hexo-theme-redefine)
-- [AstroPaper](https://github.com/satnaing/astro-paper)
-- [heti](https://github.com/sivan/heti)
-- [EarlySummerSerif](https://github.com/GuiWonder/EarlySummerSerif)
-
-## Star History
-
-<p align="center">
-<a href="https://star-history.com/#radishzzz/astro-theme-retypeset&Date">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=radishzzz/astro-theme-retypeset&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=radishzzz/astro-theme-retypeset&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=radishzzz/astro-theme-retypeset&type=Date" />
-  </picture>
-</p>
+内容版权归本人所有。主题部分遵循 MIT，原版权声明见 [LICENSE](./LICENSE)。
