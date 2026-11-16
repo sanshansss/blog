@@ -5,7 +5,7 @@ description: 手机上远程看电脑写代码，横屏塞进去字小到看不�
 tags:
   - 工具实践
   - Windows
-  - C#
+  - CSharp
   - 远程开发
 lang: zh
 abbrlink: phone-coding-mode
