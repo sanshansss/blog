@@ -2,4 +2,10 @@
 lang: en
 ---
 
-Retypeset is a static blog theme based on the [Astro](https://astro.build/) framework. Inspired by [Typography](https://astro-theme-typography.vercel.app/), Retypeset establishes a new visual standard and reimagines the layout of all pages, creating a reading experience reminiscent of paper books, reviving the beauty of typography. Details in every sight, elegance in every space.
+Beihang University. Spacecraft dynamics and attitude control.
+
+Three kinds of things live here: notes from reading papers, write-ups from dynamics and orbital simulation work, and occasional detours into tooling that has nothing to do with either.
+
+Paper notes are not summaries — they record the one thing that actually clicked at the time. Tooling posts try to document the dead ends, so future me doesn't walk into them again.
+
+If something here is wrong, [open an issue](https://github.com/sanshansss).
