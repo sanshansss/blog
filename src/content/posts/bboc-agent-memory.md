@@ -17,11 +17,10 @@ paperYear: 2017
 ---
 
 <!--
-来源存档：D:\yuezixin\noterepo\papers\BigBlobOfCompute\blog.md
 首次发布：2026-11-04
-说明：本文由上述存档文件复制而来并做过发布加工（新增 论文笔记 标签、
-paperTitle/paperAuthors/paperYear 字段）。两文件内容已分叉，
-后续更新请以本文件为准，或同步回存档。
+说明：本文由个人阅读记录整理而成，并做过发布加工（新增 论文笔记 标签、
+paperTitle/paperAuthors/paperYear 字段）。博客版本与研究记录可能存在分叉，
+后续更新以本文件为准。
 -->
 
 ## 一个让我停下来的句子

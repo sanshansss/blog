@@ -1,0 +1,336 @@
+/* ==========================================================================
+   Post Figures — 内联 SVG + CSS 动画
+   用于 GNC 智能体系列文章，替代原 LaTeX/TikZ 插图。
+   纯 CSS：入场渐变 + 连线流动 + 阶段依次点亮，无额外 JS 依赖。
+   ========================================================================== */
+
+.gnc-fig {
+  --gnc-navy: #0b3b73;
+  --gnc-blue: #21618c;
+  --gnc-teal: #2e7d6b;
+  --gnc-amber: #b8791a;
+  --gnc-coral: #c8564a;
+  --gnc-ink: #20262e;
+  --gnc-muted: #66727f;
+  --gnc-line: #b8c4ce;
+  --gnc-fill-1: #eaf2f8;
+  --gnc-fill-2: #e8f3f0;
+  --gnc-fill-3: #fbf2e4;
+  --gnc-fill-4: #fdeeec;
+  --gnc-surface: #ffffff;
+  --gnc-invert: #ffffff;
+}
+
+html.dark .gnc-fig {
+  --gnc-navy: #9cc3ee;
+  --gnc-blue: #7fb0d6;
+  --gnc-teal: #74c4ae;
+  --gnc-amber: #e2b063;
+  --gnc-coral: #e88e83;
+  --gnc-ink: #e6e9ee;
+  --gnc-muted: #98a3ae;
+  --gnc-line: #4b5563;
+  --gnc-fill-1: #17293c;
+  --gnc-fill-2: #142c27;
+  --gnc-fill-3: #302718;
+  --gnc-fill-4: #301f1e;
+  --gnc-surface: #121821;
+  --gnc-invert: #0b1016;
+}
+
+/* Wrapper ---------------------------------------------------------------- */
+.gnc-fig {
+  margin: 2rem 0;
+}
+
+.gnc-fig__scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 0.35rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gnc-line) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
+.gnc-fig svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-width: 600px;
+  margin: 0 auto;
+}
+
+.gnc-fig figcaption {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  text-align: center;
+  color: var(--gnc-muted);
+}
+
+/* 窄屏提示：插图内部横向滚动 */
+@media (max-width: 640px) {
+  .gnc-fig::after {
+    content: '← 左右滑动查看完整插图 →';
+    display: block;
+    margin-top: 0.45rem;
+    font-size: 0.75rem;
+    text-align: center;
+    color: var(--gnc-muted);
+    opacity: 0.75;
+  }
+}
+
+/* Typography inside SVG -------------------------------------------------- */
+.gnc-fig svg text {
+  font-family:
+    system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', sans-serif;
+  font-size: 13px;
+  fill: var(--gnc-ink);
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.gnc-fig .gnc-t--strong {
+  font-weight: 600;
+}
+
+.gnc-fig .gnc-t--start {
+  text-anchor: start;
+}
+
+.gnc-fig .gnc-t--end {
+  text-anchor: end;
+}
+
+.gnc-fig .gnc-t--sm {
+  font-size: 11px;
+  fill: var(--gnc-muted);
+}
+
+.gnc-fig .gnc-t--xs {
+  font-size: 10px;
+  fill: var(--gnc-muted);
+  letter-spacing: 0.02em;
+}
+
+.gnc-fig .gnc-t--on-solid {
+  fill: var(--gnc-invert);
+}
+
+.gnc-fig .gnc-t--navy {
+  fill: var(--gnc-navy);
+  font-weight: 600;
+}
+
+.gnc-fig .gnc-t--teal {
+  fill: var(--gnc-teal);
+  font-weight: 600;
+}
+
+.gnc-fig .gnc-t--amber {
+  fill: var(--gnc-amber);
+  font-weight: 600;
+}
+
+.gnc-fig .gnc-t--coral {
+  fill: var(--gnc-coral);
+  font-weight: 600;
+}
+
+/* Cards ------------------------------------------------------------------ */
+.gnc-fig .gnc-card {
+  fill: var(--gnc-fill-1);
+  stroke: var(--gnc-blue);
+  stroke-width: 1.2;
+  transition:
+    stroke 0.25s ease,
+    stroke-width 0.25s ease;
+}
+
+.gnc-fig .gnc-card--core {
+  fill: var(--gnc-navy);
+  stroke: var(--gnc-navy);
+}
+
+.gnc-fig .gnc-card--teal {
+  fill: var(--gnc-fill-2);
+  stroke: var(--gnc-teal);
+}
+
+.gnc-fig .gnc-card--amber {
+  fill: var(--gnc-fill-3);
+  stroke: var(--gnc-amber);
+}
+
+.gnc-fig .gnc-card--coral {
+  fill: var(--gnc-fill-4);
+  stroke: var(--gnc-coral);
+}
+
+.gnc-fig .gnc-card--ghost {
+  fill: none;
+  stroke: var(--gnc-line);
+  stroke-dasharray: 5 4;
+  stroke-width: 1;
+}
+
+.gnc-fig .gnc-card--surface {
+  fill: var(--gnc-surface);
+  stroke: var(--gnc-line);
+}
+
+.gnc-fig .gnc-lane {
+  fill: var(--gnc-coral);
+  fill-opacity: 0.05;
+  stroke: var(--gnc-coral);
+  stroke-opacity: 0.28;
+  stroke-width: 1;
+}
+
+.gnc-fig .gnc-lane--teal {
+  fill: var(--gnc-teal);
+  fill-opacity: 0.07;
+  stroke: var(--gnc-teal);
+}
+
+.gnc-fig .gnc-node {
+  cursor: default;
+}
+
+.gnc-fig .gnc-node:hover .gnc-card {
+  stroke: var(--gnc-amber);
+  stroke-width: 2.2;
+}
+
+/* Edges & flow ----------------------------------------------------------- */
+.gnc-fig .gnc-edge {
+  fill: none;
+  stroke: var(--gnc-ink);
+  stroke-opacity: 0.55;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.gnc-fig .gnc-edge--teal {
+  stroke: var(--gnc-teal);
+  stroke-opacity: 0.8;
+}
+
+.gnc-fig .gnc-edge--coral {
+  stroke: var(--gnc-coral);
+  stroke-opacity: 0.8;
+}
+
+.gnc-fig .gnc-edge--amber {
+  stroke: var(--gnc-amber);
+  stroke-opacity: 0.8;
+}
+
+.gnc-fig .gnc-edge--hair {
+  stroke-width: 1;
+  stroke-opacity: 0.4;
+}
+
+.gnc-fig .gnc-flow {
+  stroke-dasharray: 7 6;
+  animation: gnc-dash 1.2s linear infinite;
+}
+
+.gnc-fig .gnc-flow--slow {
+  animation-duration: 3s;
+}
+
+/* Animations ------------------------------------------------------------- */
+@keyframes gnc-rise {
+  from {
+    opacity: 0;
+    transform: translateY(9px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gnc-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes gnc-dash {
+  to {
+    stroke-dashoffset: -26;
+  }
+}
+
+@keyframes gnc-glint {
+  0%,
+  100% {
+    stroke-width: 1.2;
+    filter: none;
+  }
+  9% {
+    stroke-width: 2.4;
+    filter: drop-shadow(0 0 7px var(--gnc-amber));
+  }
+}
+
+@keyframes gnc-breathe {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.gnc-fig .gnc-node {
+  opacity: 0;
+  animation: gnc-rise 0.55s cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
+}
+
+.gnc-fig .gnc-edge {
+  opacity: 0;
+  animation: gnc-fade 0.6s ease 0.4s forwards;
+}
+
+.gnc-fig .gnc-label {
+  opacity: 0;
+  animation: gnc-fade 0.6s ease 0.6s forwards;
+}
+
+/* 阶段依次点亮：给 rect 加 .gnc-seq，并用 inline animation-delay 控制相位 */
+.gnc-fig .gnc-seq {
+  animation: gnc-glint 5.6s ease-in-out infinite;
+}
+
+.gnc-fig .gnc-halo {
+  fill: none;
+  stroke: var(--gnc-amber);
+  stroke-width: 1;
+  animation: gnc-breathe 3.4s ease-in-out infinite;
+}
+
+.gnc-fig .gnc-dot {
+  fill: var(--gnc-coral);
+  animation: gnc-breathe 2.2s ease-in-out infinite;
+}
+
+/* Reduced motion --------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .gnc-fig *,
+  .gnc-fig *::before,
+  .gnc-fig *::after {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
