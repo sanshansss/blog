@@ -1,7 +1,7 @@
 /* ==========================================================================
    Post Figures — 内联 SVG + CSS 动画
-   用于 GNC 智能体系列文章，替代原 LaTeX/TikZ 插图。
-   纯 CSS：入场渐变 + 连线流动 + 阶段依次点亮，无额外 JS 依赖。
+   全站博客通用的技术框图与动态示意图样式。
+   纯 CSS：入场渐变 + 连线流动 + 阶段依次点亮 + 旋转/路由动画，无额外 JS 依赖。
    ========================================================================== */
 
 .gnc-fig {
@@ -321,6 +321,91 @@ html.dark .gnc-fig {
 .gnc-fig .gnc-dot {
   fill: var(--gnc-coral);
   animation: gnc-breathe 2.2s ease-in-out infinite;
+}
+
+.gnc-fig .gnc-t--mono {
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    monospace;
+}
+
+@keyframes gnc-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes gnc-rot90 {
+  0%,
+  22% {
+    transform: rotate(0deg);
+  }
+  42%,
+  78% {
+    transform: rotate(-90deg);
+  }
+  95%,
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes gnc-travel {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes gnc-bar-breathe {
+  0%,
+  100% {
+    opacity: 0.78;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.gnc-fig .gnc-spin {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: gnc-spin 18s linear infinite;
+}
+
+.gnc-fig .gnc-spin--fast {
+  animation-duration: 9s;
+}
+
+.gnc-fig .gnc-spin--reverse {
+  animation-direction: reverse;
+}
+
+.gnc-fig .gnc-rot90 {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: gnc-rot90 6.4s ease-in-out infinite;
+}
+
+.gnc-fig .gnc-packet {
+  animation: gnc-travel 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.gnc-fig .gnc-bar {
+  animation: gnc-bar-breathe 3.6s ease-in-out infinite;
 }
 
 /* Reduced motion --------------------------------------------------------- */
