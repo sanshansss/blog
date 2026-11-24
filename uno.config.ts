@@ -11,6 +11,35 @@ import { themeConfig } from './src/config.ts'
 
 const { light, dark } = themeConfig.color
 
+// Reading (serif): Newsreader + 思源宋体, headings 600 / body 400
+// Newsreader is the closest open-licensed stand-in for Anthropic's Copernicus-style display serif
+const serifStack = [
+  '"Newsreader Variable"',
+  '"Noto Serif SC"',
+  '"Songti SC"',
+  'STSong',
+  'SimSun',
+  'ui-serif',
+  'Georgia',
+  'Cambria',
+  '"Times New Roman"',
+  'Times',
+  'serif',
+]
+
+// Interface (sans): Plus Jakarta Sans + HarmonyOS Sans / 思源黑体（系统字体，不下载）
+const sansStack = [
+  '"Plus Jakarta Sans Variable"',
+  '"HarmonyOS Sans SC"',
+  '"PingFang SC"',
+  '"Hiragino Sans GB"',
+  '"Microsoft YaHei"',
+  '"Noto Sans SC"',
+  'ui-sans-serif',
+  'system-ui',
+  'sans-serif',
+]
+
 export default defineConfig({
   presets: [
     presetWind3(),
@@ -40,10 +69,11 @@ export default defineConfig({
       caution: 'oklch(50.5% 0.213 27.518 / 0.8)', // red-700
     },
     fontFamily: {
-      title: ['Snell-Black', 'EarlySummer-Subset', 'EarlySummer', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
-      navbar: ['STIX-Italic', 'EarlySummer-Subset', 'EarlySummer', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
-      time: ['Snell-Bold', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
-      serif: ['STIX', 'EarlySummer', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
+      title: serifStack,
+      navbar: sansStack,
+      time: sansStack,
+      sans: sansStack,
+      serif: serifStack,
     },
   },
   rules: [

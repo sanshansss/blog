@@ -30,19 +30,19 @@ export const { getStaticPaths, GET } = await OGImageRoute({
       size: [250],
     },
     border: {
-      color: [242, 241, 245],
+      color: [250, 249, 245],
       width: 20,
     },
     font: {
       title: {
         families: ['Noto Sans SC'],
         weight: 'Bold',
-        color: [34, 33, 36],
+        color: [20, 20, 19],
         lineHeight: 1.5,
       },
       description: {
         families: ['Noto Sans SC'],
-        color: [72, 71, 74],
+        color: [76, 75, 69],
         lineHeight: 1.5,
       },
     },
@@ -50,6 +50,6 @@ export const { getStaticPaths, GET } = await OGImageRoute({
       './assets/fonts/NotoSansSC-Bold.otf',
       './assets/fonts/NotoSansSC-Regular.otf',
     ],
-    bgGradient: [[242, 241, 245]],
+    bgGradient: [[250, 249, 245]],
   }),
 })

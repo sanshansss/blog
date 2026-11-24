@@ -36,25 +36,29 @@ export const themeConfig: ThemeConfig = {
       // primary color
       // used for title, hover, etc
       // oklch color picker: https://oklch.com/
-      primary: 'oklch(25% 0.005 298)',
+      // warm ink #141413, sampled from Anthropic's palette
+      primary: 'oklch(19.08% 0.002 106.59)',
       // secondary color
       // used for post text
-      secondary: 'oklch(40% 0.005 298)',
+      // #4c4b45, the body-text gray of Anthropic's articles
+      secondary: 'oklch(41.18% 0.0099 99.09)',
       // background color
-      background: 'oklch(96% 0.005 298)',
+      // warm paper #faf9f5
+      background: 'oklch(98.18% 0.0054 95.1)',
       // highlight color
       // used for navbar, selected text, etc
-      highlight: 'oklch(0.93 0.195089 103.2532 / 0.5)', // rgba(255,235,0,0.5)
+      // clay #d97757 tint instead of fluorescent yellow
+      highlight: 'oklch(67.24% 0.1308 38.76 / 0.45)',
     },
     dark: {
       // primary color
-      primary: 'oklch(92% 0.005 298)',
+      primary: 'oklch(94.85% 0.0109 95.17)',
       // secondary color
-      secondary: 'oklch(77% 0.005 298)',
+      secondary: 'oklch(74.99% 0.0129 96.48)',
       // background color
-      background: 'oklch(22% 0.005 298)',
+      background: 'oklch(23.57% 0.0024 67.71)',
       // highlight color
-      highlight: 'oklch(0.93 0.195089 103.2532 / 0.2)', // rgba(255,235,0,0.2)
+      highlight: 'oklch(67.24% 0.1308 38.76 / 0.42)',
     },
   },
   // COLOR SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
@@ -67,7 +71,7 @@ export const themeConfig: ThemeConfig = {
     // not fill in the locale code above again, can be an empty array []
     moreLocales: ['en'], // ['de', 'en', 'es', 'fr', 'ja', 'ko', 'pl', 'pt', 'ru', 'zh', 'zh-tw']
     // post font style
-    fontStyle: 'sans', // sans | serif
+    fontStyle: 'serif', // sans | serif
     // post date format
     dateFormat: 'YYYY-MM-DD', // YYYY-MM-DD | MM-DD-YYYY | DD-MM-YYYY | MMM D YYYY | D MMM YYYY
     // enable table of contents
