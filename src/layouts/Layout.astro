@@ -78,3 +78,15 @@ const MarginBottom = isPost && themeConfig.comment.enabled
   </body>
 </html>
 
+<style>
+  @media (min-width: 1152px) {
+    .post-layout {
+      --post-left: max(3.25rem, calc(50vw - 42rem));
+      --site-right: max(5rem, calc(50vw - 35rem));
+      width: calc(100% - var(--post-left) - var(--site-right) - 16rem);
+      max-width: 54rem;
+      margin-inline: var(--post-left) 0;
+    }
+  }
+</style>
+

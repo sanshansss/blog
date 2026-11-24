@@ -1,6 +1,5 @@
 ---
 import type { MarkdownHeading } from 'astro'
-import TocIcon from '@/assets/icons/toc-icon.svg'
 import { ui } from '@/i18n/ui'
 import { getPageInfo } from '@/utils/page'
 
@@ -9,129 +8,360 @@ interface Props {
 }
 
 const { currentLang } = getPageInfo(Astro.url.pathname)
-const currentUI = ui[currentLang as keyof typeof ui] ?? {}
-
-const { headings = [] } = Astro.props
-const filteredHeadings = headings.filter(heading => heading.depth >= 2 && heading.depth <= 4)
+const { toc, readingProgress } = ui[currentLang]
+const headings = Astro.props.headings.filter(heading => heading.depth >= 2 && heading.depth <= 4)
 ---
 
-{filteredHeadings.length > 0 && (
-  // TOC Container
-  <div
-    id="toc-container"
-    class="mb-6 uno-round-border bg-secondary/5 2xl:(fixed left-0 top-44.5 max-w-[min(calc(50vw-38rem),13rem)] border-none bg-secondary/0)"
-  >
-    {/* Hidden Checkbox */}
-    <input
-      type="checkbox"
-      id="toc-toggle"
-      hidden
-    />
-    {/* TOC Toggle */}
-    <div class="relative h-12 w-full">
-      <label
-        for="toc-toggle"
-        class="absolute inset-0 flex cursor-pointer items-center 2xl:(static flex c-secondary/60 transition-colors ease-out hover:c-primary)"
-      >
-        {/* Title on Mobile */}
-        <span id="toc-mobile-text">
-          {currentUI.toc}
-        </span>
-
-        {/* Icon on Desktop */}
-        <TocIcon
-          id="toc-desktop-icon"
-          aria-hidden="true"
-          class="ml-4 hidden aspect-square w-4.2 2xl:(mt-4 block origin-center active:scale-90!)"
-          fill="currentColor"
-        />
-      </label>
-    </div>
-
-    {/* Expandable Content Wrapper with Accordion Animation */}
-    <div id="toc-accordion-wrapper">
-      <nav
-        id="toc-accordion-content"
-        aria-label="Table of Contents"
-      >
-        {/* TOC List */}
-        <ul id="toc-links-list">
-          {filteredHeadings.map(heading => (
-            <li
-              class:list={{
-                'ml-0': heading.depth === 2,
-                'ml-4': heading.depth === 3,
-                'ml-8': heading.depth === 4,
-              }}
-            >
-              <a
-                href={`#${heading.slug}`}
-                class:list={[
-                  { 'no-heti toc-links-h2': heading.depth === 2 },
-                  { 'no-heti toc-links-h3': heading.depth === 3 },
-                  { 'no-heti toc-links-h4': heading.depth === 4 },
-                ]}
-              >
-                {heading.text}
-              </a>
+<aside class="reading-rail no-heti font-sans" data-reading-rail>
+  {headings.length > 0 && (
+    <>
+      <div class="reading-rail-heading" aria-hidden="true">{toc}</div>
+      <button type="button" class="reading-rail-toggle" aria-expanded="false" aria-controls="article-toc">
+        {toc}
+      </button>
+      <nav id="article-toc" aria-label={toc}>
+        <ul>
+          {headings.map(heading => (
+            <li style={`--toc-indent: ${heading.depth - 2}`}>
+              <a href={`#${encodeURIComponent(heading.slug)}`}>{heading.text}</a>
             </li>
           ))}
         </ul>
       </nav>
-    </div>
+    </>
+  )}
+  <div class="reading-meter">
+    <span class="reading-label">{readingProgress}</span>
+    <progress aria-label={readingProgress} max="100" value="0"></progress>
+    <span class="reading-percent" aria-hidden="true">0%</span>
   </div>
-)}
+</aside>
+
+<style>
+  .reading-rail {
+    --rail-ink: oklch(var(--un-preset-theme-colors-primary));
+    --rail-muted: oklch(var(--un-preset-theme-colors-secondary));
+    --rail-line: oklch(var(--un-preset-theme-colors-secondary) / 0.22);
+    --rail-paper: oklch(var(--un-preset-theme-colors-background));
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 1rem;
+    margin-block-end: 1.5rem;
+    padding-block: 0.55rem;
+    border-block: 1px solid var(--rail-line);
+    background: var(--rail-paper);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  .reading-rail-heading {
+    grid-column: 1 / -1;
+    color: var(--rail-ink);
+    font-weight: 600;
+  }
+
+  .reading-rail-toggle {
+    display: none;
+    justify-self: start;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2rem;
+    color: var(--rail-ink);
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .reading-rail-toggle::after {
+    width: 0.35rem;
+    height: 0.35rem;
+    border-right: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    transform: translateY(-0.1rem) rotate(45deg);
+    content: '';
+  }
+
+  .reading-rail-toggle[aria-expanded='true']::after {
+    transform: translateY(0.1rem) rotate(225deg);
+  }
+
+  #article-toc {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    max-height: min(16rem, 42dvh);
+    margin-block: 0.45rem;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+
+  #article-toc ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #article-toc li {
+    margin: 0;
+  }
+
+  #article-toc a {
+    display: block;
+    padding: 0.32rem 0.4rem 0.32rem calc(0.65rem + var(--toc-indent) * 0.7rem);
+    border-inline-start: 2px solid var(--rail-line);
+    color: var(--rail-muted);
+    overflow-wrap: anywhere;
+  }
+
+  #article-toc a:hover,
+  #article-toc a[aria-current='location'] {
+    color: var(--rail-ink);
+    background: oklch(var(--un-preset-theme-colors-secondary) / 0.07);
+  }
+
+  #article-toc a[aria-current='location'] {
+    border-inline-start-color: var(--rail-ink);
+    font-weight: 600;
+  }
+
+  #article-toc a:focus-visible,
+  .reading-rail-toggle:focus-visible {
+    outline: 1px solid var(--rail-ink);
+    outline-offset: -1px;
+  }
+
+  .reading-meter {
+    grid-column: 2;
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 4ch;
+    align-items: center;
+    gap: 0.15rem 0.625rem;
+    min-width: 6.5rem;
+    color: var(--rail-muted);
+  }
+
+  .reading-rail:not(:has(nav)) .reading-meter {
+    grid-column: 1 / -1;
+    grid-template-columns: auto minmax(0, 1fr) 4ch;
+  }
+
+  .reading-label {
+    display: none;
+  }
+
+  .reading-rail:not(:has(nav)) .reading-label {
+    display: block;
+  }
+
+  progress {
+    width: 100%;
+    height: 0.25rem;
+    overflow: hidden;
+    appearance: none;
+    border: 0;
+    border-radius: 1rem;
+    background: var(--rail-line);
+    color: var(--rail-ink);
+  }
+
+  progress::-webkit-progress-bar {
+    background: transparent;
+  }
+
+  progress::-webkit-progress-value {
+    border-radius: 1rem;
+    background: var(--rail-ink);
+  }
+
+  progress::-moz-progress-bar {
+    border-radius: 1rem;
+    background: var(--rail-ink);
+  }
+
+  .reading-percent {
+    text-align: end;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .reading-rail:not([data-ready]) .reading-meter,
+  .reading-rail:not([data-ready]):not(:has(nav)) {
+    display: none;
+  }
+
+  @media (max-width: 1151.98px) {
+    .reading-rail[data-ready] .reading-rail-heading {
+      display: none;
+    }
+
+    .reading-rail[data-ready] .reading-rail-toggle {
+      display: inline-flex;
+    }
+
+    .reading-rail[data-ready] .reading-rail-toggle[aria-expanded='false'] + nav {
+      display: none;
+    }
+
+    .reading-rail[data-ready] #article-toc {
+      position: absolute;
+      inset: 100% 0 auto;
+      margin: 0;
+      padding: 0.5rem;
+      border: 1px solid var(--rail-line);
+      background: var(--rail-paper);
+    }
+  }
+
+  @media (min-width: 1152px) {
+    .reading-rail {
+      grid-area: 2 / 1;
+      align-self: start;
+      top: 2rem;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.625rem;
+      margin: 0;
+      padding-block: 0.85rem 0;
+      border-block-end: 0;
+    }
+
+    #article-toc {
+      max-height: min(29rem, max(6rem, calc(100dvh - 10rem)));
+      margin: 0;
+    }
+
+    .reading-rail .reading-meter,
+    .reading-rail:not(:has(nav)) .reading-meter {
+      grid-area: auto / 1;
+      grid-template-columns: minmax(0, 1fr) 4ch;
+      padding-block-start: 0.65rem;
+    }
+
+    .reading-label {
+      display: block;
+      grid-column: 1 / -1;
+      font-size: 0.75rem;
+    }
+  }
+</style>
 
 <script>
-const is2xl = window.matchMedia('(min-width: 1536px)')
+let dispose: (() => void) | undefined
 
-let ticking = false
-let lastLink: Element | null = null
+function setupReadingRail() {
+  dispose?.()
+  dispose = undefined
 
-// Find and scroll to the active link
-function scrollToActiveLink() {
-  const tocList = document.getElementById('toc-links-list')
-  if (!tocList) {
-    ticking = false
+  const rail = document.querySelector<HTMLElement>('[data-reading-rail]')
+  const article = rail?.closest('article')
+  const content = article?.querySelector<HTMLElement>('#post-content')
+  const progress = rail?.querySelector('progress')
+  const percent = rail?.querySelector('.reading-percent')
+  if (!rail || !article || !content || !progress || !percent)
     return
+
+  const nav = rail.querySelector('nav')
+  const toggle = rail.querySelector<HTMLButtonElement>('.reading-rail-toggle')
+  const desktop = window.matchMedia('(min-width: 1152px)')
+  const sections = Array.from(nav?.querySelectorAll('a') ?? []).flatMap((link) => {
+    const heading = document.getElementById(decodeURIComponent(link.hash.slice(1)))
+    return heading && content.contains(heading) ? [{ link, heading }] : []
+  })
+
+  let frame: number | undefined
+  let current: HTMLAnchorElement | undefined
+
+  const update = () => {
+    frame = undefined
+    const bottom = content.getBoundingClientRect().bottom
+    const distance = bottom + window.scrollY - window.innerHeight
+    // Reach 100% when the last line of the article enters view.
+    const ratio = distance > 0 ? window.scrollY / distance : 1
+    const value = Math.floor(Math.max(0, Math.min(1, ratio)) * 100)
+    if (progress.value !== value) {
+      progress.value = value
+      percent.textContent = `${value}%`
+    }
+
+    const offset = 96
+    let active: HTMLAnchorElement | undefined
+    for (const { link, heading } of sections) {
+      if (heading.getBoundingClientRect().top > offset)
+        break
+      active = link
+    }
+
+    if (active === current)
+      return
+    current?.removeAttribute('aria-current')
+    current = active
+    current?.setAttribute('aria-current', 'location')
+
+    if (active && nav && desktop.matches) {
+      const linkRect = active.getBoundingClientRect()
+      const navRect = nav.getBoundingClientRect()
+      if (linkRect.top < navRect.top)
+        nav.scrollTop += linkRect.top - navRect.top
+      if (linkRect.bottom > navRect.bottom)
+        nav.scrollTop += linkRect.bottom - navRect.bottom
+    }
   }
 
-  const activeLink = tocList.querySelector('a:target-current')
-  if (activeLink && activeLink !== lastLink) {
-    activeLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-    lastLink = activeLink
+  function scheduleUpdate() {
+    frame ??= window.requestAnimationFrame(update)
   }
 
-  ticking = false
-}
+  function setExpanded(expanded: boolean) {
+    toggle?.setAttribute('aria-expanded', String(expanded))
+    scheduleUpdate()
+  }
 
-// Throttle scroll events
-function handleScroll() {
-  if (!ticking && is2xl.matches) {
-    window.requestAnimationFrame(scrollToActiveLink)
-    ticking = true
+  function handleToggle() {
+    setExpanded(toggle?.getAttribute('aria-expanded') === 'false')
+  }
+
+  function handleLinkClick(event: MouseEvent) {
+    if (desktop.matches || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey)
+      return
+    if (event.target instanceof Element && event.target.closest('a')) {
+      setExpanded(false)
+    }
+  }
+
+  function handleEscape(event: KeyboardEvent) {
+    if (event.key === 'Escape' && !desktop.matches && toggle?.getAttribute('aria-expanded') === 'true') {
+      setExpanded(false)
+      toggle.focus()
+    }
+  }
+
+  const observer = new ResizeObserver(scheduleUpdate)
+  observer.observe(article)
+  observer.observe(content)
+  window.addEventListener('scroll', scheduleUpdate, { passive: true })
+  window.addEventListener('resize', scheduleUpdate)
+  content.addEventListener('animationend', scheduleUpdate)
+  toggle?.addEventListener('click', handleToggle)
+  nav?.addEventListener('click', handleLinkClick)
+  rail.addEventListener('keydown', handleEscape)
+  rail.dataset.ready = ''
+  scheduleUpdate()
+
+  dispose = () => {
+    observer.disconnect()
+    window.removeEventListener('scroll', scheduleUpdate)
+    window.removeEventListener('resize', scheduleUpdate)
+    content.removeEventListener('animationend', scheduleUpdate)
+    toggle?.removeEventListener('click', handleToggle)
+    nav?.removeEventListener('click', handleLinkClick)
+    rail.removeEventListener('keydown', handleEscape)
+    if (frame !== undefined)
+      window.cancelAnimationFrame(frame)
   }
 }
 
-// Initialize scroll listener
-function setupAutoScroll() {
-  ticking = false
-  lastLink = null
-
-  const tocList = document.getElementById('toc-links-list')
-  if (!tocList || !CSS.supports('selector(:target-current)')) {
-    return
-  }
-
-  document.addEventListener('scroll', handleScroll, { passive: true })
-}
-
-// Cleanup listener and reset state
-function cleanupAutoScroll() {
-  document.removeEventListener('scroll', handleScroll)
-  lastLink = null
-}
-
-document.addEventListener('astro:page-load', setupAutoScroll)
-document.addEventListener('astro:before-swap', cleanupAutoScroll)
+document.addEventListener('astro:page-load', setupReadingRail)
+document.addEventListener('astro:before-swap', () => dispose?.())
 </script>

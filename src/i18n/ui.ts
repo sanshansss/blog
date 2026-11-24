@@ -8,6 +8,7 @@ interface Translation {
   tags: string
   about: string
   toc: string
+  readingProgress: string
 }
 
 export const ui: Record<Language, Translation> = {
@@ -19,6 +20,7 @@ export const ui: Record<Language, Translation> = {
     tags: 'Schlagwörter',
     about: 'Über',
     toc: 'Inhaltsverzeichnis',
+    readingProgress: 'Lesefortschritt',
   },
   'en': {
     title: 'Jessie\'s Notes',
@@ -28,6 +30,7 @@ export const ui: Record<Language, Translation> = {
     tags: 'Tags',
     about: 'About',
     toc: 'Table of Contents',
+    readingProgress: 'Reading progress',
   },
   'es': {
     title: 'Retipografía',
@@ -37,6 +40,7 @@ export const ui: Record<Language, Translation> = {
     tags: 'Etiquetas',
     about: 'Sobre',
     toc: 'Índice',
+    readingProgress: 'Progreso de lectura',
   },
   'fr': {
     title: 'Retypographie',
@@ -46,6 +50,7 @@ export const ui: Record<Language, Translation> = {
     tags: 'Étiquettes',
     about: 'À propos',
     toc: 'Table des matières',
+    readingProgress: 'Progression de la lecture',
   },
   'ja': {
     title: '再組版',
@@ -55,6 +60,7 @@ export const ui: Record<Language, Translation> = {
     tags: 'タグ',
     about: '概要',
     toc: '目次',
+    readingProgress: '読書の進捗',
   },
   'ko': {
     title: '재조판',
@@ -64,6 +70,7 @@ export const ui: Record<Language, Translation> = {
     tags: '태그',
     about: '소개',
     toc: '목차',
+    readingProgress: '읽기 진행률',
   },
   'pl': {
     title: 'Przeskład',
@@ -73,6 +80,7 @@ export const ui: Record<Language, Translation> = {
     tags: 'Tagi',
     about: 'O stronie',
     toc: 'Spis treści',
+    readingProgress: 'Postęp czytania',
   },
   'pt': {
     title: 'Retipografia',
@@ -82,6 +90,7 @@ export const ui: Record<Language, Translation> = {
     tags: 'Tags',
     about: 'Sobre',
     toc: 'Sumário',
+    readingProgress: 'Progresso da leitura',
   },
   'ru': {
     title: 'Переверстка',
@@ -91,6 +100,7 @@ export const ui: Record<Language, Translation> = {
     tags: 'Теги',
     about: 'О себе',
     toc: 'Оглавление',
+    readingProgress: 'Прогресс чтения',
   },
   'zh': {
     title: 'Jessie\'s Notes',
@@ -100,6 +110,7 @@ export const ui: Record<Language, Translation> = {
     tags: '标签',
     about: '关于',
     toc: '目录',
+    readingProgress: '阅读进度',
   },
   'zh-tw': {
     title: '重新編排',
@@ -109,5 +120,6 @@ export const ui: Record<Language, Translation> = {
     tags: '標籤',
     about: '關於',
     toc: '目錄',
+    readingProgress: '閱讀進度',
   },
 }

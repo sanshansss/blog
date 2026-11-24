@@ -86,42 +86,38 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
   postSlug={post.id}
   supportedLangs={supportedLangs}
 >
-  <article class="heti">
-    <div class="relative">
-      <!-- Go Back Button On Desktop -->
-      <BackButton />
-      <!-- Title -->
-      <h1 class="post-title">
-        <span
-          transition:name={`post-${slug}${currentLang ? `-${currentLang}` : ''}`}
-          data-disable-theme-toggle-transition
-        >
-          {post.data.title}
-        </span>
-      </h1>
+  <article class="post-article heti">
+    <div class="post-intro">
+      <div class="relative">
+        <BackButton />
+        <h1 class="post-title">
+          <span
+            transition:name={`post-${slug}${currentLang ? `-${currentLang}` : ''}`}
+            data-disable-theme-toggle-transition
+          >
+            {post.data.title}
+          </span>
+        </h1>
+      </div>
+      <div
+        id="post-date"
+        class="block c-primary font-time"
+        transition:name={`time-${slug}${currentLang ? `-${currentLang}` : ''}`}
+        data-disable-theme-toggle-transition
+      >
+        <PostDate
+          date={post.data.published}
+          updatedDate={post.data.updated}
+          minutes={remarkPluginFrontmatter.minutes}
+        />
+      </div>
     </div>
-
-    <!-- Date -->
-    <div
-      id="post-date"
-      class="mb-17.2 block c-primary font-time"
-      transition:name={`time-${slug}${currentLang ? `-${currentLang}` : ''}`}
-      data-disable-theme-toggle-transition
-    >
-      <PostDate
-        date={post.data.published}
-        updatedDate={post.data.updated}
-        minutes={remarkPluginFrontmatter.minutes}
-      />
-    </div>
-    <!-- TOC -->
-    {post.data.toc && <TOC headings={headings} />}
-    <!-- Content -->
+    <TOC headings={post.data.toc ? headings : []} />
     <div id="post-content">
       <Content />
-      <!-- Copyright -->
+    </div>
+    <div class="post-end">
       <div id="post-copyright" />
-      <!-- Tag List -->
       {post.data.tags?.length > 0 && (
         <div class="mt-12.6 uno-decorative-line" />
         <TagList
@@ -129,8 +125,37 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
           lang={currentLang}
         />
       )}
-      <!-- Comment -->
       <Comment />
     </div>
   </article>
 </Layout>
+
+<style>
+  .post-intro {
+    margin-block-end: clamp(2rem, 5vw, 4rem);
+  }
+
+  .post-intro .post-title {
+    font-size: clamp(2.125rem, 4vw, 3rem);
+    line-height: 1.15;
+  }
+
+  @media (min-width: 1152px) {
+    .post-article {
+      display: grid;
+      grid-template-columns: clamp(9.5rem, 13vw, 12rem) minmax(0, 1fr);
+      column-gap: clamp(2.5rem, 3.25vw, 3.25rem);
+    }
+
+    .post-intro,
+    #post-content,
+    .post-end {
+      grid-column: 2;
+      min-width: 0;
+    }
+
+    #post-content {
+      grid-row: 2;
+    }
+  }
+</style>
