@@ -15,7 +15,7 @@ const { light, dark } = themeConfig.color
 // Newsreader is the closest open-licensed stand-in for Anthropic's Copernicus-style display serif
 const serifStack = [
   '"Newsreader Variable"',
-  '"Noto Serif SC"',
+  '"Noto Serif SC Variable"',
   '"Songti SC"',
   'STSong',
   'SimSun',
