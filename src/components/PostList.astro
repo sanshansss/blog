@@ -5,7 +5,6 @@ import PinIcon from '@/assets/icons/pin-icon.svg'
 import PostDate from '@/components/PostDate.astro'
 import { getPostPath } from '@/i18n/path'
 import { getPostDescription } from '@/utils/description'
-import { isHomePage } from '@/utils/page'
 
 export interface Props {
   posts: Post[]
@@ -14,72 +13,84 @@ export interface Props {
 }
 
 const { posts, lang, pinned = false } = Astro.props
-const isHome = isHomePage(Astro.url.pathname)
 ---
 
-<ul>
-  {posts.map((post) => {
+<ul class="grid grid-cols-1 items-start gap-4 sm:grid-cols-2">
+  {posts.map((post, index) => {
     const slug = post.data.abbrlink || post.id
+    const tags = post.data.tags ?? []
+    const hasCover = Boolean(post.data.cover)
+    // the first pinned post spans both columns as the featured slot
+    const featured = pinned && index === 0
 
     return (
-      <li
-        class:list={[
-          'mb-5.5',
-          isHome ? 'lg:mb-10' : '',
-        ]}
-      >
-        {/* post title */}
-        <h3 class="inline transition-colors hover:c-primary">
-          <a
-            class:list={[
-              'cjk:tracking-wide',
-              isHome ? 'lg:font-medium lg:text-4.25' : '',
-            ]}
-            href={getPostPath(slug, lang)}
-            transition:name={`post-${slug}${lang ? `-${lang}` : ''}`}
-            data-disable-theme-toggle-transition
-          >
-            {post.data.title}
-          </a>
-          {/* pinned icon */}
-          {pinned && (
-            <PinIcon
-              aria-hidden="true"
-              class="ml-0.25em inline-block aspect-square w-0.98em translate-y--0.1em lg:(w-1.05em translate-y--0.15em)"
-              fill="currentColor"
-            />
-          )}
-        </h3>
-
-        {/* mobile post time */}
-        <div
-          class="py-0.8 text-3.5 font-time lg:hidden"
-          transition:name={`time-${slug}${lang ? `-${lang}` : ''}`}
+      <li class:list={[{ 'sm:col-span-2': featured }]}>
+        <a
+          href={getPostPath(slug, lang)}
+          class:list={[
+            'group flex h-full flex-col rounded-xl border border-secondary/12 bg-secondary/[0.04] p-4.5',
+            'transition-colors ease-out hover:(border-secondary/25 bg-secondary/[0.08])',
+          ]}
+          transition:name={`post-${slug}${lang ? `-${lang}` : ''}`}
           data-disable-theme-toggle-transition
         >
-          <PostDate
-            date={post.data.published}
-            minutes={post.remarkPluginFrontmatter.minutes}
-          />
-        </div>
+          {/* cover slot — renders only when the post declares `cover` */}
+          {hasCover && (
+            <div class="mb-3.5 overflow-hidden rounded-lg bg-secondary/5">
+              <img
+                src={post.data.cover}
+                alt=""
+                loading="lazy"
+                class="aspect-16/9 w-full object-cover"
+              />
+            </div>
+          )}
 
-        {/* desktop post time */}
-        <div class="hidden text-3.65 font-time lg:(ml-2.5 inline)">
-          <PostDate
-            date={post.data.published}
-            minutes={post.remarkPluginFrontmatter.minutes}
-          />
-        </div>
-
-        {/* desktop post description */}
-        {isHome && (
-          <div
-            class="heti hidden"
-            lg="mt-2.25 block"
-          >
-            <p>{getPostDescription(post, 'list')}</p>
+          {/* meta row: date · reading time, pinned mark on the right */}
+          <div class="mb-2.5 flex items-baseline justify-between gap-2 text-3.1 c-secondary/60 font-time">
+            <div transition:name={`time-${slug}${lang ? `-${lang}` : ''}`} data-disable-theme-toggle-transition>
+              <PostDate
+                date={post.data.published}
+                minutes={post.remarkPluginFrontmatter.minutes}
+              />
+            </div>
+            {pinned && (
+              <PinIcon
+                aria-hidden="true"
+                class="aspect-square w-3 shrink-0 translate-y-0.1em c-secondary/50"
+                fill="currentColor"
+              />
+            )}
           </div>
-        )}
+
+          {/* title */}
+          <h3
+            class:list={[
+              'line-clamp-2 font-medium leading-[1.45] text-balance c-primary transition-colors',
+              featured ? 'text-5' : 'text-4.25',
+            ]}
+          >
+            {post.data.title}
+          </h3>
+
+          {/* description */}
+          {getPostDescription(post, 'list') && (
+            <p class="line-clamp-2 mt-2 text-3.25 c-secondary/70 leading-[1.65] font-navbar sm:line-clamp-3">
+              {getPostDescription(post, 'list')}
+            </p>
+          )}
+
+          {/* tags */}
+          {tags.length > 0 && (
+            <div class="mt-auto flex flex-wrap gap-1.5 pt-3.5">
+              {tags.slice(0, 3).map(tag => (
+                <span class="border border-secondary/18 rounded-full px-2 py-0.25 text-2.85 c-secondary/60 leading-[1.5] font-navbar">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </a>
       </li>
     )
   })}

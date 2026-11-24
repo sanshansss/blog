@@ -11,6 +11,8 @@ const posts = defineCollection({
     published: z.date(),
     // optional
     description: z.string().optional().default(''),
+    // optional cover image, shown inside the list card when present
+    cover: z.string().optional(),
     updated: z.preprocess(
       val => val === '' ? undefined : val,
       z.date().optional(),

@@ -53,9 +53,14 @@ const MarginBottom = isPost && themeConfig.comment.enabled
   <Head {postTitle} {postDescription} {postSlug} />
   <body class:list={[fontStyle]}>
     <div
-      class="mx-auto max-w-205.848 min-h-vh w-full min-h-dvh"
-      p="x-[min(7.25vw,3.731rem)] y-10"
-      lg="mx-[max(5.75rem,calc(50vw-34.25rem))] my-20 max-w-[min(calc(75vw-16rem),42rem)] min-h-full p-0"
+      class:list={[
+        'w-full',
+        // mobile / tablet shell
+        'max-lg:(mx-auto max-w-205.848 min-h-vh min-h-dvh px-[min(7.25vw,3.731rem)] py-10)',
+        // desktop shell: 42rem reading measure (posts overrides this via .post-layout)
+        'lg:(mx-[max(5.75rem,calc(50vw-34.25rem))] my-20 max-w-[min(calc(75vw-16rem),42rem)] min-h-full p-0)',
+        { 'post-layout': isPost },
+      ]}
     >
       <Header />
       <Navbar />
