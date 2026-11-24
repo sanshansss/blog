@@ -16,6 +16,7 @@ import { rehypeExternalLinks } from './src/plugins/rehype-external-links.mjs'
 import { rehypeHeadingAnchor } from './src/plugins/rehype-heading-anchor.mjs'
 import { rehypeImageProcessor } from './src/plugins/rehype-image-processor.mjs'
 import { remarkContainerDirectives } from './src/plugins/remark-container-directives.mjs'
+import { remarkInlineSvgBlocks } from './src/plugins/remark-inline-svg-blocks.mjs'
 import { remarkLeafDirectives } from './src/plugins/remark-leaf-directives.mjs'
 import { remarkReadingTime } from './src/plugins/remark-reading-time.mjs'
 
@@ -62,6 +63,8 @@ export default defineConfig({
   ],
   markdown: {
     remarkPlugins: [
+      // 必须最先执行：把被空行拆断的内联 SVG 重新合并成一个 HTML 块
+      remarkInlineSvgBlocks,
       remarkDirective,
       remarkMath,
       remarkContainerDirectives,

@@ -36,10 +36,9 @@ To make these mechanics directly observable, I built a set of nine Chinese-label
   <text class="gnc-t--strong gnc-t--teal" x="450" y="42">Orbital &amp; Relative Motion</text>
   <circle cx="450" cy="112" r="14" fill="var(--gnc-teal)" fill-opacity="0.25" stroke="var(--gnc-teal)" stroke-width="1.5"></circle>
   <ellipse cx="450" cy="112" rx="64" ry="30" fill="none" stroke="var(--gnc-teal)" stroke-width="1.3" class="gnc-flow gnc-flow--slow"></ellipse>
-  <g class="gnc-spin gnc-spin--fast">
-    <circle cx="514" cy="112" r="4.5" fill="var(--gnc-amber)"></circle>
-    <circle cx="386" cy="112" r="2.5" fill="var(--gnc-teal)" fill-opacity="0.5"></circle>
-  </g>
+  <!-- 两颗卫星沿已绘制的椭圆轨道运行（旋转分组会走正圆，半径 64 会掠过标题与说明文字） -->
+  <circle r="4.5" fill="var(--gnc-amber)"><animateMotion dur="6s" repeatCount="indefinite" path="M514 112 A64 30 0 1 0 386 112 A64 30 0 1 0 514 112"></animateMotion></circle>
+  <circle r="2.5" fill="var(--gnc-teal)" fill-opacity="0.5"><animateMotion dur="6s" begin="-3s" repeatCount="indefinite" path="M514 112 A64 30 0 1 0 386 112 A64 30 0 1 0 514 112"></animateMotion></circle>
   <text class="gnc-t--xs" x="450" y="176">Sun-Synchronous · CW Rendezvous · Flyby</text>
 </g>
 

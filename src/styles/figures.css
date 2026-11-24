@@ -40,10 +40,14 @@ html.dark .gnc-fig {
 
 /* Wrapper ---------------------------------------------------------------- */
 .gnc-fig {
+  /* 图表与图注始终留在正文栏内，绝不溢出到两侧导轨 */
+  max-width: 100%;
+  min-width: 0;
   margin: 2rem 0;
 }
 
 .gnc-fig__scroll {
+  max-width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
   padding-bottom: 0.35rem;
@@ -55,12 +59,19 @@ html.dark .gnc-fig {
 .gnc-fig svg {
   display: block;
   width: 100%;
+  max-width: 100%;
   height: auto;
-  min-width: 600px;
   margin: 0 auto;
 }
 
+/* 只有可横向滚动的容器才锁定最小可读宽度；
+   没有滚动容器的 SVG 依然收在正文栏宽度内 */
+.gnc-fig__scroll > svg {
+  min-width: 600px;
+}
+
 .gnc-fig figcaption {
+  max-width: 100%;
   margin-top: 0.75rem;
   font-size: 0.875rem;
   line-height: 1.6;
