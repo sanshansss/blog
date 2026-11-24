@@ -50,13 +50,13 @@ const MarginBottom = isPost && themeConfig.comment.enabled
   ]}
 >
   <Head {postTitle} {postDescription} {postSlug} />
-  <body class:list={[fontStyle]}>
+  <body class:list={[fontStyle, { 'post-page': isPost }]}>
     <div
       class:list={[
         'w-full',
         // mobile / tablet shell
         'max-lg:(mx-auto max-w-205.848 min-h-vh min-h-dvh px-[min(7.25vw,3.731rem)] py-10)',
-        // desktop shell: 42rem reading measure (posts overrides this via .post-layout)
+        // desktop shell for pages without the article layout
         'lg:(mx-[max(5.75rem,calc(50vw-34.25rem))] my-20 max-w-[min(calc(75vw-16rem),42rem)] min-h-full p-0)',
         { 'post-layout': isPost },
       ]}
@@ -78,13 +78,32 @@ const MarginBottom = isPost && themeConfig.comment.enabled
 </html>
 
 <style>
-  @media (min-width: 1152px) {
+  .post-layout {
+    max-width: 49rem;
+    padding-inline: clamp(1.125rem, 4vw, 2.5rem);
+  }
+
+  @media (min-width: 1024px) {
+    .post-page {
+      --post-layout-max: 80rem;
+      --post-gutter: clamp(2.75rem, 3.5vw, 3.5rem);
+      --post-column-gap: clamp(1.25rem, 2.25vw, 1.75rem);
+      --site-column-width: 14rem;
+      --site-column-right: max(var(--post-gutter), calc((100% - var(--post-layout-max)) / 2));
+    }
+
     .post-layout {
-      --post-left: max(3.25rem, calc(50vw - 42rem));
-      --site-right: max(5rem, calc(50vw - 35rem));
-      width: calc(100% - var(--post-left) - var(--site-right) - 16rem);
-      max-width: 54rem;
-      margin-inline: var(--post-left) 0;
+      width: calc(100% - 2 * var(--post-gutter));
+      max-width: var(--post-layout-max);
+      margin-inline: auto;
+      padding-inline: 0 calc(var(--site-column-width) + var(--post-column-gap));
+    }
+  }
+
+  @media (1024px <= width < 1152px) {
+    .post-layout > main {
+      max-width: 44rem;
+      margin-inline: auto;
     }
   }
 </style>

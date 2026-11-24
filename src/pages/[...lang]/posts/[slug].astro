@@ -143,8 +143,8 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
   @media (min-width: 1152px) {
     .post-article {
       display: grid;
-      grid-template-columns: clamp(9.5rem, 13vw, 12rem) minmax(0, 1fr);
-      column-gap: clamp(2.5rem, 3.25vw, 3.25rem);
+      grid-template-columns: clamp(9.5rem, 19%, 12rem) minmax(0, 1fr);
+      column-gap: var(--post-column-gap);
     }
 
     .post-intro,
