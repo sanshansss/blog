@@ -87,7 +87,7 @@ const MarginBottom = isPost && themeConfig.comment.enabled
     .post-page {
       --post-layout-max: 80rem;
       --post-gutter: clamp(2.75rem, 3.5vw, 3.5rem);
-      --post-column-gap: clamp(1.25rem, 2.25vw, 1.75rem);
+      --post-nav-gap: clamp(1.25rem, 2.25vw, 1.75rem);
       --site-column-width: 14rem;
       --site-column-right: max(var(--post-gutter), calc((100% - var(--post-layout-max)) / 2));
     }
@@ -96,7 +96,7 @@ const MarginBottom = isPost && themeConfig.comment.enabled
       width: calc(100% - 2 * var(--post-gutter));
       max-width: var(--post-layout-max);
       margin-inline: auto;
-      padding-inline: 0 calc(var(--site-column-width) + var(--post-column-gap));
+      padding-inline: 0 calc(var(--site-column-width) + var(--post-nav-gap));
     }
   }
 
