@@ -161,7 +161,22 @@ const embedHandlers = {
 }
 
 export function remarkLeafDirectives() {
-  return (tree) => {
+  return (tree, file) => {
+    // The theme supports block directives only. Keep inline syntax such as
+    // aspect ratios (16:9) and paper IDs (arXiv:2610.07573) as literal text.
+    const source = String(file)
+    visit(tree, 'textDirective', (node, index, parent) => {
+      const start = node.position?.start.offset
+      const end = node.position?.end.offset
+      if (parent && typeof index === 'number' && typeof start === 'number' && typeof end === 'number') {
+        parent.children[index] = {
+          type: 'text',
+          value: source.slice(start, end),
+          position: node.position,
+        }
+      }
+    })
+
     visit(tree, 'leafDirective', (node) => {
       const handler = embedHandlers[node.name]
       if (!handler) {
