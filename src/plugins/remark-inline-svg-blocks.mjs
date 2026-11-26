@@ -14,8 +14,12 @@
  * 变成 SVG 之外的普通 HTML 元素 —— 分组框空着、文字挤在图片下面、
  * 连线与箭头消失、整张图高度失控。
  *
+ * 还有第二种断法：SVG 内部按 4 空格缩进（`<g>` 里再套一层子节点），
+ * 一旦前面的空行已经终止了 HTML 块，这些行会被解析成「缩进代码块」（code 节点），
+ * 同样得合并回来。
+ *
  * 这个插件在 mdast 阶段把所有"属于同一个未闭合 `<svg>`"的兄弟节点
- * 合并回单个 html 节点，源码里的空行因此不影响渲染结果。
+ * 合并回单个 html 节点，源码里的空行与缩进因此都不影响渲染结果。
  */
 
 const SVG_OPEN_RE = /<svg[\s>]/i
@@ -42,9 +46,21 @@ function rawTextOf(node, source) {
   return ''
 }
 
+/**
+ * 缩进 ≥4 空格的行会被 Markdown 当成「缩进代码块」。
+ * SVG 内部为了层次清晰常缩进 4 空格，一旦前面有空行把它与上一个
+ * HTML 块隔开，这些行就变成 code 节点，合并链在此中断，整张图又被拆碎。
+ * 只在内容看起来是标签（以 `<` 开头）、且不是围栏代码块时才认作残片。
+ */
+function isIndentedMarkupBlock(node) {
+  return node.type === 'code'
+    && node.lang == null
+    && /^\s*</.test(node.value ?? '')
+}
+
 /** 可能是同一个 HTML 块被空行拆开后的一段 */
 function isHtmlFragment(node) {
-  return node.type === 'html' || node.type === 'paragraph'
+  return node.type === 'html' || node.type === 'paragraph' || isIndentedMarkupBlock(node)
 }
 
 export function remarkInlineSvgBlocks() {
