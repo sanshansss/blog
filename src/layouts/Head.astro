@@ -38,6 +38,9 @@ const pageImage = postSlug
   : apiflashKey
     ? `https://api.apiflash.com/v1/urltoimage?access_key=${apiflashKey}&url=${Astro.url}&format=png&width=1500&height=788&ttl=259200&wait_until=network_idle&no_tracking=true`
     : new URL(`${base}/icons/og-logo.png`, Astro.url.origin).href
+// 是否 dev（内联脚本拿不到 import.meta.env，用 props 传）
+const isDev = import.meta.env.DEV
+
 ---
 
 <head>
@@ -95,6 +98,7 @@ const pageImage = postSlug
     lightMode,
     darkMode,
     reduceMotion,
+    isDev,
  }}
 >
 (function () {
@@ -141,6 +145,26 @@ const pageImage = postSlug
     initTheme(newDocument)
     initMotionPref(newDocument)
   })
+
+  // Dev only: Astro dev 内联到 HTML 的 <style> 是未经 Vite/UnoCSS 处理的源码
+  // （--at-apply / @apply 未展开），而软导航会用这份原始 CSS 替换掉 Vite 运行时
+  // 注入的已处理版本，于是点进文章后样式全丢，手动刷新才恢复。
+  // 上游 issue: withastro/astro#16373（仅影响 dev，构建产物正常）。
+  // 这里在换页前把新文档里的同名 style 内容换成当前文档中已处理好的版本。
+  if (isDev) {
+    document.addEventListener('astro:before-swap', ({ newDocument }) => {
+      const processed = new Map()
+      for (const el of document.querySelectorAll('style[data-vite-dev-id]')) {
+        processed.set(el.getAttribute('data-vite-dev-id'), el.textContent)
+      }
+      for (const el of newDocument.querySelectorAll('style[data-vite-dev-id]')) {
+        const done = processed.get(el.getAttribute('data-vite-dev-id'))
+        if (done && done !== el.textContent) {
+          el.textContent = done
+        }
+      }
+    })
+  }
 
   // Initialize theme on first load
   initTheme()
