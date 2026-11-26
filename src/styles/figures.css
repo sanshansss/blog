@@ -73,7 +73,7 @@ html.dark .gnc-fig {
 .gnc-fig figcaption {
   max-width: 100%;
   margin-top: 0.75rem;
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   line-height: 1.6;
   text-align: center;
   color: var(--gnc-muted);
@@ -96,7 +96,7 @@ html.dark .gnc-fig {
 .gnc-fig svg text {
   /* 手写体优先，回退到文章正文的英文/中文衬线栈（见 uno.config.ts 的 figure） */
   --at-apply: 'font-figure';
-  font-size: 13px;
+  font-size: 14px;
   fill: var(--gnc-ink);
   text-anchor: middle;
   dominant-baseline: middle;
@@ -115,12 +115,12 @@ html.dark .gnc-fig {
 }
 
 .gnc-fig .gnc-t--sm {
-  font-size: 11px;
+  font-size: 12px;
   fill: var(--gnc-muted);
 }
 
 .gnc-fig .gnc-t--xs {
-  font-size: 10px;
+  font-size: 11px;
   fill: var(--gnc-muted);
   letter-spacing: 0.02em;
 }
