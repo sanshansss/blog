@@ -1,10 +1,14 @@
 ---
+import SearchIcon from '@/assets/icons/search-icon.svg'
 import PostList from '@/components/PostList.astro'
-import { allLocales } from '@/config'
+import ProjectOrbit from '@/components/ProjectOrbit.astro'
+import { allLocales, defaultLocale } from '@/config'
 import { getLangFromLocale, getLangRouteParam } from '@/i18n/lang'
-import { getPostPath } from '@/i18n/path'
+import { getPostPath, getTagPath } from '@/i18n/path'
 import Layout from '@/layouts/Layout.astro'
-import { getPinnedPosts, getPostsByYear } from '@/utils/content'
+import { getAllTags, getPosts } from '@/utils/content'
+import { getPostDescription } from '@/utils/description'
+import '@/styles/home.css'
 
 export async function getStaticPaths() {
   return allLocales.map(lang => ({
@@ -12,69 +16,206 @@ export async function getStaticPaths() {
   }))
 }
 
-const currentLang = getLangFromLocale(Astro.currentLocale)
-const pinnedPosts = await getPinnedPosts(currentLang)
-const postsByYear = await getPostsByYear(currentLang)
-const projectCopy = currentLang === 'zh'
-  ? {
-      heading: '精选项目',
-      title: '空间飞行器动力学教学动画',
-      details: '项目介绍',
-      repo: 'GitHub 仓库',
-    }
-  : currentLang === 'en'
-    ? {
-        heading: 'Selected Project',
-        title: 'Spacecraft Dynamics Teaching Animations',
-        details: 'Project overview',
-        repo: 'GitHub repository',
-      }
-    : null
+const lang = getLangFromLocale(Astro.currentLocale)
+const isChinese = lang === 'zh'
+const projectSlug = 'spacecraft-dynamics-animations'
 const projectRepo = 'https://github.com/sanshansss/spacecraft-dynamics-animations'
+const [allPosts, localTags, defaultTags] = await Promise.all([
+  getPosts(lang),
+  getAllTags(lang),
+  getAllTags(defaultLocale),
+])
+const project = allPosts.find(post => (post.data.abbrlink || post.id) === projectSlug)
+const posts = allPosts.filter(post => post !== project)
+
+const recentLabel = isChinese ? '最近文章' : 'Recent articles'
+const searchLabel = isChinese ? '搜索' : 'Search'
+const categories = [
+  { label: isChinese ? '全部' : 'All', tags: [] },
+  { label: isChinese ? '航天' : 'Space', tags: ['航天', '空间飞行器', '动力学', 'spacecraft', 'dynamics'] },
+  { label: 'AI', tags: ['ai', 'agent', 'agent-memory', '领域智能体', 'rag'] },
+  { label: isChinese ? '工具' : 'Tools', tags: ['工具实践'] },
+]
+const topics = [
+  { label: isChinese ? '航天动力学' : 'Spacecraft dynamics', tags: ['航天动力学', '动力学', 'Dynamics'] },
+  { label: isChinese ? '智能体' : 'Agents', tags: ['智能体', 'agent', 'Agent'] },
+  { label: isChinese ? '工具实践' : 'Tooling', tags: ['工具实践'] },
+].flatMap(({ label, tags }) => {
+  const localTag = tags.find(tag => localTags.includes(tag))
+  if (localTag)
+return [{ label, href: getTagPath(localTag, lang) }]
+  const defaultTag = tags.find(tag => defaultTags.includes(tag))
+  return defaultTag ? [{ label, href: getTagPath(defaultTag, defaultLocale) }] : []
+})
 ---
 
 <Layout>
-  {projectCopy && (
-    <section class="mb-7.5">
-      <div class="uno-decorative-line" />
-      <div class="flex flex-col gap-2.5 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <p class="text-3.2 text-secondary font-navbar">{projectCopy.heading}</p>
-          <h2 class="mt-0.5 text-4.2 font-medium">{projectCopy.title}</h2>
-        </div>
-        <div class="flex shrink-0 gap-4 text-3.4 font-navbar">
-          <a
-            class="highlight-hover transition-colors after:bottom-0.3em hover:c-primary"
-            href={projectRepo}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {projectCopy.repo} ↗
-          </a>
-          <a
-            class="highlight-hover transition-colors after:bottom-0.3em hover:c-primary"
-            href={getPostPath('spacecraft-dynamics-animations', currentLang)}
-          >
-            {projectCopy.details}
-          </a>
+  <section slot="home-topics" class="topic-index" aria-labelledby="topic-index-title">
+    <h2 id="topic-index-title">{isChinese ? '主题索引' : 'Topic index'}</h2>
+    <ul>
+      {topics.map(({ label, href }) => (
+        <li><a href={href}>{label}<span aria-hidden="true">→</span></a></li>
+      ))}
+    </ul>
+  </section>
+
+  {project && (
+    <section class="featured-project" aria-labelledby="featured-project-title">
+      <div class="featured-copy">
+        <p class="featured-label">{isChinese ? '精选项目' : 'Selected project'}</p>
+        <h2 id="featured-project-title">{project.data.title}</h2>
+        <p>{getPostDescription(project, 'list')}</p>
+        <div class="featured-links">
+          <a href={getPostPath(projectSlug, lang)}>{isChinese ? '项目介绍' : 'Project overview'}</a>
+          <a href={projectRepo} target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
         </div>
       </div>
+      <ProjectOrbit />
     </section>
   )}
 
-  <!-- Pinned Posts -->
-  {pinnedPosts.length > 0 && (
-    <section class="mb-7.5">
-      <div class="uno-decorative-line" />
-      <PostList posts={pinnedPosts} lang={currentLang} pinned={true} />
-    </section>
-  )}
-
-  <!-- Regular Posts -->
-  {Array.from(postsByYear.entries(), ([_year, posts]) => (
-    <section class="mb-7.5">
-      <div class="uno-decorative-line" />
-      <PostList posts={posts} lang={currentLang} />
-    </section>
-  ))}
+  <section class="recent-articles" aria-labelledby="recent-articles-title">
+    <home-articles>
+      <div class="recent-toolbar">
+        <h2 id="recent-articles-title">{recentLabel}</h2>
+        <div class="recent-controls" data-controls hidden>
+          <div class="article-filters" role="group" aria-label={isChinese ? '文章分类' : 'Article categories'}>
+            {categories.map(({ label, tags }, index) => (
+              <button type="button" aria-pressed={index === 0 ? 'true' : 'false'} data-filter-tags={JSON.stringify(tags)}>{label}</button>
+            ))}
+            <span class="filter-underline" aria-hidden="true"></span>
+          </div>
+          <button type="button" class="article-search-toggle" aria-expanded="false" aria-controls="article-search">
+            <SearchIcon aria-hidden="true" fill="currentColor" />{searchLabel}
+          </button>
+        </div>
+      </div>
+      <div id="article-search" class="article-search" role="search" aria-label={searchLabel} hidden>
+        <input
+          type="search"
+          aria-label={isChinese ? '搜索最近文章' : 'Search recent articles'}
+          placeholder={isChinese ? '搜索标题、摘要或标签' : 'Search titles, summaries, or tags'}
+        />
+      </div>
+      <p class="sr-only" role="status" data-result-count data-format={isChinese ? '找到 {count} 篇文章' : 'Articles found: {count}'}></p>
+      <p class="article-empty" hidden={posts.length > 0}>
+        {posts.length === 0
+          ? (isChinese ? '暂无近期文章。' : 'No recent articles yet.')
+          : (isChinese ? '没有符合条件的文章。' : 'No matching articles.')}
+      </p>
+      <PostList {posts} {lang} editorial />
+    </home-articles>
+  </section>
 </Layout>
+
+<script>
+class HomeArticles extends HTMLElement {
+  private stop?: () => void
+
+  connectedCallback() {
+    const controls = this.querySelector<HTMLElement>('[data-controls]')!
+    const filters = this.querySelector<HTMLElement>('.article-filters')!
+    const buttons = Array.from(filters.querySelectorAll<HTMLButtonElement>('button'))
+    const underline = this.querySelector<HTMLElement>('.filter-underline')!
+    const toggle = this.querySelector<HTMLButtonElement>('.article-search-toggle')!
+    const search = this.querySelector<HTMLElement>('#article-search')!
+    const input = search.querySelector<HTMLInputElement>('input')!
+    const list = this.querySelector<HTMLElement>('.editorial-list')!
+    const empty = this.querySelector<HTMLElement>('.article-empty')!
+    const status = this.querySelector<HTMLElement>('[data-result-count]')!
+    const normalize = (value: string) => value.normalize('NFKC').toLowerCase()
+    const articles = Array.from(list.querySelectorAll<HTMLElement>('.editorial-card'), (card) => {
+      const tags = (JSON.parse(card.dataset.tags!) as string[]).map(normalize)
+      const title = card.querySelector('.editorial-card-title')?.textContent ?? ''
+      const description = card.querySelector('.editorial-card-description')?.textContent ?? ''
+      return { card, tags, text: normalize([title, description, ...tags].join(' ')) }
+    })
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const reduceMotion = document.body.dataset.reduceMotion === 'true'
+    const events = new AbortController()
+    const options = { signal: events.signal }
+    let selected = buttons[0]
+    let fade: Animation | undefined
+
+    function positionUnderline() {
+      underline.style.transform = `translate(${selected.offsetLeft}px, ${selected.offsetTop + selected.offsetHeight - 2}px)`
+      underline.style.width = `${selected.offsetWidth}px`
+    }
+
+    function applyFilters(animate: boolean) {
+      const tags = JSON.parse(selected.dataset.filterTags!) as string[]
+      const terms = normalize(input.value).trim().split(/\s+/).filter(Boolean)
+      let count = 0
+      for (const article of articles) {
+        const matchesCategory = tags.length === 0 || tags.some(tag => article.tags.includes(tag))
+        const visible = matchesCategory && terms.every(term => article.text.includes(term))
+        article.card.hidden = !visible
+        if (visible)
+          count++
+      }
+      empty.hidden = count > 0
+      status.textContent = status.dataset.format!.replace('{count}', String(count))
+      fade?.cancel()
+      if (animate && count > 0 && !motion.matches && !reduceMotion) {
+        fade = list.animate([{ opacity: 0.55 }, { opacity: 1 }], { duration: 180, easing: 'ease-out' })
+      }
+    }
+
+    for (const button of buttons) {
+      button.addEventListener('click', () => {
+        if (button === selected)
+          return
+        selected.setAttribute('aria-pressed', 'false')
+        selected = button
+        selected.setAttribute('aria-pressed', 'true')
+        positionUnderline()
+        applyFilters(true)
+      }, options)
+    }
+
+    function setSearchOpen(open: boolean) {
+      search.hidden = !open
+      toggle.setAttribute('aria-expanded', String(open))
+      if (open) {
+        input.focus()
+      }
+      else {
+        toggle.focus()
+        if (input.value) {
+          input.value = ''
+          applyFilters(false)
+        }
+      }
+    }
+
+    toggle.addEventListener('click', () => setSearchOpen(search.hasAttribute('hidden')), options)
+    input.addEventListener('input', () => applyFilters(false), options)
+    input.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape')
+        return
+      event.preventDefault()
+      setSearchOpen(false)
+    }, options)
+    motion.addEventListener('change', () => fade?.cancel(), options)
+
+    controls.hidden = false
+    positionUnderline()
+    const resize = new ResizeObserver(positionUnderline)
+    resize.observe(filters)
+    buttons.forEach(button => resize.observe(button))
+    const frame = requestAnimationFrame(() => filters.classList.add('has-underline'))
+    this.stop = () => {
+      events.abort()
+      resize.disconnect()
+      cancelAnimationFrame(frame)
+      fade?.cancel()
+    }
+  }
+
+  disconnectedCallback() {
+    this.stop?.()
+  }
+}
+
+customElements.define('home-articles', HomeArticles)
+</script>

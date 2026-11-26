@@ -1,0 +1,107 @@
+---
+import { themeConfig } from '@/config'
+---
+
+<project-orbit aria-hidden="true" data-reduce-motion={themeConfig.global.reduceMotion}>
+  <svg viewBox="0 0 326 175" focusable="false">
+    <defs>
+      <pattern id="solar-cells" width="7" height="6" patternUnits="userSpaceOnUse">
+        <path d="M0 0H7V6" fill="none" stroke="currentColor" stroke-width=".65" opacity=".7" />
+        <path d="M1.5 2.9h4" fill="none" stroke="currentColor" stroke-width=".35" opacity=".55" />
+      </pattern>
+    </defs>
+    <g fill="none" stroke="currentColor" stroke-linecap="round">
+      <ellipse cx="163" cy="88" rx="88" ry="27" transform="rotate(-12 163 88)" stroke-dasharray="1 4" opacity=".45" />
+      <g transform="rotate(-23 163 88)">
+        <path id="project-orbit-track" d="M310 88a147 47 0 1 1-294 0 147 47 0 1 1 294 0Z" stroke-dasharray="1.25 4.3" opacity=".72" />
+        <circle class="orbit-static" cx="310" cy="88" r="4.2" />
+        <circle class="orbit-moving" r="4.2">
+          <animateMotion dur="20s" repeatCount="indefinite" calcMode="paced">
+            <mpath href="#project-orbit-track" />
+          </animateMotion>
+        </circle>
+      </g>
+    </g>
+    <g class="satellite" transform="translate(164 87) rotate(18)" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round">
+      <path d="M-32-5h-12v7h12m56-4h12v7H24" />
+      <g transform="translate(-44 -17) skewX(-16)">
+        <rect x="-73" width="73" height="29" rx="1" class="satellite-surface" />
+        <rect x="-69" y="3" width="65" height="23" fill="url(#solar-cells)" stroke-width=".65" />
+        <path d="M-50 3v23m25-23v23M-69 15h65" stroke-width=".75" />
+      </g>
+      <g transform="translate(38 -13) skewX(-9)">
+        <rect width="88" height="31" rx="1" class="satellite-surface" />
+        <rect x="4" y="3" width="80" height="25" fill="url(#solar-cells)" stroke-width=".65" />
+        <path d="M29 3v25M57 3v25M4 16h80" stroke-width=".75" />
+      </g>
+      <path d="M-30-16-14-28h38v41L9 25h-39Z" class="satellite-surface" />
+      <path d="M-30-16H9v41M9-16l15-12M24-22l-10 9v29l10-8M-23-20h30l8-5" />
+      <path d="M5-28v-17m3 17v-17" />
+      <circle cx="6.5" cy="-49" r="3.3" class="satellite-surface" />
+      <circle cx="-10.5" cy="4" r="16" class="satellite-surface" />
+      <circle cx="-10.5" cy="4" r="12.8" stroke-width=".65" />
+      <path d="m-21-2 10 6 8 9M-11-8V4l-7 8" stroke-width=".65" />
+      <circle cx="-10.5" cy="4" r="2.1" fill="currentColor" stroke="none" />
+      <path d="M-22 25v3l4 2 5-2v-3m31-37v19" />
+      <path d="M-26-12v2m30-2v2m-30 29v2m30-2v2" stroke-width="1.8" stroke-linecap="round" />
+    </g>
+  </svg>
+</project-orbit>
+
+<style>
+  project-orbit { display: block; min-width: 0; color: var(--home-drawing); }
+  svg { display: block; width: 100%; height: auto; }
+  .satellite-surface { fill: var(--home-satellite); }
+  .orbit-static, .orbit-moving { fill: var(--home-accent); stroke: none; }
+  .orbit-moving, [data-moving] .orbit-static { display: none; }
+  [data-moving] .orbit-moving { display: inline; }
+  @media (prefers-reduced-motion: reduce) {
+    [data-moving] .orbit-static { display: inline; }
+    [data-moving] .orbit-moving { display: none; }
+  }
+</style>
+
+<script>
+class ProjectOrbit extends HTMLElement {
+  private stop?: () => void
+
+  connectedCallback() {
+    const svg = this.querySelector('svg')!
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    let inView = false
+
+    const update = () => {
+      const moving = this.dataset.reduceMotion !== 'true' && !motion.matches
+      this.toggleAttribute('data-moving', moving)
+      if (moving && inView) {
+        svg.unpauseAnimations()
+      }
+      else {
+        svg.pauseAnimations()
+        if (!moving)
+          svg.setCurrentTime(0)
+      }
+    }
+
+    svg.setCurrentTime(0)
+    update()
+    const observer = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting
+      update()
+    })
+    observer.observe(svg)
+    motion.addEventListener('change', update)
+    this.stop = () => {
+      observer.disconnect()
+      motion.removeEventListener('change', update)
+      svg.pauseAnimations()
+    }
+  }
+
+  disconnectedCallback() {
+    this.stop?.()
+  }
+}
+
+customElements.define('project-orbit', ProjectOrbit)
+</script>

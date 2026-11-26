@@ -36,7 +36,7 @@ interface Props {
 }
 
 const { postTitle, postDescription, postSlug, supportedLangs = [] } = Astro.props
-const { isPost } = getPageInfo(Astro.url.pathname)
+const { isHome, isPost } = getPageInfo(Astro.url.pathname)
 const fontStyle = themeConfig.global.fontStyle === 'serif' ? 'font-serif' : 'font-sans'
 const MarginBottom = isPost && themeConfig.comment.enabled
   ? 'mb-10' // Post page with comment
@@ -50,25 +50,44 @@ const MarginBottom = isPost && themeConfig.comment.enabled
   ]}
 >
   <Head {postTitle} {postDescription} {postSlug} />
-  <body class:list={[fontStyle, { 'post-page': isPost }]}>
-    <div
-      class:list={[
-        'w-full',
-        // mobile / tablet shell
-        'max-lg:(mx-auto max-w-205.848 min-h-vh min-h-dvh px-[min(7.25vw,3.731rem)] py-10)',
-        // desktop shell for pages without the article layout
-        'lg:(mx-[max(5.75rem,calc(50vw-34.25rem))] my-20 max-w-[min(calc(75vw-16rem),42rem)] min-h-full p-0)',
-        { 'post-layout': isPost },
-      ]}
-    >
-      <Header />
-      <Navbar />
-      <main class={MarginBottom}>
-        <slot />
-      </main>
-      <Footer />
-    </div>
-    <Button supportedLangs={supportedLangs} />
+  <body
+    class:list={[fontStyle, { 'post-page': isPost, 'home-page': isHome }]}
+    data-reduce-motion={isHome ? themeConfig.global.reduceMotion : undefined}
+  >
+    {isHome && (
+      <div class="home-shell">
+        <div class="home-identity">
+          <Header />
+          <Navbar />
+          <Button supportedLangs={supportedLangs} />
+        </div>
+        <main class="home-main"><slot /></main>
+        <aside class="home-sidebar">
+          <slot name="home-topics" />
+          <div class="home-footer"><Footer /></div>
+        </aside>
+      </div>
+    )}
+    {!isHome && (
+      <div
+        class:list={[
+          'w-full',
+          // mobile / tablet shell
+          'max-lg:(mx-auto max-w-205.848 min-h-vh min-h-dvh px-[min(7.25vw,3.731rem)] py-10)',
+          // desktop shell for pages without the article layout
+          'lg:(mx-[max(5.75rem,calc(50vw-34.25rem))] my-20 max-w-[min(calc(75vw-16rem),42rem)] min-h-full p-0)',
+          { 'post-layout': isPost },
+        ]}
+      >
+        <Header />
+        <Navbar />
+        <main class={MarginBottom}>
+          <slot />
+        </main>
+        <Footer />
+      </div>
+    )}
+    {!isHome && <Button supportedLangs={supportedLangs} />}
     <SoundEffect />
     <CodeCopyButton />
     <GithubCard />
@@ -78,6 +97,60 @@ const MarginBottom = isPost && themeConfig.comment.enabled
 </html>
 
 <style>
+  .home-shell {
+    display: grid;
+    grid-template: 'main identity' auto 'main sidebar' 1fr / minmax(0, 3.2fr) minmax(13.75rem, 1fr);
+    align-items: start;
+    gap: clamp(1.75rem, 2.6vw, 3rem);
+    width: min(80rem, calc(100% - 2 * clamp(1.125rem, 4vw, 3rem)));
+    margin: clamp(2rem, 3.4vw, 3rem) auto 3rem;
+  }
+
+  .home-main { grid-area: main; min-width: 0; }
+  .home-sidebar { grid-area: sidebar; }
+  .home-identity { grid-area: identity; position: relative; }
+  .home-identity :global(header),
+  .home-identity :global(nav),
+  .home-identity > :global(div),
+  .home-footer :global(footer) {
+    position: static;
+    width: auto;
+  }
+  .home-identity :global(header) { margin: 0; padding-top: .45rem; }
+  .home-identity :global(h1) { width: auto; font-size: clamp(1.85rem, 2.8vw, 2.75rem); line-height: 1.15; }
+  .home-identity :global(header h2) { width: auto; font-size: 1.13rem; }
+  .home-identity :global(nav) {
+    margin: 1.65rem 0 0;
+    padding: 1.1rem 0 1.15rem;
+    border-block: 1px solid var(--home-rule);
+    font-family: inherit;
+    font-size: 1.15rem;
+    line-height: 2.7;
+  }
+  .home-identity :global(nav a) { padding-inline-start: 1.15rem; }
+  .home-identity :global(nav a::after) { content: none; }
+  .home-identity :global(nav a.highlight-static::before) {
+    position: absolute;
+    inset: .7em auto .7em 0;
+    width: 2px;
+    background: var(--home-accent);
+    content: '';
+  }
+  .home-identity > :global(div) { position: absolute; display: flex; gap: .9rem; right: 0; bottom: 1.9rem; }
+  .home-footer { margin-top: 1.8rem; padding-top: 1.55rem; border-top: 1px solid var(--home-rule); }
+  .home-footer :global(footer) { font-size: .88rem; line-height: 1.5; }
+  .home-footer :global(footer p:first-child a) { margin-inline: .18em; }
+  .home-footer :global(footer p:first-child a:first-child) { margin-inline-start: 0; }
+
+  @media (max-width: 1023px) {
+    .home-shell { grid-template: 'identity' 'main' 'sidebar' / minmax(0, 1fr); }
+    .home-identity > :global(div) { top: .85rem; bottom: auto; }
+    .home-identity :global(header) { padding-right: 4rem; }
+    .home-identity :global(nav) { margin-top: 1rem; padding: .35rem 0; font-size: 1rem; }
+    .home-identity :global(nav ul) { display: flex; flex-wrap: wrap; column-gap: 1.3rem; }
+    .home-identity :global(nav a) { padding-inline-start: .65rem; }
+  }
+
   .post-layout {
     max-width: 49rem;
     padding-inline: clamp(1.125rem, 4vw, 2.5rem);
