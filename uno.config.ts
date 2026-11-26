@@ -74,6 +74,14 @@ export default defineConfig({
       time: sansStack,
       sans: sansStack,
       serif: serifStack,
+      // 插图（内联 SVG）手写体：Comic Sans 无中文字形，回退到正文同款衬线栈
+      figure: [
+        '"Comic Sans MS"',
+        'Comic Sans',
+        '"Chalkboard SE"',
+        '"Comic Neue"',
+        ...serifStack,
+      ],
     },
   },
   rules: [

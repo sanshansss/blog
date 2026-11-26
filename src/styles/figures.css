@@ -94,9 +94,8 @@ html.dark .gnc-fig {
 
 /* Typography inside SVG -------------------------------------------------- */
 .gnc-fig svg text {
-  font-family:
-    system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
-    'Microsoft YaHei', sans-serif;
+  /* 手写体优先，回退到文章正文的英文/中文衬线栈（见 uno.config.ts 的 figure） */
+  --at-apply: 'font-figure';
   font-size: 13px;
   fill: var(--gnc-ink);
   text-anchor: middle;
@@ -335,9 +334,7 @@ html.dark .gnc-fig {
 }
 
 .gnc-fig .gnc-t--mono {
-  font-family:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
-    monospace;
+  --at-apply: 'font-figure';
 }
 
 @keyframes gnc-spin {
