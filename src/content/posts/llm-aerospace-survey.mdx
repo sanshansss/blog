@@ -1,5 +1,5 @@
 ---
-title: 大模型在航天任务中的已有工作：一份文献版图
+title: 大模型在航天任务中的已有工作：一份文献综述
 published: 2026-11-23
 description: 三十余篇公开文献的横向梳理：六个研究领域、五个彼此不可比的评测基准，以及三点相对确定的判断。
 tags:
@@ -12,10 +12,13 @@ abbrlink: llm-aerospace-survey
 toc: true
 ---
 
-<!--
+import AeroSurveyLandscape from '@/components/figures/AeroSurveyLandscape.astro'
+import AeroAgentAuthority from '@/components/figures/AeroAgentAuthority.astro'
+
+{/*
 姊妹篇：GNC 单机配置智能体的实践与思考（/posts/gnc-design-agent/）
 说明：原为《GNC 单机配置智能体的实践与思考》的文献综述章节，因篇幅与主题独立成篇。
--->
+*/}
 
 这篇是 [《GNC 单机配置智能体的实践与思考》](../gnc-design-agent/) 的姊妹篇。
 
@@ -34,27 +37,7 @@ toc: true
 
 从现有文献来看，这六个方向虽然具体任务不同，但在系统架构上普遍采用了相近的分工方式：语言模型负责语义翻译、规则组织和任务编排，具体的数值计算与物理求解仍交给确定性求解器或规划器完成，模型本身不直接承担物理计算。
 
-<figure class="gnc-fig">
-<div class="gnc-fig__scroll">
-<svg viewBox="0 0 900 372" role="img" aria-label="六个研究领域与五个评测基准的版图">
-<g class="gnc-node" style="animation-delay:.05s"><rect class="gnc-card" x="20" y="30" width="270" height="70" rx="7"></rect><text class="gnc-t--strong" x="155" y="56">任务与轨道设计</text><text class="gnc-t--sm" x="155" y="80">PLUTO · HELIOS</text></g>
-<g class="gnc-node" style="animation-delay:.12s"><rect class="gnc-card" x="315" y="30" width="270" height="70" rx="7"></rect><text class="gnc-t--strong" x="450" y="56">在轨控制与 GNC</text><text class="gnc-t--sm" x="450" y="80">ASTREA（唯一在轨验证）</text></g>
-<g class="gnc-node" style="animation-delay:.19s"><rect class="gnc-card" x="610" y="30" width="270" height="70" rx="7"></rect><text class="gnc-t--strong" x="745" y="56">在轨服务与空间机器人</text><text class="gnc-t--sm" x="745" y="80">SpaceMind</text></g>
-<g class="gnc-node" style="animation-delay:.26s"><rect class="gnc-card" x="20" y="120" width="270" height="70" rx="7"></rect><text class="gnc-t--strong" x="155" y="146">遥测异常检测与运维</text><text class="gnc-t--sm" x="155" y="170">ESA-ADB · ATSADBench</text></g>
-<g class="gnc-node" style="animation-delay:.33s"><rect class="gnc-card" x="315" y="120" width="270" height="70" rx="7"></rect><text class="gnc-t--strong" x="450" y="146">需求工程与 MBSE</text><text class="gnc-t--sm" x="450" y="170">推理时干预（Capella）</text></g>
-<g class="gnc-node" style="animation-delay:.4s"><rect class="gnc-card" x="610" y="120" width="270" height="70" rx="7"></rect><text class="gnc-t--strong" x="745" y="146">态势感知与调度规划</text><text class="gnc-t--sm" x="745" y="170">GURU</text></g>
-<text class="gnc-label gnc-t--sm gnc-t--coral" x="450" y="216">共同范式：语言模型做语义翻译与任务编排，确定性求解器做计算</text>
-<path class="gnc-edge gnc-edge--hair" d="M20 232 H880"></path>
-<text class="gnc-label gnc-t--xs gnc-t--start" x="20" y="252">五个评测基准（任务契约不同，彼此不可比）</text>
-<g class="gnc-node" style="animation-delay:.5s"><rect class="gnc-card gnc-card--surface" x="20" y="266" width="160" height="60" rx="6"></rect><text class="gnc-t--sm" x="100" y="288">AstroAgentBench</text><text class="gnc-t--xs" x="100" y="308">任务规划</text></g>
-<g class="gnc-node" style="animation-delay:.55s"><rect class="gnc-card gnc-card--surface" x="195" y="266" width="160" height="60" rx="6"></rect><text class="gnc-t--sm" x="275" y="288">AstroMind</text><text class="gnc-t--xs" x="275" y="308">态势感知</text></g>
-<g class="gnc-node" style="animation-delay:.6s"><rect class="gnc-card gnc-card--surface" x="370" y="266" width="160" height="60" rx="6"></rect><text class="gnc-t--sm" x="450" y="288">ATSADBench</text><text class="gnc-t--xs" x="450" y="308">时序异常</text></g>
-<g class="gnc-node" style="animation-delay:.65s"><rect class="gnc-card gnc-card--surface" x="545" y="266" width="160" height="60" rx="6"></rect><text class="gnc-t--sm" x="625" y="288">APBench</text><text class="gnc-t--xs" x="625" y="308">领域知识</text></g>
-<g class="gnc-node" style="animation-delay:.7s"><rect class="gnc-card gnc-card--amber" x="720" y="266" width="160" height="60" rx="6"></rect><text class="gnc-t--sm" x="800" y="288">ESA-ADB</text><text class="gnc-t--xs" x="800" y="308">真实在轨数据</text></g>
-</svg>
-</div>
-<figcaption>图 1　按工程环节划分的六个研究领域及现有的五个评测基准。不同基准覆盖的知识层、规划层、态势层与运维层各不相同，彼此难以直接横向比较。</figcaption>
-</figure>
+<AeroSurveyLandscape />
 
 ## 二、各领域的代表性工作
 
@@ -88,58 +71,7 @@ toc: true
 
 **第一，权威分层正在成为航天智能体的基本约束。** GURU 的「提议—检查—判定」三层架构、PLUTO 的约束校验、ASTREA 的人工监督，以及领域综述中强调的「权威接地（Authoritative Grounding）」，在思路上指向同一件事。Alandihallaj 等人发表于 *IEEE Access* 的综述（2026 年，第 14 卷，153884–153914 页）也进一步指出，即便完成了工具与物理接地，仍不足以直接满足飞行就绪要求，还必须配套完整的验证与确认（V&V）、运行时监控和安全防护机制。
 
-<figure class="gnc-fig">
-<div class="gnc-fig__scroll">
-<svg viewBox="0 0 900 265" role="img" aria-label="航天智能体的三层权威边界：提议、规则检查与物理确认">
-<defs>
-<marker id="as2-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-ink)"></path></marker>
-<marker id="as2-arrow-coral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-coral)"></path></marker>
-<marker id="as2-arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-teal)"></path></marker>
-</defs>
-
-<g class="gnc-node" style="animation-delay:.05s">
-  <rect class="gnc-card gnc-card--core gnc-seq" x="28" y="34" width="210" height="92" rx="8" style="animation-delay:0s"></rect>
-  <text class="gnc-t--on-solid gnc-t--strong" x="133" y="62">第一层：语言 / 学习模型</text>
-  <text class="gnc-t--on-solid gnc-t--sm" x="133" y="84">提议 · 排序 · 语义翻译</text>
-  <text class="gnc-t--on-solid gnc-t--xs" x="133" y="106">不具备安全裁定权</text>
-</g>
-
-<g class="gnc-node" style="animation-delay:.16s">
-  <rect class="gnc-card gnc-card--amber gnc-seq" x="290" y="34" width="210" height="92" rx="8" style="animation-delay:1.8s"></rect>
-  <text class="gnc-t--strong gnc-t--amber" x="395" y="62">第二层：符号与规则引擎</text>
-  <text class="gnc-t--sm" x="395" y="84">硬约束校验 · 接口与限值检查</text>
-  <text class="gnc-t--xs" x="395" y="106">PLUTO 约束校验 / GURU 规则检查</text>
-</g>
-
-<g class="gnc-node" style="animation-delay:.27s">
-  <rect class="gnc-card gnc-card--teal gnc-seq" x="552" y="34" width="210" height="92" rx="8" style="animation-delay:3.6s"></rect>
-  <text class="gnc-t--strong gnc-t--teal" x="657" y="62">第三层：经验证物理模型</text>
-  <text class="gnc-t--sm" x="657" y="84">动力学仿真 · 优化器最终确认</text>
-  <text class="gnc-t--xs" x="657" y="106">形成可核查的验证证据</text>
-</g>
-
-<g class="gnc-node" style="animation-delay:.38s">
-  <rect class="gnc-card gnc-card--surface" x="796" y="48" width="84" height="64" rx="7"></rect>
-  <text class="gnc-t--sm gnc-t--strong" x="838" y="72">执行 /</text>
-  <text class="gnc-t--sm gnc-t--strong" x="838" y="90">输出方案</text>
-</g>
-
-<path class="gnc-edge gnc-flow" d="M240 80 H286" marker-end="url(#as2-arrow)"></path>
-<path class="gnc-edge gnc-flow" d="M502 80 H548" marker-end="url(#as2-arrow)"></path>
-<path class="gnc-edge gnc-edge--teal gnc-flow" d="M764 80 H792" marker-end="url(#as2-arrow-teal)"></path>
-
-<g class="gnc-node" style="animation-delay:.48s">
-  <rect class="gnc-card gnc-card--surface" x="200" y="182" width="500" height="50" rx="8"></rect>
-  <text class="gnc-t--sm gnc-t--strong" x="450" y="201">运行时监控 · V&amp;V 证据链 · 人工审批兜底</text>
-  <text class="gnc-t--xs" x="450" y="220">ASTREA 人工监督与时间尺度同步 / IEEE Access (2026) 飞前就绪限定</text>
-</g>
-
-<path class="gnc-edge gnc-edge--coral gnc-flow" d="M657 128 V162 H133 V130" marker-end="url(#as2-arrow-coral)"></path>
-<text class="gnc-label gnc-t--xs gnc-t--coral" x="395" y="152">不满足约束或仿真越界时退回重提</text>
-</svg>
-</div>
-<figcaption>图 2　跨领域收敛出的三层权威边界。语言模型只负责提出候选与编排，安全边界由符号规则和经验证的物理模型共同把关。</figcaption>
-</figure>
+<AeroAgentAuthority />
 
 **第二，领域知识资产可以沉淀在模型之外，并持续演进。** SpaceMind 通过技能自演化把操作经验蒸馏为文件，GUIDE 在不修改模型权重的前提下演化规则手册，两者都说明工程能力未必非要通过反复微调模型来获得。这与 Simulink 官方提供的技能目录、STK 配套的专业技能集，本质上是同一种工程思路。
 

@@ -1,0 +1,45 @@
+---
+/**
+ * PhoneCodingFlow
+ *
+ * 来源：phone-coding-mode.md 的内联 SVG（迁移时原样搬入，未改动任何图形与动画）。
+ * 样式统一由 src/styles/figures.css 提供 —— 这里只有结构。
+ *
+ * 图注默认值与迁移前一致；需要覆盖时在 MDX 里写 <PhoneCodingFlow caption="..." />
+ */
+interface Props {
+  caption?: string
+}
+
+const caption = Astro.props.caption ?? '图 2　竖屏切换与还原的状态流转。由于快照文件落盘在修改显示配置之前，即便中途发生异常退出，也能依据原始拓扑恢复。'
+---
+
+<figure class="gnc-fig">
+<div class="gnc-fig__scroll">
+<svg viewBox="0 0 900 245" role="img" aria-label="PhoneCoding 切换与快照还原的执行流程">
+<defs>
+<marker id="pc2-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-ink)"></path></marker>
+<marker id="pc2-arrow-coral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-coral)"></path></marker>
+</defs>
+
+<g class="gnc-node" style="animation-delay:.05s"><rect class="gnc-card gnc-seq" x="18" y="42" width="136" height="66" rx="7" style="animation-delay:0s"></rect><text class="gnc-t--strong" x="86" y="68">热键 / 命令行</text><text class="gnc-t--xs gnc-t--mono" x="86" y="88">Ctrl+Alt+P</text></g>
+<g class="gnc-node" style="animation-delay:.13s"><rect class="gnc-card gnc-card--amber gnc-seq" x="182" y="42" width="150" height="66" rx="7" style="animation-delay:1.1s"></rect><text class="gnc-t--strong" x="257" y="68">写入状态快照</text><text class="gnc-t--xs gnc-t--mono" x="257" y="88">snapshot.ini</text></g>
+<g class="gnc-node" style="animation-delay:.21s"><rect class="gnc-card gnc-seq" x="360" y="42" width="160" height="66" rx="7" style="animation-delay:2.2s"></rect><text class="gnc-t--strong" x="440" y="68">枚举支持档位</text><text class="gnc-t--xs gnc-t--mono" x="440" y="88">EnumDisplaySettingsW</text></g>
+<g class="gnc-node" style="animation-delay:.29s"><rect class="gnc-card gnc-card--core gnc-seq" x="548" y="42" width="156" height="66" rx="7" style="animation-delay:3.3s"></rect><text class="gnc-t--on-solid gnc-t--strong" x="626" y="68">原子提交配置</text><text class="gnc-t--on-solid gnc-t--xs gnc-t--mono" x="626" y="88">SetDisplayConfig</text></g>
+<g class="gnc-node" style="animation-delay:.37s"><rect class="gnc-card gnc-card--teal gnc-seq" x="732" y="42" width="150" height="66" rx="7" style="animation-delay:4.4s"></rect><text class="gnc-t--strong" x="807" y="68">竖屏远程状态</text><text class="gnc-t--xs" x="807" y="88">720×1280 竖屏</text></g>
+
+<path class="gnc-edge" d="M156 75 H178" marker-end="url(#pc2-arrow)"></path>
+<path class="gnc-edge" d="M334 75 H356" marker-end="url(#pc2-arrow)"></path>
+<path class="gnc-edge" d="M522 75 H544" marker-end="url(#pc2-arrow)"></path>
+<path class="gnc-edge" d="M706 75 H728" marker-end="url(#pc2-arrow)"></path>
+
+<g class="gnc-node" style="animation-delay:.48s"><rect class="gnc-card gnc-card--surface" x="300" y="158" width="300" height="52" rx="8"></rect><text class="gnc-t--strong" x="450" y="178">按快照精确还原多屏拓扑</text><text class="gnc-t--xs" x="450" y="196">再次触发 / 程序异常重启均可从 snapshot.ini 恢复</text></g>
+
+<path class="gnc-edge gnc-edge--coral gnc-flow" d="M807 110 V184 H604" marker-end="url(#pc2-arrow-coral)"></path>
+<text class="gnc-label gnc-t--xs gnc-t--coral" x="706" y="172">退出竖屏 / 恢复</text>
+<path class="gnc-edge gnc-edge--coral gnc-flow gnc-flow--slow" d="M296 184 H257 V112" marker-end="url(#pc2-arrow-coral)"></path>
+<text class="gnc-label gnc-t--xs gnc-t--coral gnc-t--end" x="247" y="152">读取原始配置</text>
+</svg>
+</div>
+<figcaption>{caption}</figcaption>
+</figure>

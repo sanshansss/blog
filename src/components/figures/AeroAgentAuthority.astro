@@ -1,0 +1,68 @@
+---
+/**
+ * AeroAgentAuthority
+ *
+ * 来源：llm-aerospace-survey.md 的内联 SVG（迁移时原样搬入，未改动任何图形与动画）。
+ * 样式统一由 src/styles/figures.css 提供 —— 这里只有结构。
+ *
+ * 图注默认值与迁移前一致；需要覆盖时在 MDX 里写 <AeroAgentAuthority caption="..." />
+ */
+interface Props {
+  caption?: string
+}
+
+const caption = Astro.props.caption ?? '图 2　跨领域收敛出的三层权威边界。语言模型只负责提出候选与编排，安全边界由符号规则和经验证的物理模型共同把关。'
+---
+
+<figure class="gnc-fig">
+<div class="gnc-fig__scroll">
+<svg viewBox="0 0 900 265" role="img" aria-label="航天智能体的三层权威边界：提议、规则检查与物理确认">
+<defs>
+<marker id="as2-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-ink)"></path></marker>
+<marker id="as2-arrow-coral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-coral)"></path></marker>
+<marker id="as2-arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-teal)"></path></marker>
+</defs>
+
+<g class="gnc-node" style="animation-delay:.05s">
+  <rect class="gnc-card gnc-card--core gnc-seq" x="28" y="34" width="210" height="92" rx="8" style="animation-delay:0s"></rect>
+  <text class="gnc-t--on-solid gnc-t--strong" x="133" y="62">第一层：语言 / 学习模型</text>
+  <text class="gnc-t--on-solid gnc-t--sm" x="133" y="84">提议 · 排序 · 语义翻译</text>
+  <text class="gnc-t--on-solid gnc-t--xs" x="133" y="106">不具备安全裁定权</text>
+</g>
+
+<g class="gnc-node" style="animation-delay:.16s">
+  <rect class="gnc-card gnc-card--amber gnc-seq" x="290" y="34" width="210" height="92" rx="8" style="animation-delay:1.8s"></rect>
+  <text class="gnc-t--strong gnc-t--amber" x="395" y="62">第二层：符号与规则引擎</text>
+  <text class="gnc-t--sm" x="395" y="84">硬约束校验 · 接口与限值检查</text>
+  <text class="gnc-t--xs" x="395" y="106">PLUTO 约束校验 / GURU 规则检查</text>
+</g>
+
+<g class="gnc-node" style="animation-delay:.27s">
+  <rect class="gnc-card gnc-card--teal gnc-seq" x="552" y="34" width="210" height="92" rx="8" style="animation-delay:3.6s"></rect>
+  <text class="gnc-t--strong gnc-t--teal" x="657" y="62">第三层：经验证物理模型</text>
+  <text class="gnc-t--sm" x="657" y="84">动力学仿真 · 优化器最终确认</text>
+  <text class="gnc-t--xs" x="657" y="106">形成可核查的验证证据</text>
+</g>
+
+<g class="gnc-node" style="animation-delay:.38s">
+  <rect class="gnc-card gnc-card--surface" x="796" y="48" width="84" height="64" rx="7"></rect>
+  <text class="gnc-t--sm gnc-t--strong" x="838" y="72">执行 /</text>
+  <text class="gnc-t--sm gnc-t--strong" x="838" y="90">输出方案</text>
+</g>
+
+<path class="gnc-edge gnc-flow" d="M240 80 H286" marker-end="url(#as2-arrow)"></path>
+<path class="gnc-edge gnc-flow" d="M502 80 H548" marker-end="url(#as2-arrow)"></path>
+<path class="gnc-edge gnc-edge--teal gnc-flow" d="M764 80 H792" marker-end="url(#as2-arrow-teal)"></path>
+
+<g class="gnc-node" style="animation-delay:.48s">
+  <rect class="gnc-card gnc-card--surface" x="200" y="182" width="500" height="50" rx="8"></rect>
+  <text class="gnc-t--sm gnc-t--strong" x="450" y="201">运行时监控 · V&amp;V 证据链 · 人工审批兜底</text>
+  <text class="gnc-t--xs" x="450" y="220">ASTREA 人工监督与时间尺度同步 / IEEE Access (2026) 飞前就绪限定</text>
+</g>
+
+<path class="gnc-edge gnc-edge--coral gnc-flow" d="M657 128 V162 H133 V130" marker-end="url(#as2-arrow-coral)"></path>
+<text class="gnc-label gnc-t--xs gnc-t--coral" x="395" y="152">不满足约束或仿真越界时退回重提</text>
+</svg>
+</div>
+<figcaption>{caption}</figcaption>
+</figure>

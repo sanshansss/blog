@@ -1,0 +1,54 @@
+---
+title: 把 Magpie Routing 带进 Herdr：从路由图到 Context Window
+published: 2026-11-13
+description: 在 Herdr 中通过本地 mod 复刻 Magpie 的 Routing 与 Context Window 面板，基于本机 jsonl 日志实时查看 Agent 路由去向与会话上下文占用。
+tags:
+  - Herdr
+  - Magpie
+  - 工具实践
+  - Agent
+lang: zh
+abbrlink: herdr-magpie-routing
+toc: true
+---
+
+import HerdrRoutingPanel from '@/components/figures/HerdrRoutingPanel.astro'
+
+## 一、缘起与目标
+
+Herdr 的界面布局和侧边面板支持通过本地 mod 自由组合。之前看到 [lexrus 的推文和评论](https://x.com/lexrus/status/2119443089760960679) 后，我产生了一个很直接的想法：把 Magpie 里已有的 Routing 监控界面直接搬进 Herdr，这样平时在 Herdr 里并行开多个 Agent 时，不用来回切窗口就能看到请求路由情况。
+
+具体想要的效果包含两部分：
+
+1. 在顶部 `Files`、`Changes` 按钮旁边增加一个 `Routing` 开关，打开后展示各个 Agent 会话到不同模型的实时路由连线；
+2. 在面板下方增加按会话切换的 `Context Window` 视图，选中某个会话后，可以查看它最近一次请求时的上下文窗口占用和构成。
+
+最初我只打算复刻上半部分的路由图，后来用了一阵子觉得光看路由去向还不够，又顺手把 Magpie 下方的 Context Window 统计也接了进来。整个开发过程主要是让 Agent 读 Herdr 的 `AGENTS.md` 和 Magpie 的本地源码，先复刻路由视觉结构，再按 Herdr 的 mod 规范封装成可开关的独立面板。
+
+![Herdr 中的 Magpie Routing 布局](https://raw.githubusercontent.com/sanshansss/herdr-routing-layout/main/layouts/layout.png)
+
+![按会话查看 Context Window](https://raw.githubusercontent.com/sanshansss/herdr-routing-layout/main/layouts/contextwindow.png)
+
+（注：截图中的工作空间名、会话标识、本地路径和终端正文均已做马赛克处理。）
+
+## 二、数据驱动与动画实现
+
+面板的数据来源是 Magpie 在本机写入的 `~/.config/magpie/routing/*.jsonl` 路由日志。为了兼顾实时性和开销，面板通过文件系统目录监听来响应日志更新，同时保留一个 25 秒的定时刷新作为兜底，防止偶发漏事件。
+
+在信息边界上，面板只解析日志中记录的路由去向、token 计数、窗口总容量、上下文 parts 分布和条目分类，不读取也不展示原始对话正文。
+
+<HerdrRoutingPanel />
+
+在动画实现上遇到了一个底层框架限制：Herdr 的 mod 基于 GPUI 原生组件构建，目前没有提供沿任意贝塞尔曲线做关键帧动画的接口。我的折中处理是保留贝塞尔曲线本身作为静态连线，而飞行圆点则通过 GPUI 原生 transition 在路径端点之间移动。最终的动态观感和 Magpie 比较接近，但并不是逐帧完全一致。
+
+## 三、获取与安装
+
+完整的布局和 mod 文件放在 [GitHub 仓库](https://github.com/sanshansss/herdr-routing-layout)，包含布局定义、Routing 面板、顶部开关以及一个基于 Skillshare 的辅助面板。这套配置目前已经在 Herdr app 0.1.14 上验证通过。
+
+使用前需要确认两项依赖：Routing 面板需要本机运行 Magpie 并正常写入路由日志；Skillshare 面板的功能则需要本机已安装 `skillshare` CLI。
+
+如果希望直接让本机 Agent 协助安装，可以把下面这段说明交给它执行：
+
+```text
+读 ~/.config/herdr-app/AGENTS.md，然后从 https://github.com/sanshansss/herdr-routing-layout 获取 magpie-routing-v1/，按其中 RECIPE.md 安装布局和所需 mods。先检查并备份同名文件，不要改动其他配置；安装后运行 herdr-app check 和 herdr-app status，确认无错误后切换到这个布局。
+```

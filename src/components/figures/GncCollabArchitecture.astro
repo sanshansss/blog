@@ -1,0 +1,49 @@
+---
+/**
+ * GncCollabArchitecture
+ *
+ * 来源：gnc-design-agent.md 的内联 SVG（迁移时原样搬入，未改动任何图形与动画）。
+ * 样式统一由 src/styles/figures.css 提供 —— 这里只有结构。
+ *
+ * 图注默认值与迁移前一致；需要覆盖时在 MDX 里写 <GncCollabArchitecture caption="..." />
+ */
+interface Props {
+  caption?: string
+}
+
+const caption = Astro.props.caption ?? '图 1　GNC 单机配置智能体的协同架构。大模型只做语义理解与任务编排，型号库和知识库提供真实数据与工程规则，模型/仿真提供确定性计算，评价结果沿底部回路回流修正配置。'
+---
+
+<figure class="gnc-fig">
+<div class="gnc-fig__scroll">
+<svg viewBox="0 0 900 420" role="img" aria-label="GNC 单机配置智能体的协同架构">
+<defs>
+<marker id="g1-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-ink)"></path></marker>
+<marker id="g1-arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-teal)"></path></marker>
+<marker id="g1-arrow-coral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-coral)"></path></marker>
+<marker id="g1-arrow-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-amber)"></path></marker>
+</defs>
+<path class="gnc-edge gnc-edge--amber gnc-flow gnc-flow--slow" d="M267 58 V32 H631 V54" marker-end="url(#g1-arrow-amber)"></path>
+<text class="gnc-label gnc-t--xs gnc-t--amber" x="450" y="20">调用仿真</text>
+<g class="gnc-node" style="animation-delay:.05s"><rect class="gnc-card" x="10" y="60" width="150" height="70" rx="7"></rect><text x="85" y="88">任务需求</text><text class="gnc-t--sm" x="85" y="110">r</text></g>
+<g class="gnc-node" style="animation-delay:.15s"><rect class="gnc-card gnc-card--core" x="192" y="60" width="150" height="70" rx="7"></rect><rect class="gnc-halo" x="192" y="60" width="150" height="70" rx="7"></rect><text class="gnc-t--on-solid gnc-t--strong" x="267" y="86">大模型编排</text><text class="gnc-t--on-solid gnc-t--sm" x="267" y="108">πθ</text></g>
+<g class="gnc-node" style="animation-delay:.25s"><rect class="gnc-card" x="374" y="60" width="150" height="70" rx="7"></rect><text x="449" y="88">候选配置</text><text class="gnc-t--sm" x="449" y="110">C = &#123;c₁ … cₙ&#125;</text></g>
+<g class="gnc-node" style="animation-delay:.35s"><rect class="gnc-card gnc-card--teal" x="556" y="60" width="150" height="70" rx="7"></rect><text x="631" y="88">模型 / 仿真</text><text class="gnc-t--sm" x="631" y="110">M, S</text></g>
+<g class="gnc-node" style="animation-delay:.45s"><rect class="gnc-card gnc-card--amber" x="738" y="60" width="150" height="70" rx="7"></rect><text x="813" y="88">结果评价</text><text class="gnc-t--sm" x="813" y="110">J(C, y)</text></g>
+<path class="gnc-edge" d="M162 95 H188" marker-end="url(#g1-arrow)"></path>
+<path class="gnc-edge" d="M344 95 H370" marker-end="url(#g1-arrow)"></path>
+<path class="gnc-edge" d="M526 95 H552" marker-end="url(#g1-arrow)"></path>
+<path class="gnc-edge" d="M708 95 H734" marker-end="url(#g1-arrow)"></path>
+<rect class="gnc-card gnc-card--ghost" x="205" y="225" width="150" height="110" rx="8"></rect>
+<text class="gnc-label gnc-t--sm gnc-t--teal" x="280" y="245">工程资源</text>
+<g class="gnc-node" style="animation-delay:.55s"><rect class="gnc-card gnc-card--teal" x="218" y="258" width="124" height="30" rx="5"></rect><text class="gnc-t--sm" x="280" y="273">型号库 D</text></g>
+<g class="gnc-node" style="animation-delay:.65s"><rect class="gnc-card gnc-card--teal" x="218" y="296" width="124" height="30" rx="5"></rect><text class="gnc-t--sm" x="280" y="311">知识库 K</text></g>
+<path class="gnc-edge gnc-edge--teal gnc-flow" d="M267 142 V221" marker-start="url(#g1-arrow-teal)" marker-end="url(#g1-arrow-teal)"></path>
+<text class="gnc-label gnc-t--sm gnc-t--teal gnc-t--start" x="277" y="180">检索</text>
+<path class="gnc-edge gnc-edge--teal" d="M357 273 H449 V134" marker-end="url(#g1-arrow-teal)"></path>
+<path class="gnc-edge gnc-edge--coral gnc-flow" d="M813 132 V395 H176 V78 H188" marker-end="url(#g1-arrow-coral)"></path>
+<text class="gnc-label gnc-t--sm gnc-t--coral gnc-t--start" x="430" y="386">ΔC = J(C, y)&#12288;反馈修正</text>
+</svg>
+</div>
+<figcaption>{caption}</figcaption>
+</figure>

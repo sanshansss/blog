@@ -1,0 +1,37 @@
+---
+/**
+ * AeroSurveyLandscape
+ *
+ * 来源：llm-aerospace-survey.md 的内联 SVG（迁移时原样搬入，未改动任何图形与动画）。
+ * 样式统一由 src/styles/figures.css 提供 —— 这里只有结构。
+ *
+ * 图注默认值与迁移前一致；需要覆盖时在 MDX 里写 <AeroSurveyLandscape caption="..." />
+ */
+interface Props {
+  caption?: string
+}
+
+const caption = Astro.props.caption ?? '图 1　按工程环节划分的六个研究领域及现有的五个评测基准。不同基准覆盖的知识层、规划层、态势层与运维层各不相同，彼此难以直接横向比较。'
+---
+
+<figure class="gnc-fig">
+<div class="gnc-fig__scroll">
+<svg viewBox="0 0 900 372" role="img" aria-label="六个研究领域与五个评测基准的版图">
+<g class="gnc-node" style="animation-delay:.05s"><rect class="gnc-card" x="20" y="30" width="270" height="70" rx="7"></rect><text class="gnc-t--strong" x="155" y="56">任务与轨道设计</text><text class="gnc-t--sm" x="155" y="80">PLUTO · HELIOS</text></g>
+<g class="gnc-node" style="animation-delay:.12s"><rect class="gnc-card" x="315" y="30" width="270" height="70" rx="7"></rect><text class="gnc-t--strong" x="450" y="56">在轨控制与 GNC</text><text class="gnc-t--sm" x="450" y="80">ASTREA（唯一在轨验证）</text></g>
+<g class="gnc-node" style="animation-delay:.19s"><rect class="gnc-card" x="610" y="30" width="270" height="70" rx="7"></rect><text class="gnc-t--strong" x="745" y="56">在轨服务与空间机器人</text><text class="gnc-t--sm" x="745" y="80">SpaceMind</text></g>
+<g class="gnc-node" style="animation-delay:.26s"><rect class="gnc-card" x="20" y="120" width="270" height="70" rx="7"></rect><text class="gnc-t--strong" x="155" y="146">遥测异常检测与运维</text><text class="gnc-t--sm" x="155" y="170">ESA-ADB · ATSADBench</text></g>
+<g class="gnc-node" style="animation-delay:.33s"><rect class="gnc-card" x="315" y="120" width="270" height="70" rx="7"></rect><text class="gnc-t--strong" x="450" y="146">需求工程与 MBSE</text><text class="gnc-t--sm" x="450" y="170">推理时干预（Capella）</text></g>
+<g class="gnc-node" style="animation-delay:.4s"><rect class="gnc-card" x="610" y="120" width="270" height="70" rx="7"></rect><text class="gnc-t--strong" x="745" y="146">态势感知与调度规划</text><text class="gnc-t--sm" x="745" y="170">GURU</text></g>
+<text class="gnc-label gnc-t--sm gnc-t--coral" x="450" y="216">共同范式：语言模型做语义翻译与任务编排，确定性求解器做计算</text>
+<path class="gnc-edge gnc-edge--hair" d="M20 232 H880"></path>
+<text class="gnc-label gnc-t--xs gnc-t--start" x="20" y="252">五个评测基准（任务契约不同，彼此不可比）</text>
+<g class="gnc-node" style="animation-delay:.5s"><rect class="gnc-card gnc-card--surface" x="20" y="266" width="160" height="60" rx="6"></rect><text class="gnc-t--sm" x="100" y="288">AstroAgentBench</text><text class="gnc-t--xs" x="100" y="308">任务规划</text></g>
+<g class="gnc-node" style="animation-delay:.55s"><rect class="gnc-card gnc-card--surface" x="195" y="266" width="160" height="60" rx="6"></rect><text class="gnc-t--sm" x="275" y="288">AstroMind</text><text class="gnc-t--xs" x="275" y="308">态势感知</text></g>
+<g class="gnc-node" style="animation-delay:.6s"><rect class="gnc-card gnc-card--surface" x="370" y="266" width="160" height="60" rx="6"></rect><text class="gnc-t--sm" x="450" y="288">ATSADBench</text><text class="gnc-t--xs" x="450" y="308">时序异常</text></g>
+<g class="gnc-node" style="animation-delay:.65s"><rect class="gnc-card gnc-card--surface" x="545" y="266" width="160" height="60" rx="6"></rect><text class="gnc-t--sm" x="625" y="288">APBench</text><text class="gnc-t--xs" x="625" y="308">领域知识</text></g>
+<g class="gnc-node" style="animation-delay:.7s"><rect class="gnc-card gnc-card--amber" x="720" y="266" width="160" height="60" rx="6"></rect><text class="gnc-t--sm" x="800" y="288">ESA-ADB</text><text class="gnc-t--xs" x="800" y="308">真实在轨数据</text></g>
+</svg>
+</div>
+<figcaption>{caption}</figcaption>
+</figure>

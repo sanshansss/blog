@@ -1,0 +1,40 @@
+---
+title: Spacecraft Dynamics Teaching Animations
+published: 2026-10-20
+description: Nine Chinese-narrated animations on spacecraft attitude dynamics, orbital mechanics, and attitude actuators.
+tags:
+  - Spacecraft
+  - Dynamics
+  - Animation
+pin: 99
+lang: en
+abbrlink: spacecraft-dynamics-animations
+toc: false
+---
+
+import GithubRepo from '@/components/GithubRepo.astro'
+import SpacecraftTopicOverview from '@/components/figures/SpacecraftTopicOverview.astro'
+
+Many concepts in spacecraft dynamics are hard to build intuition for from static equations alone—such as why Euler-angle rotations do not commute, how energy dissipation destabilizes a minor-axis spin, or how relative trajectories close under the Clohessy–Wiltshire equations.
+
+To make these mechanics directly observable, I built a set of nine Chinese-labeled teaching animations using custom Python dynamics integrators and Manim, covering attitude kinematics, rigid-body spin stability, orbital relative motion, and attitude actuators.
+
+<SpacecraftTopicOverview caption="Figure 1. Three core themes across the nine animations: rigid-body attitude dynamics, orbital/relative motion, and attitude actuators." />
+
+The collection includes:
+
+- 3-1-2 Euler-angle sequence and the non-commutativity of rotations;
+- Explorer 1 spin instability caused by energy dissipation;
+- spin stability about the major and intermediate inertia axes;
+- stable libration and unstable divergence under gravity-gradient torque;
+- Sun-synchronous orbit nodal precession, inclination–altitude relation, and local-time preservation;
+- CW natural fly-around and V-bar two-impulse rendezvous;
+- gravity-assist velocity changes in planet-centered and heliocentric frames;
+- reaction-wheel momentum exchange, saturation, desaturation, and CMG singular geometry.
+
+All rendered videos and core simulation code are available on GitHub:
+
+<GithubRepo repo="sanshansss/spacecraft-dynamics-animations" />
+
+- Project: [https://github.com/sanshansss/spacecraft-dynamics-animations](https://github.com/sanshansss/spacecraft-dynamics-animations)
+- Homepage: [https://sanshansss.github.io/astro-theme-retypeset/](https://sanshansss.github.io/astro-theme-retypeset/)

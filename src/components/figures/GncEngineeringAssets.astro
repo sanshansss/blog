@@ -1,0 +1,43 @@
+---
+/**
+ * GncEngineeringAssets
+ *
+ * 来源：gnc-design-agent.md 的内联 SVG（迁移时原样搬入，未改动任何图形与动画）。
+ * 样式统一由 src/styles/figures.css 提供 —— 这里只有结构。
+ *
+ * 图注默认值与迁移前一致；需要覆盖时在 MDX 里写 <GncEngineeringAssets caption="..." />
+ */
+interface Props {
+  caption?: string
+}
+
+const caption = Astro.props.caption ?? '图 5　需要沉淀的四类工程资产，以及支撑它们的验证基准与版本管理。资产不是并列的文件夹，而是要能被同一套接口取用、被同一套基准校验。'
+---
+
+<figure class="gnc-fig">
+<div class="gnc-fig__scroll">
+<svg viewBox="0 0 900 360" role="img" aria-label="四类工程资产与验证基准">
+<defs>
+<marker id="g5-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-blue)"></path></marker>
+<marker id="g5-arrow-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-amber)"></path></marker>
+</defs>
+<g class="gnc-node" style="animation-delay:.05s"><rect class="gnc-card gnc-card--core" x="250" y="25" width="360" height="55" rx="8"></rect><rect class="gnc-halo" x="250" y="25" width="360" height="55" rx="8"></rect><text class="gnc-t--on-solid gnc-t--strong" x="430" y="45">特定功能设计智能体</text><text class="gnc-t--on-solid gnc-t--sm" x="430" y="65">A_design</text></g>
+<g class="gnc-node" style="animation-delay:.2s"><rect class="gnc-card" x="25" y="175" width="180" height="75" rx="7"></rect><text class="gnc-t--strong" x="115" y="200">D</text><text class="gnc-t--sm" x="115" y="226">专业数据</text></g>
+<g class="gnc-node" style="animation-delay:.27s"><rect class="gnc-card" x="235" y="175" width="180" height="75" rx="7"></rect><text class="gnc-t--strong" x="325" y="200">K</text><text class="gnc-t--sm" x="325" y="226">专业知识</text></g>
+<g class="gnc-node" style="animation-delay:.34s"><rect class="gnc-card" x="445" y="175" width="180" height="75" rx="7"></rect><text class="gnc-t--strong" x="535" y="200">M</text><text class="gnc-t--sm" x="535" y="226">工程模型</text></g>
+<g class="gnc-node" style="animation-delay:.41s"><rect class="gnc-card" x="655" y="175" width="180" height="75" rx="7"></rect><text class="gnc-t--strong" x="745" y="200">T</text><text class="gnc-t--sm" x="745" y="226">工程工具</text></g>
+<path class="gnc-edge gnc-edge--teal" d="M115 173 V140"></path>
+<path class="gnc-edge gnc-edge--teal" d="M325 173 V140"></path>
+<path class="gnc-edge gnc-edge--teal" d="M535 173 V140"></path>
+<path class="gnc-edge gnc-edge--teal" d="M745 173 V140"></path>
+<path class="gnc-edge gnc-edge--teal" d="M115 140 H745"></path>
+<path class="gnc-edge gnc-edge--teal" d="M430 140 V82" marker-end="url(#g5-arrow)"></path>
+<g class="gnc-node" style="animation-delay:.5s"><rect class="gnc-card gnc-card--amber" x="25" y="288" width="810" height="40" rx="8"></rect><text class="gnc-t--sm" x="430" y="309">验证基准与版本管理&#12288;V</text></g>
+<path class="gnc-edge gnc-edge--amber gnc-edge--hair" d="M115 286 V252" marker-end="url(#g5-arrow-amber)"></path>
+<path class="gnc-edge gnc-edge--amber gnc-edge--hair" d="M325 286 V252" marker-end="url(#g5-arrow-amber)"></path>
+<path class="gnc-edge gnc-edge--amber gnc-edge--hair" d="M535 286 V252" marker-end="url(#g5-arrow-amber)"></path>
+<path class="gnc-edge gnc-edge--amber gnc-edge--hair" d="M745 286 V252" marker-end="url(#g5-arrow-amber)"></path>
+</svg>
+</div>
+<figcaption>{caption}</figcaption>
+</figure>

@@ -1,0 +1,46 @@
+---
+/**
+ * GncConfigStages
+ *
+ * 来源：gnc-design-agent.md 的内联 SVG（迁移时原样搬入，未改动任何图形与动画）。
+ * 样式统一由 src/styles/figures.css 提供 —— 这里只有结构。
+ *
+ * 图注默认值与迁移前一致；需要覆盖时在 MDX 里写 <GncConfigStages caption="..." />
+ */
+interface Props {
+  caption?: string
+}
+
+const caption = Astro.props.caption ?? '图 2　一次配置的七个环节与迭代状态。阶段本身是串行的；闭环由评价之后的反馈修正完成，状态 sₖ 把本轮的约束、候选、仿真结果与评分一起带入下一轮。'
+---
+
+<figure class="gnc-fig">
+<div class="gnc-fig__scroll">
+<svg viewBox="0 0 900 280" role="img" aria-label="配置流程的七个阶段与迭代状态">
+<defs>
+<marker id="g2-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-ink)"></path></marker>
+<marker id="g2-arrow-coral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-coral)"></path></marker>
+</defs>
+<g class="gnc-node" style="animation-delay:.05s"><rect class="gnc-card gnc-seq" x="17" y="50" width="110" height="60" rx="7" style="animation-delay:0s"></rect><text x="72" y="80">需求理解</text></g>
+<g class="gnc-node" style="animation-delay:.12s"><rect class="gnc-card gnc-seq" x="143" y="50" width="110" height="60" rx="7" style="animation-delay:.8s"></rect><text x="198" y="80">知识检索</text></g>
+<g class="gnc-node" style="animation-delay:.19s"><rect class="gnc-card gnc-seq" x="269" y="50" width="110" height="60" rx="7" style="animation-delay:1.6s"></rect><text x="324" y="80">型号筛选</text></g>
+<g class="gnc-node" style="animation-delay:.26s"><rect class="gnc-card gnc-card--core gnc-seq" x="395" y="50" width="110" height="60" rx="7" style="animation-delay:2.4s"></rect><text class="gnc-t--on-solid gnc-t--strong" x="450" y="80">配置生成</text></g>
+<g class="gnc-node" style="animation-delay:.33s"><rect class="gnc-card gnc-card--teal gnc-seq" x="521" y="50" width="110" height="60" rx="7" style="animation-delay:3.2s"></rect><text x="576" y="80">仿真验证</text></g>
+<g class="gnc-node" style="animation-delay:.4s"><rect class="gnc-card gnc-card--amber gnc-seq" x="647" y="50" width="110" height="60" rx="7" style="animation-delay:4s"></rect><text x="702" y="80">结果评价</text></g>
+<g class="gnc-node" style="animation-delay:.47s"><rect class="gnc-card gnc-card--coral gnc-seq" x="773" y="50" width="110" height="60" rx="7" style="animation-delay:4.8s"></rect><text x="828" y="80">反馈修正</text></g>
+<path class="gnc-edge" d="M129 80 H139" marker-end="url(#g2-arrow)"></path>
+<path class="gnc-edge" d="M255 80 H265" marker-end="url(#g2-arrow)"></path>
+<path class="gnc-edge" d="M381 80 H391" marker-end="url(#g2-arrow)"></path>
+<path class="gnc-edge" d="M507 80 H517" marker-end="url(#g2-arrow)"></path>
+<path class="gnc-edge" d="M633 80 H643" marker-end="url(#g2-arrow)"></path>
+<path class="gnc-edge" d="M759 80 H769" marker-end="url(#g2-arrow)"></path>
+<text class="gnc-label gnc-t--xs gnc-t--start" x="300" y="182">迭代状态</text>
+<g class="gnc-node" style="animation-delay:.6s"><rect class="gnc-card gnc-card--surface" x="300" y="195" width="300" height="45" rx="8"></rect><text x="450" y="218">sₖ = (r, q, C, y, J)</text></g>
+<path class="gnc-edge gnc-edge--coral gnc-flow" d="M828 112 V217 H604" marker-end="url(#g2-arrow-coral)"></path>
+<text class="gnc-label gnc-t--sm gnc-t--coral" x="716" y="206">Φ(sₖ)</text>
+<path class="gnc-edge gnc-edge--coral gnc-flow gnc-flow--slow" d="M296 217 H72 V114" marker-end="url(#g2-arrow-coral)"></path>
+<text class="gnc-label gnc-t--sm gnc-t--coral" x="190" y="206">下一轮 k+1</text>
+</svg>
+</div>
+<figcaption>{caption}</figcaption>
+</figure>

@@ -1,0 +1,95 @@
+---
+/**
+ * PhoneCodingCompare
+ *
+ * 来源：phone-coding-mode.md 的内联 SVG（迁移时原样搬入，未改动任何图形与动画）。
+ * 样式统一由 src/styles/figures.css 提供 —— 这里只有结构。
+ *
+ * 图注默认值与迁移前一致；需要覆盖时在 MDX 里写 <PhoneCodingCompare caption="..." />
+ */
+interface Props {
+  caption?: string
+}
+
+const caption = Astro.props.caption ?? '图 1　手机远程串流的画面比例变化。通过将主机显示器旋转 90° 并下调分辨率，消除上下黑边，使代码区域铺满手机竖屏。'
+---
+
+<figure class="gnc-fig">
+<div class="gnc-fig__scroll">
+<svg viewBox="0 0 900 315" role="img" aria-label="横屏串流与竖屏旋转降分辨率的显示效果对比">
+<defs>
+  <marker id="pc1-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-ink)"></path></marker>
+  <marker id="pc1-arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-teal)"></path></marker>
+  <pattern id="pc1-hatch" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="8" stroke="var(--gnc-ink)" stroke-opacity="0.1" stroke-width="1.5"></line></pattern>
+</defs>
+<!-- Left: Before -->
+<g class="gnc-node" style="animation-delay:.05s">
+  <rect class="gnc-card gnc-card--surface" x="75" y="24" width="130" height="240" rx="20"></rect>
+  <rect x="122" y="33" width="36" height="4.5" rx="2.25" fill="var(--gnc-ink)" fill-opacity="0.2"></rect>
+  <rect x="120" y="253" width="40" height="3.5" rx="1.75" fill="var(--gnc-ink)" fill-opacity="0.2"></rect>
+  <rect x="84" y="44" width="112" height="202" rx="8" fill="var(--gnc-ink)" fill-opacity="0.09"></rect>
+  <rect x="84" y="44" width="112" height="68" rx="8" fill="url(#pc1-hatch)"></rect>
+  <rect x="84" y="176" width="112" height="70" rx="8" fill="url(#pc1-hatch)"></rect>
+  <rect class="gnc-card gnc-card--coral" x="87" y="113" width="106" height="62" rx="4"></rect>
+  <rect x="94" y="121" width="28" height="2.5" rx="1" fill="var(--gnc-ink)" fill-opacity="0.18"></rect>
+  <rect x="94" y="126" width="42" height="2.5" rx="1" fill="var(--gnc-ink)" fill-opacity="0.12"></rect>
+  <text class="gnc-t--xs gnc-t--coral gnc-t--strong" x="140" y="144">16:9 横屏</text>
+  <text class="gnc-t--xs" x="140" y="160">字体极小</text>
+  <text class="gnc-t--xs" x="140" y="82" fill-opacity="0.6">黑边</text>
+  <text class="gnc-t--xs" x="140" y="215" fill-opacity="0.6">黑边</text>
+  <text class="gnc-t--sm gnc-t--strong" x="140" y="290">默认直接远程</text>
+</g>
+<!-- Arrow 1 -->
+<g>
+  <path class="gnc-edge gnc-flow" d="M220 145 H316" marker-end="url(#pc1-arrow)"></path>
+  <rect x="227" y="113" width="82" height="22" rx="6" fill="var(--gnc-surface)" stroke="var(--gnc-ink)" stroke-opacity="0.22" stroke-width="1"></rect>
+  <text class="gnc-label gnc-t--xs gnc-t--mono" x="268" y="128">Ctrl+Alt+P</text>
+</g>
+<!-- Middle: Rotating monitor animation -->
+<g class="gnc-node" style="animation-delay:.18s">
+  <rect class="gnc-card gnc-card--ghost" x="332" y="32" width="226" height="226" rx="14"></rect>
+  <circle cx="445" cy="145" r="82" fill="none" stroke="var(--gnc-ink)" stroke-opacity="0.14" stroke-width="1.2" stroke-dasharray="4 4"></circle>
+  <path d="M518 106 A82 82 0 0 1 527 142" fill="none" stroke="var(--gnc-ink)" stroke-opacity="0.35" stroke-width="1.5" marker-end="url(#pc1-arrow)"></path>
+  <path d="M372 184 A82 82 0 0 1 363 148" fill="none" stroke="var(--gnc-ink)" stroke-opacity="0.35" stroke-width="1.5" marker-end="url(#pc1-arrow)"></path>
+  <g class="gnc-rot90">
+  <rect class="gnc-card gnc-card--core" x="373" y="103" width="144" height="84" rx="8"></rect>
+  <rect x="381" y="111" width="128" height="68" rx="4" fill="var(--gnc-surface)" fill-opacity="0.16"></rect>
+  <circle cx="389" cy="118" r="2" fill="var(--gnc-surface)" fill-opacity="0.45"></circle>
+  <circle cx="396" cy="118" r="2" fill="var(--gnc-surface)" fill-opacity="0.45"></circle>
+  <circle cx="403" cy="118" r="2" fill="var(--gnc-surface)" fill-opacity="0.45"></circle>
+  <text class="gnc-t--on-solid gnc-t--xs gnc-t--strong" x="445" y="142">1920×1080</text>
+  <text class="gnc-t--on-solid gnc-t--xs" x="445" y="159">旋转 90° + 降分辨率</text>
+  </g>
+  <text class="gnc-t--sm gnc-t--strong" x="445" y="290">显示器旋转与切档（循环示意）</text>
+</g>
+<!-- Arrow 2 -->
+<g>
+  <path class="gnc-edge gnc-edge--teal gnc-flow" d="M574 145 H670" marker-end="url(#pc1-arrow-teal)"></path>
+  <rect x="583" y="113" width="78" height="22" rx="11" fill="var(--gnc-teal)" fill-opacity="0.12" stroke="var(--gnc-teal)" stroke-opacity="0.35" stroke-width="1"></rect>
+  <text class="gnc-label gnc-t--xs gnc-t--teal gnc-t--strong" x="622" y="128">720×1280</text>
+</g>
+<!-- Right: After -->
+<g class="gnc-node" style="animation-delay:.3s">
+  <rect class="gnc-card gnc-card--surface" x="688" y="24" width="130" height="240" rx="20"></rect>
+  <rect x="735" y="33" width="36" height="4.5" rx="2.25" fill="var(--gnc-ink)" fill-opacity="0.2"></rect>
+  <rect x="733" y="253" width="40" height="3.5" rx="1.75" fill="var(--gnc-ink)" fill-opacity="0.2"></rect>
+  <rect class="gnc-card gnc-card--teal" x="697" y="44" width="112" height="202" rx="8"></rect>
+  <rect x="704" y="51" width="98" height="10" rx="3" fill="var(--gnc-teal)" fill-opacity="0.16"></rect>
+  <circle cx="710" cy="56" r="1.8" fill="var(--gnc-teal)" fill-opacity="0.6"></circle>
+  <circle cx="716" cy="56" r="1.8" fill="var(--gnc-teal)" fill-opacity="0.4"></circle>
+  <rect x="706" y="70" width="54" height="7" rx="3" fill="var(--gnc-teal)" fill-opacity="0.55"></rect>
+  <rect x="714" y="84" width="76" height="7" rx="3" fill="var(--gnc-teal)" fill-opacity="0.35"></rect>
+  <rect x="714" y="98" width="62" height="7" rx="3" fill="var(--gnc-teal)" fill-opacity="0.35"></rect>
+  <rect x="706" y="114" width="68" height="7" rx="3" fill="var(--gnc-teal)" fill-opacity="0.55"></rect>
+  <rect x="714" y="128" width="80" height="7" rx="3" fill="var(--gnc-teal)" fill-opacity="0.35"></rect>
+  <rect x="714" y="142" width="48" height="7" rx="3" fill="var(--gnc-teal)" fill-opacity="0.28"></rect>
+  <line x1="707" y1="162" x2="799" y2="162" stroke="var(--gnc-teal)" stroke-opacity="0.25" stroke-width="1"></line>
+  <text class="gnc-t--sm gnc-t--teal gnc-t--strong" x="753" y="186">竖屏填满</text>
+  <rect x="707" y="196" width="92" height="22" rx="11" fill="var(--gnc-teal)" fill-opacity="0.14"></rect>
+  <text class="gnc-t--xs gnc-t--teal gnc-t--strong" x="753" y="211">画面等效放大 1.5×</text>
+  <text class="gnc-t--sm gnc-t--strong" x="753" y="290">开启竖屏模式后</text>
+</g>
+</svg>
+</div>
+<figcaption>{caption}</figcaption>
+</figure>

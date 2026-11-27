@@ -1,0 +1,69 @@
+---
+/**
+ * MemoryQuadrant
+ *
+ * 来源：bboc-agent-memory.md 的内联 SVG（迁移时原样搬入，未改动任何图形与动画）。
+ * 样式统一由 src/styles/figures.css 提供 —— 这里只有结构。
+ *
+ * 图注默认值与迁移前一致；需要覆盖时在 MDX 里写 <MemoryQuadrant caption="..." />
+ */
+interface Props {
+  caption?: string
+}
+
+const caption = Astro.props.caption ?? '图 2　按「记忆是否在计算图内」与「读写策略是否由训练习得」划分的四个象限。从应用工程走向算法研究，通常需要沿箭头方向向上或向左推进。'
+---
+
+<figure class="gnc-fig">
+<div class="gnc-fig__scroll">
+<svg viewBox="0 0 900 390" role="img" aria-label="Agent Memory 工作的两维象限分布">
+<defs>
+<marker id="bb2-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-ink)"></path></marker>
+<marker id="bb2-arrow-coral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-coral)"></path></marker>
+</defs>
+
+<path class="gnc-edge" d="M120 330 V34" marker-end="url(#bb2-arrow)"></path>
+<path class="gnc-edge" d="M120 330 H860" marker-end="url(#bb2-arrow)"></path>
+<text class="gnc-label gnc-t--sm gnc-t--navy" x="62" y="108">策略由训练</text>
+<text class="gnc-label gnc-t--sm gnc-t--navy" x="62" y="126">学习得到</text>
+<text class="gnc-label gnc-t--sm" x="62" y="255">策略由人工</text>
+<text class="gnc-label gnc-t--sm" x="62" y="273">规则编写</text>
+
+<text class="gnc-label gnc-t--sm gnc-t--navy" x="305" y="356">记忆在计算图内</text>
+<text class="gnc-label gnc-t--sm" x="670" y="356">记忆在计算图外</text>
+
+<g class="gnc-node" style="animation-delay:.08s">
+  <rect class="gnc-card gnc-card--teal" x="145" y="46" width="330" height="126" rx="8"></rect>
+  <text class="gnc-t--strong gnc-t--teal" x="310" y="74">象限 I：结构与计算流均进图</text>
+  <text class="gnc-t--sm" x="310" y="102">Memory Layers · Titans / TTT</text>
+  <text class="gnc-t--sm" x="310" y="122">NTM / DNC · RETRO</text>
+  <text class="gnc-t--xs" x="310" y="148">最契合 BBOC 框架的形态，工程改动门槛高</text>
+</g>
+
+<g class="gnc-node" style="animation-delay:.18s">
+  <rect class="gnc-card gnc-card--amber" x="505" y="46" width="330" height="126" rx="8"></rect>
+  <text class="gnc-t--strong gnc-t--amber" x="670" y="74">象限 II：策略进梯度，内容在图外</text>
+  <text class="gnc-t--sm" x="670" y="106">Memory-R1 · MemAgent · Mem-alpha</text>
+  <text class="gnc-t--xs" x="670" y="148">兼顾可学习性与工程更新成本的现实折中</text>
+</g>
+
+<g class="gnc-node" style="animation-delay:.28s">
+  <rect class="gnc-card gnc-card--surface" x="145" y="192" width="330" height="120" rx="8"></rect>
+  <text class="gnc-t--strong" x="310" y="220">象限 III：手工架构，但在图内</text>
+  <text class="gnc-t--sm" x="310" y="250">Transformer-XL · Compressive Transformer</text>
+  <text class="gnc-t--xs" x="310" y="286">通过固定窗口或压缩机制扩展序列记忆</text>
+</g>
+
+<g class="gnc-node" style="animation-delay:.38s">
+  <rect class="gnc-card gnc-card--surface" x="505" y="192" width="330" height="120" rx="8"></rect>
+  <text class="gnc-t--strong" x="670" y="220">象限 IV：外部工程脚手架</text>
+  <text class="gnc-t--sm" x="670" y="250">MemGPT / Letta · Mem0 · Zep · RAG · LangChain</text>
+  <text class="gnc-t--xs" x="670" y="286">当前大多数应用层产品所在位置</text>
+</g>
+
+<path class="gnc-edge gnc-edge--coral gnc-flow" d="M670 190 V176" marker-end="url(#bb2-arrow-coral)"></path>
+<path class="gnc-edge gnc-edge--coral gnc-flow gnc-flow--slow" d="M503 109 H479" marker-end="url(#bb2-arrow-coral)"></path>
+</svg>
+</div>
+<figcaption>{caption}</figcaption>
+</figure>

@@ -1,0 +1,57 @@
+---
+/**
+ * GncMatlabChain
+ *
+ * 来源：gnc-design-agent.md 的内联 SVG（迁移时原样搬入，未改动任何图形与动画）。
+ * 样式统一由 src/styles/figures.css 提供 —— 这里只有结构。
+ *
+ * 图注默认值与迁移前一致；需要覆盖时在 MDX 里写 <GncMatlabChain caption="..." />
+ */
+interface Props {
+  caption?: string
+}
+
+const caption = Astro.props.caption ?? '图 3　论文中的 Agent 链路：需求先被拆成结构化语义（SIR），Skill 约束 Agent 通过 MATLAB MCP 操作工程工具，最后用检查与场景断言判定模型是否满足需求；失败时只允许做受限修复。'
+---
+
+<figure class="gnc-fig">
+<div class="gnc-fig__scroll">
+<svg viewBox="0 0 900 360" role="img" aria-label="MATLAB Agent 的需求到模型链路">
+<defs>
+<marker id="g3-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-ink)"></path></marker>
+<marker id="g3-arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-teal)"></path></marker>
+<marker id="g3-arrow-coral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-coral)"></path></marker>
+</defs>
+<g class="gnc-node" style="animation-delay:.05s"><rect class="gnc-card gnc-card--amber" x="10" y="26" width="110" height="38" rx="6"></rect><text class="gnc-t--sm" x="65" y="45">结构化语义 q</text></g>
+<g class="gnc-node" style="animation-delay:.1s"><rect class="gnc-card gnc-card--surface" x="120" y="26" width="110" height="38" rx="6"></rect><text class="gnc-t--xs" x="175" y="45">标识 id</text></g>
+<g class="gnc-node" style="animation-delay:.13s"><rect class="gnc-card gnc-card--surface" x="230" y="26" width="110" height="38" rx="6"></rect><text class="gnc-t--xs" x="285" y="45">触发 trg</text></g>
+<g class="gnc-node" style="animation-delay:.16s"><rect class="gnc-card gnc-card--surface" x="340" y="26" width="110" height="38" rx="6"></rect><text class="gnc-t--xs" x="395" y="45">时间 t</text></g>
+<g class="gnc-node" style="animation-delay:.19s"><rect class="gnc-card gnc-card--surface" x="450" y="26" width="110" height="38" rx="6"></rect><text class="gnc-t--xs" x="505" y="45">接口 io</text></g>
+<g class="gnc-node" style="animation-delay:.22s"><rect class="gnc-card gnc-card--surface" x="560" y="26" width="110" height="38" rx="6"></rect><text class="gnc-t--xs" x="615" y="45">组件 cmp</text></g>
+<g class="gnc-node" style="animation-delay:.25s"><rect class="gnc-card gnc-card--surface" x="670" y="26" width="110" height="38" rx="6"></rect><text class="gnc-t--xs" x="725" y="45">状态 st</text></g>
+<g class="gnc-node" style="animation-delay:.28s"><rect class="gnc-card gnc-card--surface" x="780" y="26" width="110" height="38" rx="6"></rect><text class="gnc-t--xs" x="835" y="45">场景 scn</text></g>
+<path class="gnc-edge gnc-edge--hair" stroke-dasharray="5 4" d="M225 108 V66"></path>
+<text class="gnc-label gnc-t--xs gnc-t--amber gnc-t--start" x="235" y="88">字段契约</text>
+<g class="gnc-node" style="animation-delay:.32s"><rect class="gnc-card" x="10" y="110" width="130" height="60" rx="7"></rect><text x="75" y="140">自然语言需求</text></g>
+<g class="gnc-node" style="animation-delay:.38s"><rect class="gnc-card gnc-card--amber" x="160" y="110" width="130" height="60" rx="7"></rect><text x="225" y="140">SIR&#12288;q</text></g>
+<g class="gnc-node" style="animation-delay:.44s"><rect class="gnc-card" x="310" y="110" width="130" height="60" rx="7"></rect><text x="375" y="140">Skill&#12288;Kₛ</text></g>
+<g class="gnc-node" style="animation-delay:.5s"><rect class="gnc-card gnc-card--core" x="460" y="110" width="130" height="60" rx="7"></rect><rect class="gnc-halo" x="460" y="110" width="130" height="60" rx="7"></rect><text class="gnc-t--on-solid gnc-t--strong" x="525" y="140">Agent&#12288;π</text></g>
+<g class="gnc-node" style="animation-delay:.56s"><rect class="gnc-card" x="610" y="110" width="130" height="60" rx="7"></rect><text x="675" y="140">MATLAB MCP</text></g>
+<g class="gnc-node" style="animation-delay:.62s"><rect class="gnc-card gnc-card--teal" x="760" y="110" width="130" height="60" rx="7"></rect><text x="825" y="140">MATLAB 工具</text></g>
+<path class="gnc-edge" d="M142 140 H156" marker-end="url(#g3-arrow)"></path>
+<path class="gnc-edge" d="M292 140 H306" marker-end="url(#g3-arrow)"></path>
+<path class="gnc-edge" d="M442 140 H456" marker-end="url(#g3-arrow)"></path>
+<path class="gnc-edge" d="M592 140 H606" marker-end="url(#g3-arrow)"></path>
+<path class="gnc-edge" d="M742 140 H756" marker-end="url(#g3-arrow)"></path>
+<g class="gnc-node" style="animation-delay:.7s"><rect class="gnc-card gnc-card--surface" x="460" y="250" width="130" height="60" rx="7"></rect><text x="525" y="280">断言 A ⊨ q</text></g>
+<g class="gnc-node" style="animation-delay:.76s"><rect class="gnc-card gnc-card--surface" x="610" y="250" width="130" height="60" rx="7"></rect><text x="675" y="280">检查 / 仿真</text></g>
+<g class="gnc-node" style="animation-delay:.82s"><rect class="gnc-card gnc-card--teal" x="760" y="250" width="130" height="60" rx="7"></rect><text x="825" y="280">模型制品 A</text></g>
+<path class="gnc-edge gnc-edge--teal" d="M825 172 V248" marker-end="url(#g3-arrow-teal)"></path>
+<path class="gnc-edge gnc-edge--teal" d="M758 280 H742" marker-end="url(#g3-arrow-teal)"></path>
+<path class="gnc-edge gnc-edge--teal" d="M608 280 H592" marker-end="url(#g3-arrow-teal)"></path>
+<path class="gnc-edge gnc-edge--coral gnc-flow" d="M525 248 V172" marker-end="url(#g3-arrow-coral)"></path>
+<text class="gnc-label gnc-t--sm gnc-t--coral gnc-t--start" x="537" y="214">受限修复</text>
+</svg>
+</div>
+<figcaption>{caption}</figcaption>
+</figure>

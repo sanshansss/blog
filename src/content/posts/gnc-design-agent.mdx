@@ -13,10 +13,16 @@ abbrlink: gnc-design-agent
 toc: true
 ---
 
-<!--
+import GncCollabArchitecture from '@/components/figures/GncCollabArchitecture.astro'
+import GncConfigStages from '@/components/figures/GncConfigStages.astro'
+import GncMatlabChain from '@/components/figures/GncMatlabChain.astro'
+import GncRoleSplit from '@/components/figures/GncRoleSplit.astro'
+import GncEngineeringAssets from '@/components/figures/GncEngineeringAssets.astro'
+
+{/*
 说明：本文为网页版，插图由原 TikZ 静态图改写为内联 SVG + CSS 动画；
 原第五部分「文献综述」已独立成篇《大模型在航天任务中的已有工作》。
--->
+*/}
 
 ## 一、已有实践：GNC 单机配置智能体
 
@@ -44,39 +50,7 @@ toc: true
 
 整个系统可以理解为由大模型负责理解和决策，数据库负责提供真实型号，知识库负责提供专业规则，物理模型和仿真程序负责工程计算与验证。
 
-<figure class="gnc-fig">
-<div class="gnc-fig__scroll">
-<svg viewBox="0 0 900 420" role="img" aria-label="GNC 单机配置智能体的协同架构">
-<defs>
-<marker id="g1-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-ink)"></path></marker>
-<marker id="g1-arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-teal)"></path></marker>
-<marker id="g1-arrow-coral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-coral)"></path></marker>
-<marker id="g1-arrow-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-amber)"></path></marker>
-</defs>
-<path class="gnc-edge gnc-edge--amber gnc-flow gnc-flow--slow" d="M267 58 V32 H631 V54" marker-end="url(#g1-arrow-amber)"></path>
-<text class="gnc-label gnc-t--xs gnc-t--amber" x="450" y="20">调用仿真</text>
-<g class="gnc-node" style="animation-delay:.05s"><rect class="gnc-card" x="10" y="60" width="150" height="70" rx="7"></rect><text x="85" y="88">任务需求</text><text class="gnc-t--sm" x="85" y="110">r</text></g>
-<g class="gnc-node" style="animation-delay:.15s"><rect class="gnc-card gnc-card--core" x="192" y="60" width="150" height="70" rx="7"></rect><rect class="gnc-halo" x="192" y="60" width="150" height="70" rx="7"></rect><text class="gnc-t--on-solid gnc-t--strong" x="267" y="86">大模型编排</text><text class="gnc-t--on-solid gnc-t--sm" x="267" y="108">πθ</text></g>
-<g class="gnc-node" style="animation-delay:.25s"><rect class="gnc-card" x="374" y="60" width="150" height="70" rx="7"></rect><text x="449" y="88">候选配置</text><text class="gnc-t--sm" x="449" y="110">C = {c₁ … cₙ}</text></g>
-<g class="gnc-node" style="animation-delay:.35s"><rect class="gnc-card gnc-card--teal" x="556" y="60" width="150" height="70" rx="7"></rect><text x="631" y="88">模型 / 仿真</text><text class="gnc-t--sm" x="631" y="110">M, S</text></g>
-<g class="gnc-node" style="animation-delay:.45s"><rect class="gnc-card gnc-card--amber" x="738" y="60" width="150" height="70" rx="7"></rect><text x="813" y="88">结果评价</text><text class="gnc-t--sm" x="813" y="110">J(C, y)</text></g>
-<path class="gnc-edge" d="M162 95 H188" marker-end="url(#g1-arrow)"></path>
-<path class="gnc-edge" d="M344 95 H370" marker-end="url(#g1-arrow)"></path>
-<path class="gnc-edge" d="M526 95 H552" marker-end="url(#g1-arrow)"></path>
-<path class="gnc-edge" d="M708 95 H734" marker-end="url(#g1-arrow)"></path>
-<rect class="gnc-card gnc-card--ghost" x="205" y="225" width="150" height="110" rx="8"></rect>
-<text class="gnc-label gnc-t--sm gnc-t--teal" x="280" y="245">工程资源</text>
-<g class="gnc-node" style="animation-delay:.55s"><rect class="gnc-card gnc-card--teal" x="218" y="258" width="124" height="30" rx="5"></rect><text class="gnc-t--sm" x="280" y="273">型号库 D</text></g>
-<g class="gnc-node" style="animation-delay:.65s"><rect class="gnc-card gnc-card--teal" x="218" y="296" width="124" height="30" rx="5"></rect><text class="gnc-t--sm" x="280" y="311">知识库 K</text></g>
-<path class="gnc-edge gnc-edge--teal gnc-flow" d="M267 142 V221" marker-start="url(#g1-arrow-teal)" marker-end="url(#g1-arrow-teal)"></path>
-<text class="gnc-label gnc-t--sm gnc-t--teal gnc-t--start" x="277" y="180">检索</text>
-<path class="gnc-edge gnc-edge--teal" d="M357 273 H449 V134" marker-end="url(#g1-arrow-teal)"></path>
-<path class="gnc-edge gnc-edge--coral gnc-flow" d="M813 132 V395 H176 V78 H188" marker-end="url(#g1-arrow-coral)"></path>
-<text class="gnc-label gnc-t--sm gnc-t--coral gnc-t--start" x="430" y="386">ΔC = J(C, y)　反馈修正</text>
-</svg>
-</div>
-<figcaption>图 1　GNC 单机配置智能体的协同架构。大模型只做语义理解与任务编排，型号库和知识库提供真实数据与工程规则，模型/仿真提供确定性计算，评价结果沿底部回路回流修正配置。</figcaption>
-</figure>
+<GncCollabArchitecture />
 
 **（1）单机型号数据库：保证型号与参数的真实性**
 
@@ -142,36 +116,7 @@ toc: true
 
 > 需求理解 → 知识检索 → 型号筛选 → 配置生成 → 仿真验证 → 结果评价 → 反馈修正。
 
-<figure class="gnc-fig">
-<div class="gnc-fig__scroll">
-<svg viewBox="0 0 900 280" role="img" aria-label="配置流程的七个阶段与迭代状态">
-<defs>
-<marker id="g2-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-ink)"></path></marker>
-<marker id="g2-arrow-coral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-coral)"></path></marker>
-</defs>
-<g class="gnc-node" style="animation-delay:.05s"><rect class="gnc-card gnc-seq" x="17" y="50" width="110" height="60" rx="7" style="animation-delay:0s"></rect><text x="72" y="80">需求理解</text></g>
-<g class="gnc-node" style="animation-delay:.12s"><rect class="gnc-card gnc-seq" x="143" y="50" width="110" height="60" rx="7" style="animation-delay:.8s"></rect><text x="198" y="80">知识检索</text></g>
-<g class="gnc-node" style="animation-delay:.19s"><rect class="gnc-card gnc-seq" x="269" y="50" width="110" height="60" rx="7" style="animation-delay:1.6s"></rect><text x="324" y="80">型号筛选</text></g>
-<g class="gnc-node" style="animation-delay:.26s"><rect class="gnc-card gnc-card--core gnc-seq" x="395" y="50" width="110" height="60" rx="7" style="animation-delay:2.4s"></rect><text class="gnc-t--on-solid gnc-t--strong" x="450" y="80">配置生成</text></g>
-<g class="gnc-node" style="animation-delay:.33s"><rect class="gnc-card gnc-card--teal gnc-seq" x="521" y="50" width="110" height="60" rx="7" style="animation-delay:3.2s"></rect><text x="576" y="80">仿真验证</text></g>
-<g class="gnc-node" style="animation-delay:.4s"><rect class="gnc-card gnc-card--amber gnc-seq" x="647" y="50" width="110" height="60" rx="7" style="animation-delay:4s"></rect><text x="702" y="80">结果评价</text></g>
-<g class="gnc-node" style="animation-delay:.47s"><rect class="gnc-card gnc-card--coral gnc-seq" x="773" y="50" width="110" height="60" rx="7" style="animation-delay:4.8s"></rect><text x="828" y="80">反馈修正</text></g>
-<path class="gnc-edge" d="M129 80 H139" marker-end="url(#g2-arrow)"></path>
-<path class="gnc-edge" d="M255 80 H265" marker-end="url(#g2-arrow)"></path>
-<path class="gnc-edge" d="M381 80 H391" marker-end="url(#g2-arrow)"></path>
-<path class="gnc-edge" d="M507 80 H517" marker-end="url(#g2-arrow)"></path>
-<path class="gnc-edge" d="M633 80 H643" marker-end="url(#g2-arrow)"></path>
-<path class="gnc-edge" d="M759 80 H769" marker-end="url(#g2-arrow)"></path>
-<text class="gnc-label gnc-t--xs gnc-t--start" x="300" y="182">迭代状态</text>
-<g class="gnc-node" style="animation-delay:.6s"><rect class="gnc-card gnc-card--surface" x="300" y="195" width="300" height="45" rx="8"></rect><text x="450" y="218">sₖ = (r, q, C, y, J)</text></g>
-<path class="gnc-edge gnc-edge--coral gnc-flow" d="M828 112 V217 H604" marker-end="url(#g2-arrow-coral)"></path>
-<text class="gnc-label gnc-t--sm gnc-t--coral" x="716" y="206">Φ(sₖ)</text>
-<path class="gnc-edge gnc-edge--coral gnc-flow gnc-flow--slow" d="M296 217 H72 V114" marker-end="url(#g2-arrow-coral)"></path>
-<text class="gnc-label gnc-t--sm gnc-t--coral" x="190" y="206">下一轮 k+1</text>
-</svg>
-</div>
-<figcaption>图 2　一次配置的七个环节与迭代状态。阶段本身是串行的；闭环由评价之后的反馈修正完成，状态 sₖ 把本轮的约束、候选、仿真结果与评分一起带入下一轮。</figcaption>
-</figure>
+<GncConfigStages />
 
 从智能体技术角度看，这实际上是一个典型的工具调用与反馈循环，具有 ReAct（Reasoning and Acting）的基本特征。
 
@@ -221,47 +166,7 @@ toc: true
 
 整个流程并不是让大模型直接凭空生成一个完整工程软件，而是让大模型理解需求、组织建模任务，再通过工程工具接口执行确定性的模型创建和修改操作。
 
-<figure class="gnc-fig">
-<div class="gnc-fig__scroll">
-<svg viewBox="0 0 900 360" role="img" aria-label="MATLAB Agent 的需求到模型链路">
-<defs>
-<marker id="g3-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-ink)"></path></marker>
-<marker id="g3-arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-teal)"></path></marker>
-<marker id="g3-arrow-coral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-coral)"></path></marker>
-</defs>
-<g class="gnc-node" style="animation-delay:.05s"><rect class="gnc-card gnc-card--amber" x="10" y="26" width="110" height="38" rx="6"></rect><text class="gnc-t--sm" x="65" y="45">结构化语义 q</text></g>
-<g class="gnc-node" style="animation-delay:.1s"><rect class="gnc-card gnc-card--surface" x="120" y="26" width="110" height="38" rx="6"></rect><text class="gnc-t--xs" x="175" y="45">标识 id</text></g>
-<g class="gnc-node" style="animation-delay:.13s"><rect class="gnc-card gnc-card--surface" x="230" y="26" width="110" height="38" rx="6"></rect><text class="gnc-t--xs" x="285" y="45">触发 trg</text></g>
-<g class="gnc-node" style="animation-delay:.16s"><rect class="gnc-card gnc-card--surface" x="340" y="26" width="110" height="38" rx="6"></rect><text class="gnc-t--xs" x="395" y="45">时间 t</text></g>
-<g class="gnc-node" style="animation-delay:.19s"><rect class="gnc-card gnc-card--surface" x="450" y="26" width="110" height="38" rx="6"></rect><text class="gnc-t--xs" x="505" y="45">接口 io</text></g>
-<g class="gnc-node" style="animation-delay:.22s"><rect class="gnc-card gnc-card--surface" x="560" y="26" width="110" height="38" rx="6"></rect><text class="gnc-t--xs" x="615" y="45">组件 cmp</text></g>
-<g class="gnc-node" style="animation-delay:.25s"><rect class="gnc-card gnc-card--surface" x="670" y="26" width="110" height="38" rx="6"></rect><text class="gnc-t--xs" x="725" y="45">状态 st</text></g>
-<g class="gnc-node" style="animation-delay:.28s"><rect class="gnc-card gnc-card--surface" x="780" y="26" width="110" height="38" rx="6"></rect><text class="gnc-t--xs" x="835" y="45">场景 scn</text></g>
-<path class="gnc-edge gnc-edge--hair" stroke-dasharray="5 4" d="M225 108 V66"></path>
-<text class="gnc-label gnc-t--xs gnc-t--amber gnc-t--start" x="235" y="88">字段契约</text>
-<g class="gnc-node" style="animation-delay:.32s"><rect class="gnc-card" x="10" y="110" width="130" height="60" rx="7"></rect><text x="75" y="140">自然语言需求</text></g>
-<g class="gnc-node" style="animation-delay:.38s"><rect class="gnc-card gnc-card--amber" x="160" y="110" width="130" height="60" rx="7"></rect><text x="225" y="140">SIR　q</text></g>
-<g class="gnc-node" style="animation-delay:.44s"><rect class="gnc-card" x="310" y="110" width="130" height="60" rx="7"></rect><text x="375" y="140">Skill　Kₛ</text></g>
-<g class="gnc-node" style="animation-delay:.5s"><rect class="gnc-card gnc-card--core" x="460" y="110" width="130" height="60" rx="7"></rect><rect class="gnc-halo" x="460" y="110" width="130" height="60" rx="7"></rect><text class="gnc-t--on-solid gnc-t--strong" x="525" y="140">Agent　π</text></g>
-<g class="gnc-node" style="animation-delay:.56s"><rect class="gnc-card" x="610" y="110" width="130" height="60" rx="7"></rect><text x="675" y="140">MATLAB MCP</text></g>
-<g class="gnc-node" style="animation-delay:.62s"><rect class="gnc-card gnc-card--teal" x="760" y="110" width="130" height="60" rx="7"></rect><text x="825" y="140">MATLAB 工具</text></g>
-<path class="gnc-edge" d="M142 140 H156" marker-end="url(#g3-arrow)"></path>
-<path class="gnc-edge" d="M292 140 H306" marker-end="url(#g3-arrow)"></path>
-<path class="gnc-edge" d="M442 140 H456" marker-end="url(#g3-arrow)"></path>
-<path class="gnc-edge" d="M592 140 H606" marker-end="url(#g3-arrow)"></path>
-<path class="gnc-edge" d="M742 140 H756" marker-end="url(#g3-arrow)"></path>
-<g class="gnc-node" style="animation-delay:.7s"><rect class="gnc-card gnc-card--surface" x="460" y="250" width="130" height="60" rx="7"></rect><text x="525" y="280">断言 A ⊨ q</text></g>
-<g class="gnc-node" style="animation-delay:.76s"><rect class="gnc-card gnc-card--surface" x="610" y="250" width="130" height="60" rx="7"></rect><text x="675" y="280">检查 / 仿真</text></g>
-<g class="gnc-node" style="animation-delay:.82s"><rect class="gnc-card gnc-card--teal" x="760" y="250" width="130" height="60" rx="7"></rect><text x="825" y="280">模型制品 A</text></g>
-<path class="gnc-edge gnc-edge--teal" d="M825 172 V248" marker-end="url(#g3-arrow-teal)"></path>
-<path class="gnc-edge gnc-edge--teal" d="M758 280 H742" marker-end="url(#g3-arrow-teal)"></path>
-<path class="gnc-edge gnc-edge--teal" d="M608 280 H592" marker-end="url(#g3-arrow-teal)"></path>
-<path class="gnc-edge gnc-edge--coral gnc-flow" d="M525 248 V172" marker-end="url(#g3-arrow-coral)"></path>
-<text class="gnc-label gnc-t--sm gnc-t--coral gnc-t--start" x="537" y="214">受限修复</text>
-</svg>
-</div>
-<figcaption>图 3　论文中的 Agent 链路：需求先被拆成结构化语义（SIR），Skill 约束 Agent 通过 MATLAB MCP 操作工程工具，最后用检查与场景断言判定模型是否满足需求；失败时只允许做受限修复。</figcaption>
-</figure>
+<GncMatlabChain />
 
 ### 2. 论文中的代码和模型是否实时生成？
 
@@ -324,44 +229,7 @@ MATLAB Agent 的优势在于能够进一步操作工程软件，自动创建和�
 
 我认为最值得借鉴的地方，是将现有 GNC 智能体从调用已有仿真程序，进一步拓展为能够根据配置方案自动创建、修改工程模型，并完成仿真验证。
 
-<figure class="gnc-fig">
-<div class="gnc-fig__scroll">
-<svg viewBox="0 0 900 350" role="img" aria-label="GNC 配置代理与 MATLAB Agent 的分工对比">
-<defs>
-<marker id="g4-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-ink)"></path></marker>
-</defs>
-<g class="gnc-node" style="animation-delay:.05s"><rect class="gnc-card" x="190" y="20" width="675" height="38" rx="6"></rect><text class="gnc-t--sm gnc-t--navy" x="265" y="39">任务理解</text><text class="gnc-t--sm gnc-t--navy" x="440" y="39">任务编排</text><text class="gnc-t--sm gnc-t--navy" x="615" y="39">工具调用</text><text class="gnc-t--sm gnc-t--navy" x="790" y="39">证据反馈</text></g>
-<text class="gnc-label gnc-t--xs gnc-t--end" x="180" y="39">共享机制</text>
-<path class="gnc-edge gnc-edge--hair" d="M352 20 V58"></path>
-<path class="gnc-edge gnc-edge--hair" d="M527 20 V58"></path>
-<path class="gnc-edge gnc-edge--hair" d="M702 20 V58"></path>
-<rect class="gnc-lane" x="8" y="74" width="874" height="72" rx="8"></rect>
-<rect class="gnc-lane gnc-lane--teal" x="8" y="174" width="874" height="72" rx="8"></rect>
-<text class="gnc-label gnc-t--sm gnc-t--coral gnc-t--start" x="18" y="100">GNC 单机配置</text>
-<text class="gnc-label gnc-t--xs gnc-t--start" x="18" y="120">硬件配置决策</text>
-<text class="gnc-label gnc-t--sm gnc-t--teal gnc-t--start" x="18" y="200">MATLAB Agent</text>
-<text class="gnc-label gnc-t--xs gnc-t--start" x="18" y="220">软件建模验证</text>
-<g class="gnc-node" style="animation-delay:.15s"><rect class="gnc-card gnc-card--surface" x="190" y="88" width="150" height="44" rx="6"></rect><text class="gnc-t--sm" x="265" y="110">需求 rₕ</text></g>
-<g class="gnc-node" style="animation-delay:.21s"><rect class="gnc-card gnc-card--surface" x="365" y="88" width="150" height="44" rx="6"></rect><text class="gnc-t--sm" x="440" y="110">数据 / 知识 D, K</text></g>
-<g class="gnc-node" style="animation-delay:.27s"><rect class="gnc-card gnc-card--surface" x="540" y="88" width="150" height="44" rx="6"></rect><text class="gnc-t--sm" x="615" y="110">动力学模型 M</text></g>
-<g class="gnc-node" style="animation-delay:.33s"><rect class="gnc-card gnc-card--amber" x="715" y="88" width="150" height="44" rx="6"></rect><text class="gnc-t--sm" x="790" y="110">硬件配置 C</text></g>
-<g class="gnc-node" style="animation-delay:.39s"><rect class="gnc-card gnc-card--surface" x="190" y="188" width="150" height="44" rx="6"></rect><text class="gnc-t--sm" x="265" y="210">需求 rₛ</text></g>
-<g class="gnc-node" style="animation-delay:.45s"><rect class="gnc-card gnc-card--surface" x="365" y="188" width="150" height="44" rx="6"></rect><text class="gnc-t--sm" x="440" y="210">语义表示 q</text></g>
-<g class="gnc-node" style="animation-delay:.51s"><rect class="gnc-card gnc-card--surface" x="540" y="188" width="150" height="44" rx="6"></rect><text class="gnc-t--sm" x="615" y="210">Skill / Agent</text></g>
-<g class="gnc-node" style="animation-delay:.57s"><rect class="gnc-card gnc-card--teal" x="715" y="188" width="150" height="44" rx="6"></rect><text class="gnc-t--sm" x="790" y="210">软件模型 A</text></g>
-<path class="gnc-edge" d="M342 110 H363" marker-end="url(#g4-arrow)"></path>
-<path class="gnc-edge" d="M517 110 H538" marker-end="url(#g4-arrow)"></path>
-<path class="gnc-edge" d="M692 110 H713" marker-end="url(#g4-arrow)"></path>
-<path class="gnc-edge" d="M342 210 H363" marker-end="url(#g4-arrow)"></path>
-<path class="gnc-edge" d="M517 210 H538" marker-end="url(#g4-arrow)"></path>
-<path class="gnc-edge" d="M692 210 H713" marker-end="url(#g4-arrow)"></path>
-<g class="gnc-node" style="animation-delay:.65s"><rect class="gnc-card gnc-card--surface" x="250" y="278" width="400" height="44" rx="8"></rect><text class="gnc-t--sm" x="450" y="300">互补：配置决策 ＋ 工程模型构建</text></g>
-<path class="gnc-edge gnc-flow" d="M865 110 H882 V300 H654" marker-end="url(#g4-arrow)"></path>
-<path class="gnc-edge gnc-edge--hair gnc-flow" d="M865 210 H882 V300"></path>
-</svg>
-</div>
-<figcaption>图 4　两条路线的分工。它们共享同一套任务理解、任务编排、工具调用与证据反馈机制，区别在于前者输出硬件配置决策，后者输出可检查、可仿真的工程模型。</figcaption>
-</figure>
+<GncRoleSplit />
 
 ## 三、下一步思考：从 GNC 单机配置走向软硬件联合设计
 
@@ -421,33 +289,7 @@ MATLAB Agent 的优势在于能够进一步操作工程软件，自动创建和�
 
 从这个角度看，专业知识库只是技术传承的一部分。真正要传承的是一套可以被执行的工程设计方法。
 
-<figure class="gnc-fig">
-<div class="gnc-fig__scroll">
-<svg viewBox="0 0 900 360" role="img" aria-label="四类工程资产与验证基准">
-<defs>
-<marker id="g5-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-blue)"></path></marker>
-<marker id="g5-arrow-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-amber)"></path></marker>
-</defs>
-<g class="gnc-node" style="animation-delay:.05s"><rect class="gnc-card gnc-card--core" x="250" y="25" width="360" height="55" rx="8"></rect><rect class="gnc-halo" x="250" y="25" width="360" height="55" rx="8"></rect><text class="gnc-t--on-solid gnc-t--strong" x="430" y="45">特定功能设计智能体</text><text class="gnc-t--on-solid gnc-t--sm" x="430" y="65">A_design</text></g>
-<g class="gnc-node" style="animation-delay:.2s"><rect class="gnc-card" x="25" y="175" width="180" height="75" rx="7"></rect><text class="gnc-t--strong" x="115" y="200">D</text><text class="gnc-t--sm" x="115" y="226">专业数据</text></g>
-<g class="gnc-node" style="animation-delay:.27s"><rect class="gnc-card" x="235" y="175" width="180" height="75" rx="7"></rect><text class="gnc-t--strong" x="325" y="200">K</text><text class="gnc-t--sm" x="325" y="226">专业知识</text></g>
-<g class="gnc-node" style="animation-delay:.34s"><rect class="gnc-card" x="445" y="175" width="180" height="75" rx="7"></rect><text class="gnc-t--strong" x="535" y="200">M</text><text class="gnc-t--sm" x="535" y="226">工程模型</text></g>
-<g class="gnc-node" style="animation-delay:.41s"><rect class="gnc-card" x="655" y="175" width="180" height="75" rx="7"></rect><text class="gnc-t--strong" x="745" y="200">T</text><text class="gnc-t--sm" x="745" y="226">工程工具</text></g>
-<path class="gnc-edge gnc-edge--teal" d="M115 173 V140"></path>
-<path class="gnc-edge gnc-edge--teal" d="M325 173 V140"></path>
-<path class="gnc-edge gnc-edge--teal" d="M535 173 V140"></path>
-<path class="gnc-edge gnc-edge--teal" d="M745 173 V140"></path>
-<path class="gnc-edge gnc-edge--teal" d="M115 140 H745"></path>
-<path class="gnc-edge gnc-edge--teal" d="M430 140 V82" marker-end="url(#g5-arrow)"></path>
-<g class="gnc-node" style="animation-delay:.5s"><rect class="gnc-card gnc-card--amber" x="25" y="288" width="810" height="40" rx="8"></rect><text class="gnc-t--sm" x="430" y="309">验证基准与版本管理　V</text></g>
-<path class="gnc-edge gnc-edge--amber gnc-edge--hair" d="M115 286 V252" marker-end="url(#g5-arrow-amber)"></path>
-<path class="gnc-edge gnc-edge--amber gnc-edge--hair" d="M325 286 V252" marker-end="url(#g5-arrow-amber)"></path>
-<path class="gnc-edge gnc-edge--amber gnc-edge--hair" d="M535 286 V252" marker-end="url(#g5-arrow-amber)"></path>
-<path class="gnc-edge gnc-edge--amber gnc-edge--hair" d="M745 286 V252" marker-end="url(#g5-arrow-amber)"></path>
-</svg>
-</div>
-<figcaption>图 5　需要沉淀的四类工程资产，以及支撑它们的验证基准与版本管理。资产不是并列的文件夹，而是要能被同一套接口取用、被同一套基准校验。</figcaption>
-</figure>
+<GncEngineeringAssets />
 
 ### 3. 近期目标：GNC 软硬件联合设计智能体
 

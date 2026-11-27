@@ -1,0 +1,54 @@
+---
+/**
+ * MemoryGradientBoundary
+ *
+ * 来源：bboc-agent-memory.md 的内联 SVG（迁移时原样搬入，未改动任何图形与动画）。
+ * 样式统一由 src/styles/figures.css 提供 —— 这里只有结构。
+ *
+ * 图注默认值与迁移前一致；需要覆盖时在 MDX 里写 <MemoryGradientBoundary caption="..." />
+ */
+interface Props {
+  caption?: string
+}
+
+const caption = Astro.props.caption ?? '图 1　记忆系统的梯度边界。理想的折中路线是让读写策略与表示编码处于优化回路内，同时将具体实例内容保留在计算图外的低成本存储中。'
+---
+
+<figure class="gnc-fig">
+<div class="gnc-fig__scroll">
+<svg viewBox="0 0 900 340" role="img" aria-label="记忆系统中的梯度边界：可学习的策略与外部存储内容">
+<defs>
+<marker id="bb1-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-ink)"></path></marker>
+<marker id="bb1-arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-teal)"></path></marker>
+<marker id="bb1-arrow-coral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-coral)"></path></marker>
+</defs>
+<rect class="gnc-lane gnc-lane--teal" x="20" y="24" width="530" height="292" rx="10"></rect>
+<text class="gnc-label gnc-t--sm gnc-t--teal gnc-t--start" x="38" y="48">计算图与梯度优化范围内（可学习）</text>
+<rect class="gnc-card gnc-card--ghost" x="580" y="24" width="300" height="292" rx="10"></rect>
+<text class="gnc-label gnc-t--sm gnc-t--amber gnc-t--start" x="598" y="48">计算图外（O(1) 读写，不进权重）</text>
+
+<g class="gnc-node" style="animation-delay:.06s"><rect class="gnc-card" x="45" y="105" width="130" height="68" rx="7"></rect><text class="gnc-t--strong" x="110" y="131">输入 / 任务状态</text><text class="gnc-t--sm" x="110" y="153">xₜ, hₜ</text></g>
+<g class="gnc-node" style="animation-delay:.16s"><rect class="gnc-card gnc-card--core" x="215" y="95" width="150" height="88" rx="8"></rect><rect class="gnc-halo" x="215" y="95" width="150" height="88" rx="8"></rect><text class="gnc-t--on-solid gnc-t--strong" x="290" y="126">读写策略 πθ</text><text class="gnc-t--on-solid gnc-t--sm" x="290" y="148">写什么 / 何时读 / 何时忘</text><text class="gnc-t--on-solid gnc-t--xs" x="290" y="168">由梯度或强化学习优化</text></g>
+<g class="gnc-node" style="animation-delay:.26s"><rect class="gnc-card gnc-card--teal" x="405" y="105" width="120" height="68" rx="7"></rect><text class="gnc-t--strong" x="465" y="131">表示编码器</text><text class="gnc-t--sm" x="465" y="153">压缩 / 索引</text></g>
+
+<g class="gnc-node" style="animation-delay:.36s"><rect class="gnc-card gnc-card--amber" x="625" y="95" width="215" height="88" rx="8"></rect><text class="gnc-t--strong" x="732" y="128">外部记忆内容</text><text class="gnc-t--sm" x="732" y="150">用户偏好 · 历史记录 · 时效事实</text><text class="gnc-t--xs" x="732" y="168">KV / 向量库 / 结构化数据库</text></g>
+
+<g class="gnc-node" style="animation-delay:.46s"><rect class="gnc-card gnc-card--surface" x="215" y="238" width="150" height="52" rx="7"></rect><text class="gnc-t--strong" x="290" y="258">任务损失 / 奖励</text><text class="gnc-t--sm" x="290" y="276">L(y, ŷ) / R</text></g>
+
+<path class="gnc-edge" d="M177 139 H211" marker-end="url(#bb1-arrow)"></path>
+<path class="gnc-edge gnc-edge--teal gnc-flow" d="M367 126 H401" marker-end="url(#bb1-arrow-teal)"></path>
+<path class="gnc-edge gnc-edge--teal gnc-flow" d="M527 126 H621" marker-end="url(#bb1-arrow-teal)"></path>
+<text class="gnc-label gnc-t--xs gnc-t--teal" x="574" y="114">写入 / 查询</text>
+<path class="gnc-edge gnc-edge--teal gnc-flow gnc-flow--slow" d="M621 154 H527" marker-end="url(#bb1-arrow-teal)"></path>
+<path class="gnc-edge gnc-edge--teal gnc-flow gnc-flow--slow" d="M401 154 H367" marker-end="url(#bb1-arrow-teal)"></path>
+<text class="gnc-label gnc-t--xs gnc-t--teal" x="574" y="170">召回上下文</text>
+
+<path class="gnc-edge gnc-edge--coral gnc-flow" d="M290 236 V187" marker-end="url(#bb1-arrow-coral)"></path>
+<text class="gnc-label gnc-t--xs gnc-t--coral gnc-t--start" x="300" y="212">梯度 / 策略更新</text>
+<path class="gnc-edge gnc-edge--coral gnc-edge--hair gnc-flow gnc-flow--slow" d="M367 264 H465 V177" marker-end="url(#bb1-arrow-coral)"></path>
+
+<g class="gnc-node" style="animation-delay:.56s"><rect class="gnc-card gnc-card--surface" x="625" y="238" width="215" height="52" rx="7"></rect><text class="gnc-t--sm" x="732" y="258">纯外挂框架（MemGPT / Mem0 等）</text><text class="gnc-t--xs" x="732" y="276">策略也移到图外，由人工规则驱动</text></g>
+</svg>
+</div>
+<figcaption>{caption}</figcaption>
+</figure>

@@ -1,0 +1,180 @@
+---
+/**
+ * HerdrRoutingPanel
+ *
+ * 来源：herdr-magpie-routing.md 的内联 SVG（迁移时原样搬入，未改动任何图形与动画）。
+ * 样式统一由 src/styles/figures.css 提供 —— 这里只有结构。
+ *
+ * 图注默认值与迁移前一致；需要覆盖时在 MDX 里写 <HerdrRoutingPanel caption="..." />
+ */
+interface Props {
+  caption?: string
+}
+
+const caption = Astro.props.caption ?? '图 1　Herdr Routing Mod 的结构与数据流。日志更新触发面板刷新，上方用贝塞尔曲线与飞行光点呈现路由去向，下方按会话展示 Context Window 构成。'
+---
+
+<figure class="gnc-fig">
+<div class="gnc-fig__scroll">
+<svg viewBox="0 0 920 376" role="img" aria-label="Herdr 中 Magpie Routing 与 Context Window 面板的数据流与动态路由示意">
+<defs>
+  <marker id="hr-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M1 1.5 L8.5 5 L1 8.5 Z" fill="var(--gnc-ink)"></path>
+  </marker>
+  <!-- 飞行光点柔和发光 -->
+  <filter id="hr-glow" x="-60%" y="-60%" width="220%" height="220%">
+    <feGaussianBlur stdDeviation="2.2" result="blur"></feGaussianBlur>
+    <feMerge>
+      <feMergeNode in="blur"></feMergeNode>
+      <feMergeNode in="SourceGraphic"></feMergeNode>
+    </feMerge>
+  </filter>
+  <!-- Context Window 进度条统一圆角裁切 -->
+  <clipPath id="hr-bar-clip">
+    <rect x="266" y="280" width="602" height="20" rx="6"></rect>
+  </clipPath>
+</defs>
+
+<!-- Left: Local log source -->
+<g class="gnc-node" style="animation-delay:.05s">
+  <rect class="gnc-card gnc-card--amber" x="16" y="68" width="172" height="156" rx="10"></rect>
+  <!-- 极简文档图标 -->
+  <g transform="translate(45, 84)" fill="none" stroke="var(--gnc-amber)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 1.5h6.5L13 5v9.5a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-12a1 1 0 0 1 1-1z"></path>
+    <path d="M9.5 1.5V5H13M4.5 8.5h6M4.5 11.5h4"></path>
+  </g>
+  <text class="gnc-t--strong gnc-t--amber gnc-t--start" x="65" y="96">本机路由日志</text>
+
+  <!-- 路径代码框 -->
+  <rect class="gnc-card gnc-card--surface" x="28" y="108" width="148" height="44" rx="6"></rect>
+  <text class="gnc-t--xs gnc-t--mono" x="102" y="126">~/.config/magpie/</text>
+  <text class="gnc-t--xs gnc-t--mono" x="102" y="142">routing/*.jsonl</text>
+
+  <!-- 监听状态胶囊 -->
+  <rect class="gnc-card gnc-card--surface" x="28" y="162" width="148" height="48" rx="6"></rect>
+  <circle cx="58" cy="180" r="3.2" fill="var(--gnc-teal)"></circle>
+  <text class="gnc-t--xs gnc-t--strong gnc-t--start" x="68" y="184">目录实时监听</text>
+  <text class="gnc-t--xs" x="102" y="201" opacity="0.78">+ 25s 轮询兜底</text>
+</g>
+
+<!-- Source -> Panel edge -->
+<path class="gnc-edge gnc-flow" d="M188 146 H222" marker-end="url(#hr-arrow)"></path>
+<circle cx="188" cy="146" r="3" fill="var(--gnc-amber)"></circle>
+
+<!-- Right container: Herdr Mod Panel -->
+<rect class="gnc-card gnc-card--ghost" x="228" y="16" width="676" height="344" rx="12"></rect>
+<!-- 顶部标题栏分割线 -->
+<line x1="228" y1="54" x2="904" y2="54" stroke="var(--gnc-line)" stroke-opacity="0.45" stroke-width="1"></line>
+<text class="gnc-label gnc-t--sm gnc-t--strong gnc-t--navy gnc-t--start" x="248" y="39">Herdr Routing Mod</text>
+
+<!-- 顶部模拟开关栏: Files / Changes / Routing -->
+<g>
+  <rect x="668" y="23" width="218" height="24" rx="6" fill="var(--gnc-line)" fill-opacity="0.22"></rect>
+  <text class="gnc-t--xs" x="703" y="39" opacity="0.65">Files</text>
+  <text class="gnc-t--xs" x="767" y="39" opacity="0.65">Changes</text>
+  <rect x="808" y="25" width="76" height="20" rx="4.5" fill="var(--gnc-navy)"></rect>
+  <text class="gnc-t--xs gnc-t--strong gnc-t--on-solid" x="846" y="39">Routing</text>
+</g>
+
+<!-- Agent nodes -->
+<g class="gnc-node" style="animation-delay:.14s">
+  <rect class="gnc-card gnc-card--core" x="248" y="74" width="144" height="60" rx="8"></rect>
+  <text class="gnc-t--on-solid gnc-t--strong" x="320" y="98">Agent 会话 A</text>
+  <text class="gnc-t--on-solid gnc-t--xs" x="320" y="118" opacity="0.88">主控 / 复杂推理</text>
+</g>
+<g class="gnc-node" style="animation-delay:.22s">
+  <rect class="gnc-card" x="248" y="152" width="144" height="60" rx="8"></rect>
+  <text class="gnc-t--strong" x="320" y="176">Agent 会话 B</text>
+  <text class="gnc-t--xs" x="320" y="196" opacity="0.78">检索 / 轻量工具调用</text>
+</g>
+
+<!-- Bezier routing edges -->
+<path class="gnc-edge gnc-edge--teal gnc-flow" d="M392 94 C488 94 488 92 584 92"></path>
+<path class="gnc-edge gnc-edge--amber gnc-flow gnc-flow--slow" d="M392 114 C488 114 488 140 584 140"></path>
+<path class="gnc-edge gnc-edge--teal gnc-flow gnc-flow--slow" d="M392 172 C488 172 488 152 584 152"></path>
+<path class="gnc-edge gnc-edge--coral gnc-flow" d="M392 192 C488 192 488 200 584 200"></path>
+
+<!-- 曲线起止锚点 -->
+<g>
+  <circle cx="392" cy="94" r="3" fill="var(--gnc-teal)"></circle>
+  <circle cx="392" cy="114" r="3" fill="var(--gnc-amber)"></circle>
+  <circle cx="392" cy="172" r="3" fill="var(--gnc-teal)"></circle>
+  <circle cx="392" cy="192" r="3" fill="var(--gnc-coral)"></circle>
+  <circle cx="584" cy="92" r="3" fill="var(--gnc-teal)"></circle>
+  <circle cx="584" cy="140" r="3" fill="var(--gnc-amber)"></circle>
+  <circle cx="584" cy="152" r="3" fill="var(--gnc-teal)"></circle>
+  <circle cx="584" cy="200" r="3" fill="var(--gnc-coral)"></circle>
+</g>
+
+<!-- Traveling packets along Bezier curves -->
+<circle r="4" class="gnc-packet" filter="url(#hr-glow)" style="offset-path: path('M392 94 C488 94 488 92 584 92'); fill: var(--gnc-teal); animation-delay: 0s;"></circle>
+<circle r="4" class="gnc-packet" filter="url(#hr-glow)" style="offset-path: path('M392 114 C488 114 488 140 584 140'); fill: var(--gnc-amber); animation-delay: 0.9s;"></circle>
+<circle r="4" class="gnc-packet" filter="url(#hr-glow)" style="offset-path: path('M392 172 C488 172 488 152 584 152'); fill: var(--gnc-teal); animation-delay: 1.5s;"></circle>
+<circle r="4" class="gnc-packet" filter="url(#hr-glow)" style="offset-path: path('M392 192 C488 192 488 200 584 200'); fill: var(--gnc-coral); animation-delay: 0.4s;"></circle>
+
+<!-- Model nodes -->
+<g class="gnc-node" style="animation-delay:.3s">
+  <rect class="gnc-card gnc-card--teal" x="584" y="70" width="154" height="44" rx="8"></rect>
+  <text class="gnc-t--sm gnc-t--strong" x="661" y="96">Frontier 模型</text>
+</g>
+<g class="gnc-node" style="animation-delay:.36s">
+  <rect class="gnc-card gnc-card--amber" x="584" y="124" width="154" height="44" rx="8"></rect>
+  <text class="gnc-t--sm gnc-t--strong" x="661" y="150">Balanced 模型</text>
+</g>
+<g class="gnc-node" style="animation-delay:.42s">
+  <rect class="gnc-card gnc-card--coral" x="584" y="178" width="154" height="44" rx="8"></rect>
+  <text class="gnc-t--sm gnc-t--strong" x="661" y="204">Fast / Local 模型</text>
+</g>
+
+<!-- Right status legend -->
+<g class="gnc-node" style="animation-delay:.48s">
+  <rect class="gnc-card gnc-card--surface" x="756" y="70" width="130" height="152" rx="8"></rect>
+  <text class="gnc-t--xs gnc-t--strong" x="821" y="92">仅解析元数据</text>
+  <line x1="770" y1="102" x2="872" y2="102" stroke="var(--gnc-line)" stroke-opacity="0.4" stroke-width="1"></line>
+
+  <circle cx="776" cy="118" r="2.2" fill="var(--gnc-teal)"></circle>
+  <text class="gnc-t--xs gnc-t--start" x="786" y="122">token 统计</text>
+
+  <circle cx="776" cy="138" r="2.2" fill="var(--gnc-teal)"></circle>
+  <text class="gnc-t--xs gnc-t--start" x="786" y="142">窗口容量</text>
+
+  <circle cx="776" cy="158" r="2.2" fill="var(--gnc-teal)"></circle>
+  <text class="gnc-t--xs gnc-t--start" x="786" y="162">parts 分类</text>
+
+  <!-- 隐私强调徽章 -->
+  <rect x="768" y="180" width="106" height="28" rx="6" fill="var(--gnc-coral)" fill-opacity="0.12" stroke="var(--gnc-coral)" stroke-opacity="0.35" stroke-width="1"></rect>
+  <text class="gnc-t--xs gnc-t--strong gnc-t--coral" x="821" y="198">不含对话正文</text>
+</g>
+
+<!-- Bottom: Context Window bar -->
+<g class="gnc-node" style="animation-delay:.54s">
+  <rect class="gnc-card gnc-card--surface" x="248" y="242" width="638" height="100" rx="10"></rect>
+  <text class="gnc-t--xs gnc-t--strong gnc-t--start" x="266" y="266">Context Window</text>
+  <text class="gnc-t--xs gnc-t--start" x="372" y="266" opacity="0.7">· 按选中会话展示最近一次统计</text>
+  <text class="gnc-t--xs gnc-t--mono gnc-t--strong gnc-t--end" x="868" y="266">118k / 200k tokens (59%)</text>
+
+  <!-- Segmented bar with unified rounded clip -->
+  <g clip-path="url(#hr-bar-clip)">
+    <rect x="266" y="280" width="602" height="20" fill="var(--gnc-line)" fill-opacity="0.25"></rect>
+    <rect class="gnc-bar" x="266" y="280" width="98" height="20" fill="var(--gnc-navy)" style="animation-delay:0s"></rect>
+    <rect class="gnc-bar" x="366" y="280" width="118" height="20" fill="var(--gnc-teal)" style="animation-delay:.35s"></rect>
+    <rect class="gnc-bar" x="486" y="280" width="142" height="20" fill="var(--gnc-amber)" style="animation-delay:.7s"></rect>
+  </g>
+
+  <!-- Clean SVG legend swatches -->
+  <rect x="266" y="313" width="10" height="10" rx="2.5" fill="var(--gnc-navy)"></rect>
+  <text class="gnc-t--xs gnc-t--start" x="282" y="322">System</text>
+
+  <rect x="352" y="313" width="10" height="10" rx="2.5" fill="var(--gnc-teal)"></rect>
+  <text class="gnc-t--xs gnc-t--start gnc-t--teal" x="368" y="322">Tools / Skills</text>
+
+  <rect x="470" y="313" width="10" height="10" rx="2.5" fill="var(--gnc-amber)"></rect>
+  <text class="gnc-t--xs gnc-t--start gnc-t--amber" x="486" y="322">History &amp; Context Parts</text>
+
+  <rect x="748" y="313" width="10" height="10" rx="2.5" fill="var(--gnc-line)" fill-opacity="0.35" stroke="var(--gnc-line)" stroke-width="1"></rect>
+  <text class="gnc-t--xs gnc-t--end" x="868" y="322" opacity="0.75">Remaining Window</text>
+</g>
+</svg>
+</div>
+<figcaption>{caption}</figcaption>
+</figure>

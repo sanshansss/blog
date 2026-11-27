@@ -1,0 +1,104 @@
+---
+/**
+ * SpacecraftTopicOverview
+ *
+ * 来源：spacecraft-dynamics-animations-zh.md 的内联 SVG（迁移时原样搬入，未改动任何图形与动画）。
+ * 样式统一由 src/styles/figures.css 提供 —— 这里只有结构。
+ *
+ * 图注默认值与迁移前一致；需要覆盖时在 MDX 里写 <SpacecraftTopicOverview caption="..." />
+ */
+interface Props {
+  caption?: string
+}
+
+const caption = Astro.props.caption ?? '图 1　9 支教学动画覆盖的三个板块：刚体姿态动力学、轨道与相对运动力学、姿态执行机构。'
+---
+
+<figure class="gnc-fig">
+<div class="gnc-fig__scroll">
+<svg viewBox="0 0 900 248" role="img" aria-label="空间飞行器动力学教学动画涵盖的三大主题：姿态动力学、轨道力学与姿态执行机构">
+<defs>
+  <filter id="gnc-shadow" x="-6%" y="-6%" width="112%" height="116%">
+    <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.06"></feDropShadow>
+  </filter>
+  <radialGradient id="gnc-planet-glow" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="var(--gnc-teal)" stop-opacity="0.35"></stop>
+    <stop offset="65%" stop-color="var(--gnc-teal)" stop-opacity="0.12"></stop>
+    <stop offset="100%" stop-color="var(--gnc-teal)" stop-opacity="0"></stop>
+  </radialGradient>
+  <marker id="gnc-arrow-coral" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+    <path d="M1 1.5 L6.5 4 L1 6.5 Z" fill="var(--gnc-coral)"></path>
+  </marker>
+  <marker id="gnc-arrow-amber" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+    <path d="M1 1.5 L6.5 4 L1 6.5 Z" fill="var(--gnc-amber)"></path>
+  </marker>
+  <clipPath id="gnc-clip-1"><rect x="20" y="16" width="268" height="216" rx="12"></rect></clipPath>
+  <clipPath id="gnc-clip-2"><rect x="316" y="16" width="268" height="216" rx="12"></rect></clipPath>
+  <clipPath id="gnc-clip-3"><rect x="612" y="16" width="268" height="216" rx="12"></rect></clipPath>
+</defs>
+<g class="gnc-node" style="animation-delay:.05s">
+  <rect class="gnc-card gnc-card--surface" x="20" y="16" width="268" height="216" rx="12" filter="url(#gnc-shadow)"></rect>
+  <rect x="20" y="16" width="268" height="4" fill="var(--gnc-blue)" clip-path="url(#gnc-clip-1)"></rect>
+  <text class="gnc-t--xs" x="154" y="38" text-anchor="middle" opacity="0.65" letter-spacing="1.5">01 · ATTITUDE</text>
+  <text class="gnc-t--strong gnc-t--navy" x="154" y="58" text-anchor="middle">姿态运动与自旋稳定性</text>
+  <g stroke="var(--gnc-line)" stroke-width="1" opacity="0.45">
+    <line x1="88" y1="128" x2="220" y2="128" stroke-dasharray="2 3"></line>
+    <line x1="154" y1="78" x2="154" y2="174" stroke-dasharray="2 3"></line>
+  </g>
+  <ellipse cx="154" cy="92" rx="22" ry="7" fill="none" stroke="var(--gnc-coral)" stroke-opacity="0.4" stroke-width="1.1" stroke-dasharray="3 3"></ellipse>
+  <ellipse cx="154" cy="128" rx="60" ry="22" fill="none" stroke="var(--gnc-line)" stroke-width="1.2" stroke-dasharray="4 4"></ellipse>
+  <g class="gnc-spin">
+    <ellipse cx="154" cy="128" rx="46" ry="18" fill="var(--gnc-fill-1)" fill-opacity="0.85" stroke="var(--gnc-blue)" stroke-width="1.5"></ellipse>
+    <ellipse cx="154" cy="128" rx="46" ry="7" fill="none" stroke="var(--gnc-blue)" stroke-opacity="0.35" stroke-width="1"></ellipse>
+    <line x1="154" y1="162" x2="154" y2="90" stroke="var(--gnc-coral)" stroke-width="1.8" marker-end="url(#gnc-arrow-coral)"></line>
+    <circle cx="154" cy="128" r="3" fill="var(--gnc-navy)"></circle>
+  </g>
+  <line x1="44" y1="188" x2="264" y2="188" stroke="var(--gnc-line)" stroke-opacity="0.5"></line>
+  <text class="gnc-t--xs" x="154" y="210" text-anchor="middle">3-1-2 欧拉角 · Explorer 1 · 引力梯度</text>
+</g>
+<g class="gnc-node" style="animation-delay:.16s">
+  <rect class="gnc-card gnc-card--surface" x="316" y="16" width="268" height="216" rx="12" filter="url(#gnc-shadow)"></rect>
+  <rect x="316" y="16" width="268" height="4" fill="var(--gnc-teal)" clip-path="url(#gnc-clip-2)"></rect>
+  <text class="gnc-t--xs" x="450" y="38" text-anchor="middle" opacity="0.65" letter-spacing="1.5">02 · ORBIT</text>
+  <text class="gnc-t--strong gnc-t--teal" x="450" y="58" text-anchor="middle">轨道力学与相对运动</text>
+  <circle cx="450" cy="128" r="28" fill="url(#gnc-planet-glow)"></circle>
+  <circle cx="450" cy="128" r="14" fill="var(--gnc-teal)" fill-opacity="0.22" stroke="var(--gnc-teal)" stroke-width="1.6"></circle>
+  <ellipse cx="450" cy="128" rx="14" ry="5" fill="none" stroke="var(--gnc-teal)" stroke-opacity="0.45" stroke-width="1"></ellipse>
+  <g transform="rotate(-14 450 128)">
+    <ellipse cx="450" cy="128" rx="72" ry="30" fill="none" stroke="var(--gnc-teal)" stroke-width="1.4" class="gnc-flow gnc-flow--slow"></ellipse>
+  </g>
+  <circle cx="450" cy="128" r="44" fill="none" stroke="var(--gnc-line)" stroke-width="1" stroke-dasharray="3 3"></circle>
+  <g class="gnc-spin gnc-spin--fast">
+    <circle cx="494" cy="128" r="7.5" fill="var(--gnc-amber)" fill-opacity="0.22"></circle>
+    <circle cx="494" cy="128" r="4" fill="var(--gnc-amber)"></circle>
+    <circle cx="406" cy="128" r="3" fill="var(--gnc-teal)"></circle>
+  </g>
+  <line x1="340" y1="188" x2="560" y2="188" stroke="var(--gnc-line)" stroke-opacity="0.5"></line>
+  <text class="gnc-t--xs" x="450" y="210" text-anchor="middle">太阳同步轨道 · CW 绕飞与交会 · 引力弹弓</text>
+</g>
+<g class="gnc-node" style="animation-delay:.27s">
+  <rect class="gnc-card gnc-card--surface" x="612" y="16" width="268" height="216" rx="12" filter="url(#gnc-shadow)"></rect>
+  <rect x="612" y="16" width="268" height="4" fill="var(--gnc-amber)" clip-path="url(#gnc-clip-3)"></rect>
+  <text class="gnc-t--xs" x="746" y="38" text-anchor="middle" opacity="0.65" letter-spacing="1.5">03 · ACTUATOR</text>
+  <text class="gnc-t--strong gnc-t--amber" x="746" y="58" text-anchor="middle">姿态执行机构与角动量</text>
+  <path d="M 712 96 A 46 46 0 0 1 780 96" fill="none" stroke="var(--gnc-amber)" stroke-width="1.3" stroke-dasharray="3 2" marker-end="url(#gnc-arrow-amber)"></path>
+  <circle cx="746" cy="128" r="38" fill="var(--gnc-fill-3)" stroke="var(--gnc-amber)" stroke-width="1.5"></circle>
+  <circle cx="746" cy="128" r="33" fill="none" stroke="var(--gnc-amber)" stroke-opacity="0.35" stroke-width="1" stroke-dasharray="2 4"></circle>
+  <g class="gnc-spin gnc-spin--fast gnc-spin--reverse">
+    <circle cx="746" cy="128" r="24" fill="none" stroke="var(--gnc-amber)" stroke-width="2.4" stroke-dasharray="15 10"></circle>
+    <line x1="746" y1="100" x2="746" y2="156" stroke="var(--gnc-navy)" stroke-width="1.5" stroke-linecap="round"></line>
+    <line x1="718" y1="128" x2="774" y2="128" stroke="var(--gnc-navy)" stroke-width="1.5" stroke-linecap="round"></line>
+    <circle cx="746" cy="104" r="2.2" fill="var(--gnc-navy)"></circle>
+    <circle cx="746" cy="152" r="2.2" fill="var(--gnc-navy)"></circle>
+    <circle cx="722" cy="128" r="2.2" fill="var(--gnc-navy)"></circle>
+    <circle cx="770" cy="128" r="2.2" fill="var(--gnc-navy)"></circle>
+  </g>
+  <circle cx="746" cy="128" r="6.5" fill="var(--gnc-navy)"></circle>
+  <circle cx="746" cy="128" r="2.5" fill="var(--gnc-fill-3)"></circle>
+  <line x1="636" y1="188" x2="856" y2="188" stroke="var(--gnc-line)" stroke-opacity="0.5"></line>
+  <text class="gnc-t--xs" x="746" y="210" text-anchor="middle">反作用轮饱和卸载 · CMG 奇异几何</text>
+</g>
+</svg>
+</div>
+<figcaption>{caption}</figcaption>
+</figure>

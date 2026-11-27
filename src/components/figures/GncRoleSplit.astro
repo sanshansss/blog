@@ -1,0 +1,54 @@
+---
+/**
+ * GncRoleSplit
+ *
+ * 来源：gnc-design-agent.md 的内联 SVG（迁移时原样搬入，未改动任何图形与动画）。
+ * 样式统一由 src/styles/figures.css 提供 —— 这里只有结构。
+ *
+ * 图注默认值与迁移前一致；需要覆盖时在 MDX 里写 <GncRoleSplit caption="..." />
+ */
+interface Props {
+  caption?: string
+}
+
+const caption = Astro.props.caption ?? '图 4　两条路线的分工。它们共享同一套任务理解、任务编排、工具调用与证据反馈机制，区别在于前者输出硬件配置决策，后者输出可检查、可仿真的工程模型。'
+---
+
+<figure class="gnc-fig">
+<div class="gnc-fig__scroll">
+<svg viewBox="0 0 900 350" role="img" aria-label="GNC 配置代理与 MATLAB Agent 的分工对比">
+<defs>
+<marker id="g4-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--gnc-ink)"></path></marker>
+</defs>
+<g class="gnc-node" style="animation-delay:.05s"><rect class="gnc-card" x="190" y="20" width="675" height="38" rx="6"></rect><text class="gnc-t--sm gnc-t--navy" x="265" y="39">任务理解</text><text class="gnc-t--sm gnc-t--navy" x="440" y="39">任务编排</text><text class="gnc-t--sm gnc-t--navy" x="615" y="39">工具调用</text><text class="gnc-t--sm gnc-t--navy" x="790" y="39">证据反馈</text></g>
+<text class="gnc-label gnc-t--xs gnc-t--end" x="180" y="39">共享机制</text>
+<path class="gnc-edge gnc-edge--hair" d="M352 20 V58"></path>
+<path class="gnc-edge gnc-edge--hair" d="M527 20 V58"></path>
+<path class="gnc-edge gnc-edge--hair" d="M702 20 V58"></path>
+<rect class="gnc-lane" x="8" y="74" width="874" height="72" rx="8"></rect>
+<rect class="gnc-lane gnc-lane--teal" x="8" y="174" width="874" height="72" rx="8"></rect>
+<text class="gnc-label gnc-t--sm gnc-t--coral gnc-t--start" x="18" y="100">GNC 单机配置</text>
+<text class="gnc-label gnc-t--xs gnc-t--start" x="18" y="120">硬件配置决策</text>
+<text class="gnc-label gnc-t--sm gnc-t--teal gnc-t--start" x="18" y="200">MATLAB Agent</text>
+<text class="gnc-label gnc-t--xs gnc-t--start" x="18" y="220">软件建模验证</text>
+<g class="gnc-node" style="animation-delay:.15s"><rect class="gnc-card gnc-card--surface" x="190" y="88" width="150" height="44" rx="6"></rect><text class="gnc-t--sm" x="265" y="110">需求 rₕ</text></g>
+<g class="gnc-node" style="animation-delay:.21s"><rect class="gnc-card gnc-card--surface" x="365" y="88" width="150" height="44" rx="6"></rect><text class="gnc-t--sm" x="440" y="110">数据 / 知识 D, K</text></g>
+<g class="gnc-node" style="animation-delay:.27s"><rect class="gnc-card gnc-card--surface" x="540" y="88" width="150" height="44" rx="6"></rect><text class="gnc-t--sm" x="615" y="110">动力学模型 M</text></g>
+<g class="gnc-node" style="animation-delay:.33s"><rect class="gnc-card gnc-card--amber" x="715" y="88" width="150" height="44" rx="6"></rect><text class="gnc-t--sm" x="790" y="110">硬件配置 C</text></g>
+<g class="gnc-node" style="animation-delay:.39s"><rect class="gnc-card gnc-card--surface" x="190" y="188" width="150" height="44" rx="6"></rect><text class="gnc-t--sm" x="265" y="210">需求 rₛ</text></g>
+<g class="gnc-node" style="animation-delay:.45s"><rect class="gnc-card gnc-card--surface" x="365" y="188" width="150" height="44" rx="6"></rect><text class="gnc-t--sm" x="440" y="210">语义表示 q</text></g>
+<g class="gnc-node" style="animation-delay:.51s"><rect class="gnc-card gnc-card--surface" x="540" y="188" width="150" height="44" rx="6"></rect><text class="gnc-t--sm" x="615" y="210">Skill / Agent</text></g>
+<g class="gnc-node" style="animation-delay:.57s"><rect class="gnc-card gnc-card--teal" x="715" y="188" width="150" height="44" rx="6"></rect><text class="gnc-t--sm" x="790" y="210">软件模型 A</text></g>
+<path class="gnc-edge" d="M342 110 H363" marker-end="url(#g4-arrow)"></path>
+<path class="gnc-edge" d="M517 110 H538" marker-end="url(#g4-arrow)"></path>
+<path class="gnc-edge" d="M692 110 H713" marker-end="url(#g4-arrow)"></path>
+<path class="gnc-edge" d="M342 210 H363" marker-end="url(#g4-arrow)"></path>
+<path class="gnc-edge" d="M517 210 H538" marker-end="url(#g4-arrow)"></path>
+<path class="gnc-edge" d="M692 210 H713" marker-end="url(#g4-arrow)"></path>
+<g class="gnc-node" style="animation-delay:.65s"><rect class="gnc-card gnc-card--surface" x="250" y="278" width="400" height="44" rx="8"></rect><text class="gnc-t--sm" x="450" y="300">互补：配置决策 ＋ 工程模型构建</text></g>
+<path class="gnc-edge gnc-flow" d="M865 110 H882 V300 H654" marker-end="url(#g4-arrow)"></path>
+<path class="gnc-edge gnc-edge--hair gnc-flow" d="M865 210 H882 V300"></path>
+</svg>
+</div>
+<figcaption>{caption}</figcaption>
+</figure>

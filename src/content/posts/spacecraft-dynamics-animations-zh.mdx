@@ -1,0 +1,40 @@
+---
+title: 空间飞行器动力学教学动画
+published: 2026-10-20
+description: 9 支面向空间飞行器姿态动力学、轨道力学与姿态执行机构的中文教学动画。
+tags:
+  - 空间飞行器
+  - 动力学
+  - 教学动画
+pin: 99
+lang: zh
+abbrlink: spacecraft-dynamics-animations
+toc: false
+---
+
+import GithubRepo from '@/components/GithubRepo.astro'
+import SpacecraftTopicOverview from '@/components/figures/SpacecraftTopicOverview.astro'
+
+学习空间飞行器动力学时，很多概念单看公式和静态配图并不直观——比如欧拉角转序为什么不可交换、存在能量耗散时最小惯量轴自旋为什么会发散，以及 CW 方程下的相对绕飞轨迹长什么样。
+
+为此，我用 Python 自写动力学数值模型，配合 Manim 制作了一组共 9 支中文教学动画，尝试把姿态运动学、刚体自旋稳定性、轨道相对运动以及执行机构工作机理做成可以直接观察的动态过程。
+
+<SpacecraftTopicOverview />
+
+目前包含的主题如下：
+
+- 3-1-2 欧拉角转序与旋转不可交换性；
+- Explorer 1 在能量耗散下的最小惯量轴自旋失稳；
+- 最大惯量轴与中间惯量轴自旋稳定性对比；
+- 引力梯度稳定的天平动与不稳定构型发散过程；
+- 太阳同步轨道的节点进动、倾角—高度关系与一年尺度地方时保持；
+- CW 自然闭合绕飞与 V-bar 双脉冲交会；
+- 引力弹弓在行星系与日心系中的速度变化；
+- 反作用轮角动量交换、饱和卸载与 CMG 奇异几何。
+
+全部成片视频与核心动力学仿真代码已整理到 GitHub：
+
+<GithubRepo repo="sanshansss/spacecraft-dynamics-animations" />
+
+- 项目仓库：[https://github.com/sanshansss/spacecraft-dynamics-animations](https://github.com/sanshansss/spacecraft-dynamics-animations)
+- 个人主页：[https://sanshansss.github.io/astro-theme-retypeset/](https://sanshansss.github.io/astro-theme-retypeset/)
