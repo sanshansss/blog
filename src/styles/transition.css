@@ -108,9 +108,162 @@ html.reduce-motion {
 
   #post-date,
   #post-content > *,
-  #back-button {
+  #back-button,
+  .home-section-line,
+  .home-card,
+  .orbit-craft,
+  .orbit-ring {
     opacity: 1;
     transform: translate(0);
     animation: none;
+  }
+}
+
+/* Homepage Animations >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+@keyframes homeLineDraw {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes homeCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(0.875rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes orbitTravel {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+
+@keyframes orbitPulse {
+  0%, 100% {
+    opacity: 0.25;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.18);
+  }
+}
+
+.home-section-line {
+  transform-origin: left center;
+  animation: homeLineDraw 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--section-i, 0) * 80ms);
+}
+
+.home-card {
+  animation: homeCardIn 0.48s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+  animation-delay: calc(min(var(--card-i, 0), 8) * 55ms + 50ms);
+}
+
+.home-card-link {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.25s ease-out,
+    background-color 0.25s ease-out,
+    box-shadow 0.25s ease-out;
+}
+
+.home-card-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    360px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    oklch(var(--un-preset-theme-colors-primary) / 0.06),
+    transparent 65%
+  );
+  transition: opacity 0.3s ease-out;
+}
+
+.home-card-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -12px oklch(var(--un-preset-theme-colors-primary) / 0.14);
+}
+
+.home-card-link:hover::before {
+  opacity: 1;
+}
+
+.orbit-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: orbitPulse 3.6s ease-in-out infinite;
+}
+
+.orbit-craft {
+  offset-path: path('M 8 26 A 36 13 0 1 0 80 26 A 36 13 0 1 0 8 26');
+  offset-rotate: auto;
+  animation: orbitTravel 7.5s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-section-line,
+  .home-card,
+  .orbit-craft,
+  .orbit-ring {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .home-card-link,
+  .home-card-link::before {
+    transition: none;
+  }
+
+  .home-card-link:hover {
+    transform: none;
+  }
+}
+
+/* Reading Progress Bar >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 90;
+  width: 100%;
+  height: 2px;
+  pointer-events: none;
+  transform-origin: left center;
+  transform: scaleX(0);
+  background: oklch(var(--un-preset-theme-colors-primary) / 0.75);
+}
+
+@supports (animation-timeline: scroll()) {
+  @keyframes readingProgress {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  .reading-progress {
+    animation: readingProgress linear both;
+    animation-timeline: scroll(root);
   }
 }
