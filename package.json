@@ -47,7 +47,7 @@
     "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^8.1.1",
+    "@antfu/eslint-config": "^10.0.0",
     "@astrojs/check": "^0.9.8",
     "@types/markdown-it": "^14.1.2",
     "@types/node": "^25.6.0",
@@ -56,10 +56,10 @@
     "@unocss/eslint-plugin": "66.6.8",
     "@unocss/preset-attributify": "66.6.8",
     "@unocss/reset": "66.6.8",
-    "astro-eslint-parser": "^1.4.0",
+    "astro-eslint-parser": "^3.2.0",
     "autocorrect-node": "^2.14.0",
-    "eslint": "^10.2.0",
-    "eslint-plugin-astro": "^1.7.0",
+    "eslint": "^10.15.0",
+    "eslint-plugin-astro": "^3.2.2",
     "fast-glob": "^3.3.3",
     "lint-staged": "^16.4.0",
     "playwright": "^1.59.1",
