@@ -61,7 +61,9 @@ const navItems = [
     {navItems.map(item => (
       <li>
         <a
-          href={item.raw ? item.href : getLocalizedPath(item.href)}
+          href={item.raw
+? item.href
+: getLocalizedPath(item.href)}
           class={item.className}
         >
           {item.label}

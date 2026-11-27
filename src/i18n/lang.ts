@@ -9,7 +9,9 @@ import { langMap } from '@/i18n/config'
  * @returns Route parameter value (e.g. 'en') or undefined (root path '/')
  */
 export function getLangRouteParam(lang: Language): string | undefined {
-  return lang === defaultLocale ? undefined : lang
+  return lang === defaultLocale
+    ? undefined
+    : lang
 }
 
 /**

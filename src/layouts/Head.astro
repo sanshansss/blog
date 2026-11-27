@@ -25,13 +25,17 @@ const { google = '', bing = '', yandex = '', baidu = '' } = verification
 const { customGoogleAnalyticsJS = '', customUmamiAnalyticsJS = '' } = themeConfig.preload ?? {}
 
 // Site Metadata
-const metaTheme = defaultMode === 'dark' ? darkMode : lightMode
+const metaTheme = defaultMode === 'dark'
+? darkMode
+: lightMode
 const siteTitle = i18nTitle ? currentUI.title : title
 const siteSubtitle = i18nTitle ? currentUI.subtitle : subtitle
 const siteDescription = i18nTitle ? currentUI.description : description
 
 // Page Metadata
-const pageTitle = postTitle ? `${postTitle} | ${siteTitle}` : `${siteTitle} - ${siteSubtitle}`
+const pageTitle = postTitle
+? `${postTitle} | ${siteTitle}`
+: `${siteTitle} - ${siteSubtitle}`
 const pageDescription = postDescription || siteDescription
 const pageImage = postSlug
   ? new URL(`${base}/og/${postSlug}.png`, Astro.url.origin)
@@ -67,8 +71,12 @@ const isDev = import.meta.env.DEV
 {allLocales.map(lang => (
   <link
     rel="alternate"
-    href={`${Astro.url.origin}${base}${lang === defaultLocale ? '' : `/${lang}/`}`}
-    hreflang={lang === 'zh-tw' ? 'zh-TW' : lang}
+    href={`${Astro.url.origin}${base}${lang === defaultLocale
+? ''
+: `/${lang}/`}`}
+    hreflang={lang === 'zh-tw'
+? 'zh-TW'
+: lang}
   />
 ))}
 

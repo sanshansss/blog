@@ -111,7 +111,9 @@ async function fixRelativeImagePaths(htmlContent: string, baseUrl: string): Prom
  */
 export async function generateFeed({ lang }: { lang?: Language } = {}) {
   const currentUI = ui[lang as keyof typeof ui] ?? ui[defaultLocale as keyof typeof ui] ?? {}
-  const siteURL = lang ? `${url}${base}/${lang}/` : `${url}${base}/`
+  const siteURL = lang
+    ? `${url}${base}/${lang}/`
+    : `${url}${base}/`
 
   // Create Feed instance
   const feed = new Feed({
@@ -125,8 +127,12 @@ export async function generateFeed({ lang }: { lang?: Language } = {}) {
     generator: 'Astro-Theme-Retypeset with Feed for Node.js',
 
     feedLinks: {
-      rss: new URL(lang ? `${base}/${lang}/rss.xml` : `${base}/rss.xml`, url).toString(),
-      atom: new URL(lang ? `${base}/${lang}/atom.xml` : `${base}/atom.xml`, url).toString(),
+      rss: new URL(lang
+        ? `${base}/${lang}/rss.xml`
+        : `${base}/rss.xml`, url).toString(),
+      atom: new URL(lang
+        ? `${base}/${lang}/atom.xml`
+        : `${base}/atom.xml`, url).toString(),
     },
 
     author: {
@@ -176,7 +182,9 @@ export async function generateFeed({ lang }: { lang?: Language } = {}) {
     // publishDate -> Atom:<published>, RSS:<pubDate>
     const publishDate = new Date(post.data.published)
     // updateDate -> Atom:<updated>, RSS has no update tag
-    const updateDate = post.data.updated ? new Date(post.data.updated) : publishDate
+    const updateDate = post.data.updated
+      ? new Date(post.data.updated)
+      : publishDate
 
     feed.addItem({
       title: post.data.title,
@@ -184,10 +192,12 @@ export async function generateFeed({ lang }: { lang?: Language } = {}) {
       link,
       description: getPostDescription(post, 'feed'),
       content: postContent,
-      author: [{
-        name: author,
-        link: `${url}${base}/`,
-      }],
+      author: [
+        {
+          name: author,
+          link: `${url}${base}/`,
+        },
+      ],
       published: publishDate,
       date: updateDate,
     })

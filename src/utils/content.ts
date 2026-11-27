@@ -153,7 +153,9 @@ async function _getPostsByYear(lang?: Language): Promise<Map<number, Post[]>> {
     })
   })
 
-  return new Map([...yearMap.entries()].sort((a, b) => b[0] - a[0]))
+  return new Map([
+    ...yearMap.entries(),
+  ].sort((a, b) => b[0] - a[0]))
 }
 
 export const getPostsByYear = memoize(_getPostsByYear)

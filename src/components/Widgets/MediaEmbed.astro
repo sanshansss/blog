@@ -23,7 +23,9 @@ async function setupMermaidEmbeds() {
     const { default: mermaid } = await import('mermaid')
     mermaid.initialize({
       startOnLoad: false,
-      theme: document.documentElement.classList.contains('dark') ? 'dark' : 'default',
+      theme: document.documentElement.classList.contains('dark')
+        ? 'dark'
+        : 'default',
     })
     mermaid.run()
   }
@@ -56,7 +58,9 @@ async function setupTweetEmbeds() {
   }
 
   tweets.forEach((tweet) => {
-    tweet.setAttribute('data-theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light')
+    tweet.setAttribute('data-theme', document.documentElement.classList.contains('dark')
+      ? 'dark'
+      : 'light')
   })
 
   // Inject Twitter script

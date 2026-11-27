@@ -12,7 +12,9 @@ import '@/styles/home.css'
 
 export async function getStaticPaths() {
   return allLocales.map(lang => ({
-    params: { lang: getLangRouteParam(lang) },
+    params: {
+lang: getLangRouteParam(lang),
+},
   }))
 }
 
@@ -31,21 +33,67 @@ const posts = allPosts.filter(post => post !== project)
 const recentLabel = isChinese ? '最近文章' : 'Recent articles'
 const searchLabel = isChinese ? '搜索' : 'Search'
 const categories = [
-  { label: isChinese ? '全部' : 'All', tags: [] },
-  { label: isChinese ? '航天' : 'Space', tags: ['航天', '空间飞行器', '动力学', 'spacecraft', 'dynamics'] },
-  { label: 'AI', tags: ['ai', 'agent', 'agent-memory', '领域智能体', 'rag'] },
-  { label: isChinese ? '工具' : 'Tools', tags: ['工具实践'] },
+  {
+label: isChinese ? '全部' : 'All',
+tags: [],
+},
+  {
+label: isChinese ? '航天' : 'Space',
+tags: [
+'航天',
+'空间飞行器',
+'动力学',
+'spacecraft',
+'dynamics',
+],
+},
+  {
+label: 'AI',
+tags: [
+'ai',
+'agent',
+'agent-memory',
+'领域智能体',
+'rag',
+],
+},
+  {
+label: isChinese ? '工具' : 'Tools',
+tags: ['工具实践'],
+},
 ]
 const topics = [
-  { label: isChinese ? '航天动力学' : 'Spacecraft dynamics', tags: ['航天动力学', '动力学', 'Dynamics'] },
-  { label: isChinese ? '智能体' : 'Agents', tags: ['智能体', 'agent', 'Agent'] },
-  { label: isChinese ? '工具实践' : 'Tooling', tags: ['工具实践'] },
+  {
+label: isChinese ? '航天动力学' : 'Spacecraft dynamics',
+tags: ['航天动力学', '动力学', 'Dynamics'],
+},
+  {
+label: isChinese ? '智能体' : 'Agents',
+tags: ['智能体', 'agent', 'Agent'],
+},
+  {
+label: isChinese ? '工具实践' : 'Tooling',
+tags: ['工具实践'],
+},
 ].flatMap(({ label, tags }) => {
   const localTag = tags.find(tag => localTags.includes(tag))
-  if (localTag)
-return [{ label, href: getTagPath(localTag, lang) }]
+  if (localTag) {
+return [
+{
+label,
+href: getTagPath(localTag, lang),
+},
+]
+}
   const defaultTag = tags.find(tag => defaultTags.includes(tag))
-  return defaultTag ? [{ label, href: getTagPath(defaultTag, defaultLocale) }] : []
+  return defaultTag
+? [
+{
+label,
+href: getTagPath(defaultTag, defaultLocale),
+},
+]
+: []
 })
 ---
 
@@ -81,7 +129,13 @@ return [{ label, href: getTagPath(localTag, lang) }]
         <div class="recent-controls" data-controls hidden>
           <div class="article-filters" role="group" aria-label={isChinese ? '文章分类' : 'Article categories'}>
             {categories.map(({ label, tags }, index) => (
-              <button type="button" aria-pressed={index === 0 ? 'true' : 'false'} data-filter-tags={JSON.stringify(tags)}>{label}</button>
+              <button
+                type="button"
+                aria-pressed={index === 0
+? 'true'
+: 'false'}
+                data-filter-tags={JSON.stringify(tags)}
+              >{label}</button>
             ))}
             <span class="filter-underline" aria-hidden="true"></span>
           </div>
@@ -128,7 +182,11 @@ class HomeArticles extends HTMLElement {
       const tags = (JSON.parse(card.dataset.tags!) as string[]).map(normalize)
       const title = card.querySelector('.editorial-card-title')?.textContent ?? ''
       const description = card.querySelector('.editorial-card-description')?.textContent ?? ''
-      return { card, tags, text: normalize([title, description, ...tags].join(' ')) }
+      return {
+        card,
+        tags,
+        text: normalize([title, description, ...tags].join(' ')),
+      }
     })
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)')
     const reduceMotion = document.body.dataset.reduceMotion === 'true'
@@ -157,7 +215,10 @@ class HomeArticles extends HTMLElement {
       status.textContent = status.dataset.format!.replace('{count}', String(count))
       fade?.cancel()
       if (animate && count > 0 && !motion.matches && !reduceMotion) {
-        fade = list.animate([{ opacity: 0.55 }, { opacity: 1 }], { duration: 180, easing: 'ease-out' })
+        fade = list.animate([
+          { opacity: 0.55 },
+          { opacity: 1 },
+        ], { duration: 180, easing: 'ease-out' })
       }
     }
 

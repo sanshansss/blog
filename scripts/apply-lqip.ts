@@ -118,7 +118,9 @@ async function scanAndAnalyzeImages(): Promise<{ fileMappings: FileMapping[], im
   }))
 
   const { cached, new: newCount } = fileMappings.reduce((acc, { webUrl }) => {
-    existingMap[webUrl] !== undefined ? acc.cached++ : acc.new++
+    existingMap[webUrl] !== undefined
+      ? acc.cached++
+      : acc.new++
     return acc
   }, { cached: 0, new: 0 })
 

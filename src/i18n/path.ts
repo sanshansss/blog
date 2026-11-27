@@ -14,7 +14,9 @@ export function getTagPath(tagName: string, lang: Language): string {
     ? `/tags/${tagName}/`
     : `/${lang}/tags/${tagName}/`
 
-  return base ? `${base}${tagPath}` : tagPath
+  return base
+    ? `${base}${tagPath}`
+    : tagPath
 }
 
 /**
@@ -29,7 +31,9 @@ export function getPostPath(slug: string, lang: Language): string {
     ? `/posts/${slug}/`
     : `/${lang}/posts/${slug}/`
 
-  return base ? `${base}${postPath}` : postPath
+  return base
+    ? `${base}${postPath}`
+    : postPath
 }
 
 /**
@@ -43,12 +47,16 @@ export function getLocalizedPath(path: string, currentLang?: Language) {
   const normalizedPath = path.replace(/^\/|\/$/g, '')
   const lang = currentLang ?? getLangFromPath(path)
 
-  const langPrefix = lang === defaultLocale ? '' : `/${lang}`
+  const langPrefix = lang === defaultLocale
+    ? ''
+    : `/${lang}`
   const localizedPath = normalizedPath === ''
     ? `${langPrefix}/`
     : `${langPrefix}/${normalizedPath}/`
 
-  return base ? `${base}${localizedPath}` : localizedPath
+  return base
+    ? `${base}${localizedPath}`
+    : localizedPath
 }
 
 /**

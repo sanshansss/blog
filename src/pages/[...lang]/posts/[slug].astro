@@ -61,7 +61,10 @@ export async function getStaticPaths() {
     .map((post) => {
       const slug = post.data.abbrlink || post.id
       return {
-        params: { lang: getLangRouteParam(lang), slug },
+        params: {
+lang: getLangRouteParam(lang),
+slug,
+},
         props: { post, supportedLangs: slugToLangs[slug] },
       }
     }),
@@ -92,7 +95,9 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
         <BackButton />
         <h1 class="post-title">
           <span
-            transition:name={`post-${slug}${currentLang ? `-${currentLang}` : ''}`}
+            transition:name={`post-${slug}${currentLang
+? `-${currentLang}`
+: ''}`}
             data-disable-theme-toggle-transition
           >
             {post.data.title}
@@ -102,7 +107,9 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
       <div
         id="post-date"
         class="block c-primary font-time"
-        transition:name={`time-${slug}${currentLang ? `-${currentLang}` : ''}`}
+        transition:name={`time-${slug}${currentLang
+? `-${currentLang}`
+: ''}`}
         data-disable-theme-toggle-transition
       >
         <PostDate
@@ -112,7 +119,10 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
         />
       </div>
     </div>
-    <TOC headings={post.data.toc ? headings : []} />
+    <TOC headings={post.data.toc
+? headings
+: []}
+    />
     <div id="post-content">
       <Content />
     </div>

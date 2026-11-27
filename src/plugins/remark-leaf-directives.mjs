@@ -143,7 +143,9 @@ const embedHandlers = {
     }
 
     const [, type, id] = match
-    const height = ['track', 'episode', 'show'].includes(type) ? 152 : 352
+    const height = ['track', 'episode', 'show'].includes(type)
+      ? 152
+      : 352
 
     return `
     <figure>

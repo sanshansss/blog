@@ -24,8 +24,12 @@ const { posts, lang, editorial = false } = Astro.props
     return (
       <li
         class={editorial ? 'editorial-card' : 'home-card'}
-        style={editorial ? undefined : `--card-i: ${index};`}
-        data-tags={editorial ? JSON.stringify(tags) : undefined}
+        style={editorial
+? undefined
+: `--card-i: ${index};`}
+        data-tags={editorial
+? JSON.stringify(tags)
+: undefined}
       >
         <a
           href={getPostPath(slug, lang)}
@@ -47,7 +51,12 @@ const { posts, lang, editorial = false } = Astro.props
           )}
 
           <div class={editorial ? 'editorial-card-date' : 'mb-2.5 flex items-baseline justify-between gap-2 text-3.1 c-secondary/60 font-time'}>
-            <div transition:name={`time-${slug}${lang ? `-${lang}` : ''}`} data-disable-theme-toggle-transition>
+            <div
+              transition:name={`time-${slug}${lang
+? `-${lang}`
+: ''}`}
+              data-disable-theme-toggle-transition
+            >
               <PostDate
                 date={post.data.published}
                 minutes={post.remarkPluginFrontmatter.minutes}
@@ -58,7 +67,9 @@ const { posts, lang, editorial = false } = Astro.props
           {/* title */}
           <h3
             class={editorial ? 'editorial-card-title' : 'line-clamp-2 font-medium leading-[1.45] text-balance c-primary transition-colors text-4.25'}
-            transition:name={`post-${slug}${lang ? `-${lang}` : ''}`}
+            transition:name={`post-${slug}${lang
+? `-${lang}`
+: ''}`}
             data-disable-theme-toggle-transition
           >
             {post.data.title}

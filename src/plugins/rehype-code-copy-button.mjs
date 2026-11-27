@@ -60,7 +60,9 @@ export function rehypeCodeCopyButton() {
       parent.children[index] = {
         type: 'element',
         tagName: 'div',
-        properties: { className: ['code-block-wrapper'] },
+        properties: {
+          className: ['code-block-wrapper'],
+        },
         children: [
           {
             type: 'element',

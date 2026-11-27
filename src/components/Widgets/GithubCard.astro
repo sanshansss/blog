@@ -41,7 +41,9 @@ async function fetchRepoData(repo: string): Promise<GithubRepoData | null> {
       description: raw.description,
       stargazers_count: raw.stargazers_count,
       forks_count: raw.forks_count,
-      license: raw.license ? { spdx_id: raw.license.spdx_id } : null,
+      license: raw.license
+        ? { spdx_id: raw.license.spdx_id }
+        : null,
     }
 
     // Cache the successful response

@@ -50,6 +50,8 @@ export const { getStaticPaths, GET } = await OGImageRoute({
       './assets/fonts/NotoSansSC-Bold.otf',
       './assets/fonts/NotoSansSC-Regular.otf',
     ],
-    bgGradient: [[250, 249, 245]],
+    bgGradient: [
+      [250, 249, 245],
+    ],
   }),
 })

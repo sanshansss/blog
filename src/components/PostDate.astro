@@ -23,8 +23,12 @@ function formatDate(date: Date, format: DateFormat) {
 
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
-    month: format === 'MMM D YYYY' || format === 'D MMM YYYY' ? 'short' : '2-digit',
-    day: format === 'MMM D YYYY' || format === 'D MMM YYYY' ? 'numeric' : '2-digit',
+    month: format === 'MMM D YYYY' || format === 'D MMM YYYY'
+? 'short'
+: '2-digit',
+    day: format === 'MMM D YYYY' || format === 'D MMM YYYY'
+? 'numeric'
+: '2-digit',
   }
 
   switch (format) {

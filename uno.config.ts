@@ -85,10 +85,13 @@ export default defineConfig({
     },
   },
   rules: [
-    ['scrollbar-hidden', {
-      'scrollbar-width': 'none',
-      '-ms-overflow-style': 'none',
-    }],
+    [
+      'scrollbar-hidden',
+      {
+        'scrollbar-width': 'none',
+        '-ms-overflow-style': 'none',
+      },
+    ],
   ],
   shortcuts: {
     'uno-desktop-column': 'fixed right-[var(--site-column-right,max(5rem,calc(50vw-35rem)))] w-[var(--site-column-width,14rem)]',

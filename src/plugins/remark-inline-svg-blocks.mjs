@@ -65,7 +65,9 @@ function isHtmlFragment(node) {
 
 export function remarkInlineSvgBlocks() {
   return (tree, file) => {
-    const source = typeof file?.value === 'string' ? file.value : undefined
+    const source = typeof file?.value === 'string'
+      ? file.value
+      : undefined
 
     // 自底向上遍历所有子节点数组（含 root）
     const visitChildren = (parent) => {
@@ -117,7 +119,9 @@ export function remarkInlineSvgBlocks() {
           : ''
         const htmlNode = {
           type: 'html',
-          value: sliced && sliced.startsWith(leading.slice(0, 32)) ? sliced : raw,
+          value: sliced && sliced.startsWith(leading.slice(0, 32))
+            ? sliced
+            : raw,
         }
         if (start && end) {
           htmlNode.position = { start, end }

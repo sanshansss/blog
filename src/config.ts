@@ -208,7 +208,9 @@ export const themeConfig: ThemeConfig = {
   // PRELOAD SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END
 }
 
-export const base = themeConfig.site.base === '/' ? '' : themeConfig.site.base.replace(/\/$/, '')
+export const base = themeConfig.site.base === '/'
+  ? ''
+  : themeConfig.site.base.replace(/\/$/, '')
 export const defaultLocale = themeConfig.global.locale
 export const moreLocales = themeConfig.global.moreLocales
 export const allLocales = [defaultLocale, ...moreLocales]

@@ -52,7 +52,9 @@ function zoomIn(img: HTMLImageElement) {
   // Calculate scale and position
   const viewportWidth = window.innerWidth
   const viewportHeight = window.innerHeight
-  const scaleFactor = window.innerWidth < 768 ? 1 : 0.8
+  const scaleFactor = window.innerWidth < 768
+    ? 1
+    : 0.8
   const scale = Math.min(
     (viewportWidth * scaleFactor) / rect.width,
     (viewportHeight * scaleFactor) / rect.height,

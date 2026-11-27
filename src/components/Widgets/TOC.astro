@@ -269,7 +269,11 @@ function setupReadingRail() {
   const desktop = window.matchMedia('(min-width: 1152px)')
   const sections = Array.from(nav?.querySelectorAll('a') ?? []).flatMap((link) => {
     const heading = document.getElementById(decodeURIComponent(link.hash.slice(1)))
-    return heading && content.contains(heading) ? [{ link, heading }] : []
+    return heading && content.contains(heading)
+      ? [
+          { link, heading },
+        ]
+      : []
   })
 
   let frame: number | undefined
@@ -280,7 +284,9 @@ function setupReadingRail() {
     const bottom = content.getBoundingClientRect().bottom
     const distance = bottom + window.scrollY - window.innerHeight
     // Reach 100% when the last line of the article enters view.
-    const ratio = distance > 0 ? window.scrollY / distance : 1
+    const ratio = distance > 0
+      ? window.scrollY / distance
+      : 1
     const value = Math.floor(Math.max(0, Math.min(1, ratio)) * 100)
     if (progress.value !== value) {
       progress.value = value

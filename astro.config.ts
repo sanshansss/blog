@@ -23,7 +23,14 @@ import { remarkReadingTime } from './src/plugins/remark-reading-time.mjs'
 const { url: site } = themeConfig.site
 const { imageHostURL } = themeConfig.preload ?? {}
 const imageConfig = imageHostURL
-  ? { image: { domains: [imageHostURL], remotePatterns: [{ protocol: 'https' }] } }
+  ? {
+      image: {
+        domains: [imageHostURL],
+        remotePatterns: [
+          { protocol: 'https' },
+        ],
+      },
+    }
   : {}
 
 export default defineConfig({
@@ -73,7 +80,10 @@ export default defineConfig({
     ],
     rehypePlugins: [
       rehypeKatex,
-      [rehypeMermaid, { strategy: 'pre-mermaid' }],
+      [
+        rehypeMermaid,
+        { strategy: 'pre-mermaid' },
+      ],
       rehypeSlug,
       rehypeHeadingAnchor,
       rehypeImageProcessor,

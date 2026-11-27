@@ -5,7 +5,9 @@ import { generateAtom } from '@/utils/feed'
 
 export function getStaticPaths() {
   return allLocales.map(lang => ({
-    params: { lang: getLangRouteParam(lang) },
+    params: {
+      lang: getLangRouteParam(lang),
+    },
   }))
 }
 

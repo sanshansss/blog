@@ -14,14 +14,20 @@ function createFigure(imgNode, isInGallery = false) {
       type: 'element',
       tagName: 'figcaption',
       properties: {},
-      children: [{ type: 'text', value: altText }],
+      children: [
+        { type: 'text', value: altText },
+      ],
     })
   }
 
   return {
     type: 'element',
     tagName: 'figure',
-    properties: isInGallery ? { className: ['gallery-item'] } : {},
+    properties: isInGallery
+      ? {
+          className: ['gallery-item'],
+        }
+      : {},
     children,
   }
 }

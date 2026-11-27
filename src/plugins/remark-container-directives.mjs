@@ -11,7 +11,9 @@ const admonitionTypes = {
 // Extract text from directive label
 function getLabelText(node) {
   return node?.children
-    ?.map(child => child.type === 'text' ? child.value : '')
+    ?.map(child => child.type === 'text'
+      ? child.value
+      : '')
     .join('')
     .trim() || ''
 }

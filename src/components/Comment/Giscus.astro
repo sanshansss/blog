@@ -70,7 +70,13 @@ function updateGiscusTheme() {
 
   try {
     giscusWindow.postMessage(
-      { giscus: { setConfig: { theme: getThemeUrl() } } },
+      {
+        giscus: {
+          setConfig: {
+            theme: getThemeUrl(),
+          },
+        },
+      },
       'https://giscus.app',
     )
   }
